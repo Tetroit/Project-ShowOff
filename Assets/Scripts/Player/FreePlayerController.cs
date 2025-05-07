@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace amogus
 {
@@ -9,44 +10,79 @@ namespace amogus
         Keyboard,
         Joystick
     }
+    [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     public class FreePlayerController : PlayerController
     {
         [System.Serializable]
         public struct PlayerState
         {
-            public bool lockControls;
+            public string name;
             public float movementSpeed;
             public float speedLimit;
             public float airSpeed;
             public float criticalAngle;
             public float jumpHeight;
             public float acceleration;
+            public float height;
 
 
             public PlayerState(
-                bool lockControls = false,
+                string name = "lobotomy",
                 float movementSpeed = 5f,
                 float speedLimit = 10f,
                 float airSpeed = 1f,
                 float criticalAngle = 30f,
                 float jumpHeight = 5f,
-                float acceleration = 1f
+                float acceleration = 1f,
+                float height = 2f
             )
             {
-                this.lockControls = lockControls;
+                this.name = name;
                 this.movementSpeed = movementSpeed;
                 this.speedLimit = speedLimit;
                 this.airSpeed = airSpeed;
                 this.criticalAngle = criticalAngle;
                 this.jumpHeight = jumpHeight;
                 this.acceleration = acceleration;
+                this.height = height;
+            }
+
+            public static PlayerState Lerp (PlayerState s1,  PlayerState s2, float fac)
+            {
+                return new PlayerState(
+                    $"lerp between {s1.name} and {s2.name}",
+                    Mathf.Lerp(s1.movementSpeed, s2.movementSpeed, fac),
+                    Mathf.Lerp(s1.speedLimit, s2.speedLimit, fac),
+                    Mathf.Lerp(s1.airSpeed, s2.airSpeed, fac),
+                    Mathf.Lerp(s1.criticalAngle, s2.criticalAngle, fac),
+                    Mathf.Lerp(s1.jumpHeight, s2.jumpHeight, fac),
+                    Mathf.Lerp(s1.acceleration, s2.acceleration, fac),
+                    Mathf.Lerp(s1.height, s2.height, fac)
+                    );
+            }
+
+            public override string ToString()
+            {
+                return name;
             }
         }
-        [SerializeField] PlayerState state = new PlayerState();
 
+        [SerializeField] List<PlayerState> states = new List<PlayerState>();
+        [SerializeField] int currentState = 0;
+        public PlayerState state => states[currentState];
+
+        public float height
+        {
+            get => coll.height;
+            set => coll.height = value;
+        }
         public bool isMoving { get; private set; }
         public bool isGrounded { get; private set; }
+
+        public bool isSprinting { get; private set; }
+        public bool isCrouching { get; private set; }
         bool isSafe;
+        public bool lockControls;
         float accelerationFac = 0;
 
         Vector3 lastSafePos;
@@ -55,19 +91,17 @@ namespace amogus
 
         List<ContactPoint> contacts = new List<ContactPoint>();
 
-        float turnX;
-
         Vector3 castOffset;
         float castRadius;
 
         [SerializeField] Transform cameraTransform;
         Rigidbody rb;
-        Collider coll;
+        CapsuleCollider coll;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
-            coll = GetComponent<Collider>();
+            coll = GetComponent<CapsuleCollider>();
         }
         private void Start()
         {
@@ -81,16 +115,21 @@ namespace amogus
 
         }
 
+        private void Update()
+        {
+            if (lockControls) return;
+            cameraTransform?.GetComponent<PlayerCamera>().UpdateTransform(transform.position);
+        }
         private void LateUpdate()
         {
-            if (state.lockControls) return;
+            if (lockControls) return;
             LookAround();
-            cameraTransform?.GetComponent<PlayerCamera>().UpdateTransform(transform.position, turnX);
             //timeSinceFixedUpdate = Time.time - lastFixedUpdateTime;
         }
         private void FixedUpdate()
         {
-            if (state.lockControls) return;
+            if (lockControls) return;
+            height = state.height;
             Move();
             contacts.Clear();
         }
@@ -117,12 +156,15 @@ namespace amogus
 
         private void LookAround()
         {
-            turnX += Input.GetAxis("Mouse X");
             //if (cameraTransform)
             //    cameraTransform.localRotation = Quaternion.Euler(-turn.y, 0f, 0f);
 
         }
 
+        public Quaternion GetCameraRotation()
+        {
+            return cameraTransform.rotation;
+        }
         private void Move()
         {
             Vector3 moveDirection = Vector3.zero;
@@ -152,22 +194,36 @@ namespace amogus
 
             //----------------INPUT READ--------------------------
 
-            if (!state.lockControls)
+            if (!lockControls)
             {
+                var up = Vector3.up;
+                var forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up);
+                var right = Vector3.Cross(forward, Vector3.down);
                 if (inputDevice == InputDevice.Joystick)
                 {
-                    moveDirection += Input.GetAxisRaw("Vertical") * transform.forward;
+                    moveDirection += Input.GetAxisRaw("Vertical") * forward;
                     moveDirection += Input.GetAxisRaw("Horizontal") * transform.right;
                 }
                 if (inputDevice == InputDevice.Keyboard)
                 {
-                    if (Input.GetKey(KeyCode.W)) moveDirection += transform.forward;
-                    if (Input.GetKey(KeyCode.S)) moveDirection -= transform.forward;
-                    if (Input.GetKey(KeyCode.D)) moveDirection += transform.right;
-                    if (Input.GetKey(KeyCode.A)) moveDirection -= transform.right;
+                    //movement
+                    if (Input.GetKey(KeyCode.W)) moveDirection += forward;
+                    if (Input.GetKey(KeyCode.S)) moveDirection -= forward;
+                    if (Input.GetKey(KeyCode.D)) moveDirection += right;
+                    if (Input.GetKey(KeyCode.A)) moveDirection -= right;
 
+                    GizmoManager.Instance.StageLine(Vector3.zero, moveDirection * 10, Color.cyan, transform);
+                    //jump
                     if (Input.GetKey(KeyCode.Space) && isGrounded) shouldJump = true;
-                }
+
+                    //states
+                    if (Input.GetKey(KeyCode.LeftShift))
+                        SwitchState(1);
+                    else if (Input.GetKey(KeyCode.LeftControl))
+                        SwitchState(2);
+                    else 
+                        SwitchState(0);
+                };
             }
 
             if (moveDirection.magnitude > 0.1f)
@@ -214,7 +270,7 @@ namespace amogus
 
             rb.linearVelocity = rbCopy;
 
-            rb.rotation = Quaternion.Euler(0f, turnX, 0f);
+            rb.rotation = Quaternion.Euler(0f, GetCameraRotation().eulerAngles.x, 0f);
             //rb.velocity = constraints[constraints.Count - 1];
 
 
@@ -240,20 +296,31 @@ namespace amogus
             }
         }
 
+
+        public void SwitchState (int newState)
+        {
+            rb.position += new Vector3(0, (states[newState].height - state.height) / 2f, 0);
+            currentState = newState;
+        }
         public override void EnableControl()
         {
             rb.position = cameraTransform.position;
-            turnX = cameraTransform.rotation.eulerAngles.y;
-            rb.isKinematic = false;
+            rb.linearVelocity = Vector3.zero;
             coll.enabled = true;
-            state.lockControls = false;
+            lockControls = false;
+            rb.isKinematic = false;
+            rb.WakeUp();
+
+            Debug.Log("enabled free move controls");
         }
 
         public override void DisableControl()
         {
             rb.isKinematic = true;
             coll.enabled = false;
-            state.lockControls = true;
+            lockControls = true;
+
+            Debug.Log("disabled free move controls");
         }
     }
 
