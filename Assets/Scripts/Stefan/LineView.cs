@@ -428,8 +428,7 @@ namespace Dialogue
             // finish.
             if (useFadeEffect)
             {
-                //yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 0, 1, fadeInTime, currentStopToken));
-                yield return null;
+                yield return StartCoroutine(Effects.FadeAlpha(canvasGroup, 0, 1, fadeInTime, currentStopToken));
                 if (currentStopToken.WasInterrupted)
                 {
                     // The fade effect was interrupted. Stop this entire
@@ -440,31 +439,29 @@ namespace Dialogue
 
             // If we're using the typewriter effect, start it, and wait for
             // it to finish.
-            if (useTypewriterEffect)
+            if (!useTypewriterEffect) yield break;
+            var pauses = LineView.GetPauseDurationsInsideLine(dialogueLine);
+
+            // setting the canvas all back to its defaults because if we didn't also fade we don't have anything visible
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+
+            yield return StartCoroutine(Effects.PausableTypewriter(
+                lineText,
+                typewriterEffectSpeed,
+                () => onCharacterTyped.Invoke(),
+                () => onPauseStarted.Invoke(),
+                () => onPauseEnded.Invoke(),
+                pauses,
+                currentStopToken
+            ));
+
+            if (currentStopToken.WasInterrupted)
             {
-                var pauses = LineView.GetPauseDurationsInsideLine(dialogueLine);
-
-                // setting the canvas all back to its defaults because if we didn't also fade we don't have anything visible
-                canvasGroup.alpha = 1f;
-                canvasGroup.interactable = true;
-                canvasGroup.blocksRaycasts = true;
-
-                yield return StartCoroutine(Effects.PausableTypewriter(
-                    lineText,
-                    typewriterEffectSpeed,
-                    () => onCharacterTyped.Invoke(),
-                    () => onPauseStarted.Invoke(),
-                    () => onPauseEnded.Invoke(),
-                    pauses,
-                    currentStopToken
-                ));
-
-                if (currentStopToken.WasInterrupted)
-                {
-                    // The typewriter effect was interrupted. Stop this
-                    // entire coroutine.
-                    yield break;
-                }
+                // The typewriter effect was interrupted. Stop this
+                // entire coroutine.
+                yield break;
             }
         }
 
