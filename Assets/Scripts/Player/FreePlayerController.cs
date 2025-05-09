@@ -242,18 +242,26 @@ namespace amogus
 
         public override void EnableControl()
         {
+            transform.position = cameraTransform.position;
             rb.position = cameraTransform.position;
+            rb.linearVelocity = Vector3.zero;
             turnX = cameraTransform.rotation.eulerAngles.y;
-            rb.isKinematic = false;
             coll.enabled = true;
             state.lockControls = false;
+            rb.isKinematic = false;
+            rb.WakeUp();
+
+            Debug.Log("enabled free move controls");
         }
 
         public override void DisableControl()
         {
+            rb.Sleep();
             rb.isKinematic = true;
             coll.enabled = false;
             state.lockControls = true;
+
+            Debug.Log("disabled free move controls");
         }
     }
 

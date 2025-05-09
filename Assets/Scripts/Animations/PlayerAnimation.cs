@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace amogus
 {
-    [CreateAssetMenu(menuName = "Animations/PlayerAnimation")]
+    [Serializable]
     public class PlayerAnimation : ScriptedAnimation<PlayerFSM>
     {
         public override void Animate(PlayerFSM target)
