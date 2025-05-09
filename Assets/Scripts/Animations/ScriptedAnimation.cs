@@ -9,7 +9,7 @@ namespace amogus
     /// <summary>
     /// A general class for handling animations
     /// </summary>
-    public abstract class ScriptedAnimation<T> : ScriptableObject where T : MonoBehaviour
+    public abstract class ScriptedAnimation<T> where T : MonoBehaviour
     {
         public float time { get; private set; }
         public float totalDuration;
@@ -33,7 +33,6 @@ namespace amogus
         {
             while (time < totalDuration)
             {
-                Debug.Log($"FAC: {time01}");
                 time += Time.deltaTime;
                 Animate(target);
                 yield return new WaitForEndOfFrame();

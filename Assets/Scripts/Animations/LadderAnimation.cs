@@ -7,13 +7,15 @@ using UnityEngine;
 
 namespace amogus
 {
-    [CreateAssetMenu(menuName = "Animations/LadderTransition")]
+    [Serializable]
     public class LadderAnimation : PlayerAnimation
     {
         Vector3 startPos;
         Quaternion startRot;
         [SerializeField] Vector3 targetPos;
         [SerializeField] Vector3 targetRot;
+        [SerializeField]
+        Ladder ladder;
         public override void Begin(PlayerFSM target)
         {
             startPos = target.transform.position;
@@ -21,8 +23,7 @@ namespace amogus
         }
         public override void Animate(PlayerFSM target)
         {
-            var q = Quaternion.Slerp(startRot, Quaternion.Euler(targetRot), Mathf.Min(time01 * 2, 1));
-            Debug.Log(q);
+            var q = Quaternion.Slerp(startRot, Quaternion.Euler(targetRot), time01);
             target.transform.SetPositionAndRotation(Vector3.Lerp(startPos, targetPos, time01), q);
         }
 

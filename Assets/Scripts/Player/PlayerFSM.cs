@@ -28,6 +28,7 @@ namespace amogus
         List<ControllerTypeToControllerPair> controllerList = new();
         [SerializeField]
         PlayerCamera cameraScript;
+        public bool inAnimation = false;
         public Dictionary<ControllerType, PlayerController> controllerDict =>
             controllerList.ToDictionary(pair => pair.controllerType, pair => pair.playerController);
         private void OnEnable()
@@ -38,6 +39,7 @@ namespace amogus
                 else pair.playerController.DisableControl();
             }
             currentControllerID = startControllerType;
+            inAnimation = false;
         }
 
         public bool ValidateController(ControllerType id)
@@ -53,7 +55,10 @@ namespace amogus
         public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation)
         {
             if (!ValidateController(id)) return;
-            animation.OnEnd += () => SwitchController(id);
+            animation.OnEnd += () => { 
+                SwitchController(id); 
+                ExitAnimation(); 
+            };
 
             if (currentControllerID != ControllerType.NONE)
             {
@@ -62,6 +67,7 @@ namespace amogus
                 DisableCamera();
                 currentControllerID = ControllerType.NONE;
             }
+            EnterAnimation();
             animation.StartAnimation(this);
         }
 
@@ -73,8 +79,6 @@ namespace amogus
 
             if (currentControllerID != ControllerType.NONE)
                 controllerDict[currentControllerID].DisableControl();
-            else
-                EnableCamera();
 
             if (id != ControllerType.NONE)
                 controllerDict[id].EnableControl();
@@ -89,14 +93,36 @@ namespace amogus
                 Debug.Log("No switch found");
                 return;
             }
-            if (sw.fromType != currentControllerID) return;
-            Debug.Log("Transition triggered");
-            if (sw.transition != null)
-                SwitchController(sw.toType, sw.transition);
-            else
-                SwitchController(sw.toType);
+            if (inAnimation) return;
+            if (sw.FromType == currentControllerID)
+            {
+                Debug.Log("Forward transition triggered");
+                if (sw.useForwardAnimation)
+                    SwitchController(sw.ToType, sw.ForwardTransitionBase);
+                else
+                    SwitchController(sw.ToType);
+            }
+            else if (sw.ToType == currentControllerID)
+            {
+
+                Debug.Log("Forward transition triggered");
+                if (sw.useBackwardAnimation)
+                    SwitchController(sw.FromType, sw.BackwardTransitionBase);
+                else
+                    SwitchController(sw.ToType);
+            }
         }
 
+        public void EnterAnimation()
+        {
+            inAnimation = true;
+            DisableCamera();
+        }
+        public void ExitAnimation()
+        {
+            inAnimation = false;
+            EnableCamera();
+        }
         public void EnableCamera()
         {
             if (cameraScript == null) return;
