@@ -167,6 +167,7 @@ namespace amogus
         }
         private void Move()
         {
+            GizmoManager.Instance.Clear(transform);
             Vector3 moveDirection = Vector3.zero;
             bool shouldJump = false;
             isGrounded = false;
@@ -174,11 +175,15 @@ namespace amogus
 
             //----------------GROUND CHECK-------------------------
 
+            Vector3 groundNormal = Vector3.up;
             foreach (ContactPoint c in contacts)
             {
                 float flatness = c.normal.y;
                 if (flatness > Mathf.Cos(state.criticalAngle * Mathf.Deg2Rad))
+                {
+                    groundNormal = c.normal;
                     isGrounded = true;
+                }
 
                 Debug.Log(flatness + " <----> " + state.criticalAngle);
             }
@@ -196,9 +201,16 @@ namespace amogus
 
             if (!lockControls)
             {
-                var up = Vector3.up;
-                var forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up);
-                var right = Vector3.Cross(forward, Vector3.down);
+                Vector3 forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;
+                Vector3 up = Vector3.up;
+                //account for slope
+                if (isGrounded)
+                {
+                    up = groundNormal;
+                    forward = Vector3.ProjectOnPlane(forward, up);
+                }
+                Vector3 right = Vector3.Cross(forward, Vector3.down);
+
                 if (inputDevice == InputDevice.Joystick)
                 {
                     moveDirection += Input.GetAxisRaw("Vertical") * forward;
@@ -225,6 +237,7 @@ namespace amogus
                         SwitchState(0);
                 };
             }
+            //-------------STATE RESOLUTION-------------
 
             if (moveDirection.magnitude > 0.1f)
             {
@@ -235,17 +248,22 @@ namespace amogus
                 isMoving = false;
             }
 
-            //-------------COLLISION RESOLUTION-------------
-
             moveDirection = moveDirection.normalized * state.movementSpeed;
-
             Vector3 rbCopy;
             if (isGrounded)
             {
-                rbCopy = new Vector3(moveDirection.x, rb.linearVelocity.y, moveDirection.z);
+                rbCopy = new Vector3(moveDirection.x, moveDirection.y, moveDirection.z);
+                rb.useGravity = false;
             }
             else
-                rbCopy = rb.linearVelocity + new Vector3(moveDirection.x * Time.deltaTime * state.airSpeed, 0, moveDirection.z * Time.deltaTime * state.airSpeed);
+            {
+                rbCopy = rb.linearVelocity + new Vector3(moveDirection.x * state.airSpeed, 0, moveDirection.z * state.airSpeed);
+                rb.useGravity = true;
+            }
+
+            //-------------COLLISION RESOLUTION-------------
+
+
 
             //if (!isMoving)
             //{
@@ -270,11 +288,14 @@ namespace amogus
 
             rb.linearVelocity = rbCopy;
 
+            GizmoManager.Instance.StageLine(Vector3.zero, rb.linearVelocity, Color.blue, transform);
+
             rb.rotation = Quaternion.Euler(0f, GetCameraRotation().eulerAngles.x, 0f);
             //rb.velocity = constraints[constraints.Count - 1];
 
 
             // -----------------JUMP-----------------
+
             if (shouldJump)
             {
                 rb.linearVelocity = new Vector3(rb.linearVelocity.x/2, state.jumpHeight, rb.linearVelocity.z/2);
@@ -284,15 +305,12 @@ namespace amogus
         //to learn more about the thing down here google "Gram Schmidt process"
         public void Orhtogonalise(List<Vector3> vecs)
         {
-            GizmoManager.Instance.Clear(transform);
-            GizmoManager.Instance.StageLine(Vector3.zero, vecs[0], new Color(0f, 1f, 0f), transform);
             for (int i = 1; i < vecs.Count; i++)
             {
                 for (int j = 0; j < i; j++)
                 {
                     vecs[i] -= Vector3.Project(vecs[i], vecs[j]);
                 }
-                GizmoManager.Instance.StageLine(Vector3.zero, vecs[i], new Color(0.4f * i, 1f, 0f), transform);
             }
         }
 
