@@ -9,11 +9,13 @@ namespace amogus
         [SerializeField] float speed;
         public override void DisableControl()
         {
+            enabled = false;
             Debug.Log("ladder controls disabled");
         }
 
         public override void EnableControl()
         {
+            enabled = true;
             Debug.Log("ladder controls enabled");
         }
 

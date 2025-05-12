@@ -118,7 +118,7 @@ namespace amogus
         private void Update()
         {
             if (lockControls) return;
-            cameraTransform?.GetComponent<PlayerCamera>().UpdateTransform(transform.position);
+            cameraTransform.GetComponent<PlayerCamera>().UpdateTransform(transform.position);
         }
         private void LateUpdate()
         {
@@ -202,7 +202,7 @@ namespace amogus
                 if (inputDevice == InputDevice.Joystick)
                 {
                     moveDirection += Input.GetAxisRaw("Vertical") * forward;
-                    moveDirection += Input.GetAxisRaw("Horizontal") * transform.right;
+                    moveDirection += Input.GetAxisRaw("Horizontal") * right;
                 }
                 if (inputDevice == InputDevice.Keyboard)
                 {
@@ -247,10 +247,10 @@ namespace amogus
             else
                 rbCopy = rb.linearVelocity + new Vector3(moveDirection.x * Time.deltaTime * state.airSpeed, 0, moveDirection.z * Time.deltaTime * state.airSpeed);
 
-            if (!isMoving)
-            {
-                rbCopy -= moveDirection.normalized * state.acceleration * Time.deltaTime;
-            }
+            //if (!isMoving)
+            //{
+            //    rbCopy -= moveDirection.normalized * state.acceleration * Time.deltaTime;
+            //}
 
             if (rbCopy.magnitude > state.speedLimit)
                 rbCopy = rbCopy.normalized * state.speedLimit;
