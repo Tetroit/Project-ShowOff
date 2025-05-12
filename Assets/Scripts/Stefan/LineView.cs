@@ -1,61 +1,13 @@
-/*
-Yarn Spinner is licensed to you under the terms found in the file LICENSE.md.
-*/
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Text.RegularExpressions;
 
 
 namespace Dialogue
 {
-
-    public class LineAttribute
-    {
-        public readonly int Position;
-        public readonly string Protocol;
-
-        public LineAttribute(int position, string name)
-        {
-            Position = position;
-            Protocol = name;
-        }
-    }
-    [System.Serializable]
-    public class DialogueLine
-    {
-        public string characterName;
-        public string text;
-
-        public DialogueLine(string characterName, string text)
-        {
-            this.characterName = characterName;
-            this.text = text;
-        }
-
-        public string GetCombinedText()
-        {
-            
-            return characterName + ": " + text ;
-        }
-
-        public List<LineAttribute> GetAttributes()
-        {
-            var results = new List<LineAttribute>();
-            var matches = Regex.Matches(text, @"\[(.*?)\]");
-            int i = 0;
-            foreach (Match match in matches)
-            {
-                results.Add(new LineAttribute(i++, match.Groups[1].Value));
-            }
-
-            return results;
-        }
-    }
 
     /// <summary>
     /// A Dialogue View that presents lines of dialogue, using Unity UI
@@ -324,7 +276,6 @@ namespace Dialogue
             canvasGroup.gameObject.SetActive(true);
 
             int length;
-
             if (characterNameText == null)
             {
                 if (showCharacterNameInLineView)
