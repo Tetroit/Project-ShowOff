@@ -307,9 +307,8 @@ namespace amogus
             transform.position = cameraTransform.position;
             rb.position = cameraTransform.position;
             rb.linearVelocity = Vector3.zero;
-            turnX = cameraTransform.rotation.eulerAngles.y;
             coll.enabled = true;
-            state.lockControls = false;
+            lockControls = false;
             rb.isKinematic = false;
             rb.WakeUp();
 
@@ -321,7 +320,7 @@ namespace amogus
             rb.Sleep();
             rb.isKinematic = true;
             coll.enabled = false;
-            state.lockControls = true;
+            lockControls = true;
 
             Debug.Log("disabled free move controls");
         }
