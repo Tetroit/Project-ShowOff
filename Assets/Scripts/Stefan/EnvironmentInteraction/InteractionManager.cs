@@ -1,18 +1,34 @@
 using DG.Tweening;
+using System;
 using System.Collections;
-using Unity.VisualScripting;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public interface IInteractable
 {
-    void Deselect();
+    IEnumerator Interact();
+    IEnumerator Deselect();
 }
 
 public interface IHoldable : IInteractable
 {
-    void Hold();
     Transform Self { get; }
+    Vector3 GetInitialPosition();
+}
+
+public readonly struct InputFacade
+{
+    readonly InputSystem_Actions _input;
+
+    public InputFacade(InputSystem_Actions input)
+    {
+        _input = input;
+    }
+
+    public InputSystem_Actions.UIActions UI => _input.UI;
+    public InputSystem_Actions.PlayerActions Player => _input.Player;
+    
 }
 
 public class InteractionManager : MonoBehaviour
@@ -20,71 +36,56 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] float _interactionRange;
     [SerializeField] float _interactionRadius;
     [SerializeField] LayerMask _interactionMask;
-    [SerializeField] Transform _holdSpot;
-    [SerializeField] Transform _faceDirection;
-    [SerializeField] Transform _backwardsDirection;
-
-    [SerializeField] float _rotationSensitivity;
-
-    float _currentHoldRotation;
-    bool _isClick;
-    Coroutine _holdAnimation;
-    bool _isHolding;
+    [SerializeField] HoldManager _holdManager;
+    
+    Coroutine _interactAnimation;
 
     InputSystem_Actions _input;
 
+    //Used to save performance by not getting component every frame
     IInteractable _lastInteractable;
     GameObject _lastInteractableGO;
+
+    IInteractable _currentInteractingItem;
 
     void Awake()
     {
         _input = new();
-        _input.UI.Click.started += OnMouseClickStart;
-        _input.UI.Click.canceled += OnMouseClickEnd;
-
-        _input.Player.Look.performed += OnMouseMove;
+        
         _input.Player.Interact.started += OnInteract;
-
+        _input.UI.Cancel.started += OnDissmised;
+    }
+    
+    void Start()
+    {
+        _holdManager.Init(new InputFacade(_input));
     }
 
     void OnInteract(InputAction.CallbackContext context)
     {
-        if (_lastInteractable == null || _holdAnimation != null) return;
-        Debug.Log("interacting");
+        if (_lastInteractable == null || _interactAnimation != null) return;
+        _currentInteractingItem = _lastInteractable;
+
         switch (_lastInteractable)
         {
             case IHoldable holdable:
-                PickUp(holdable);
+                _interactAnimation = this.RunCoroutineWithCallback(_holdManager.OnInteract(holdable), () => _interactAnimation = null);
                 break;
             default:
                 break;
         }
     }
 
-    void OnMouseClickStart(InputAction.CallbackContext context)
-    {
-        _isClick = true;
-        Debug.Log("click");
-    }
 
-    void OnMouseClickEnd(InputAction.CallbackContext context)
+    void OnDissmised(InputAction.CallbackContext context)
     {
-        _isClick = false;
-    }
-
-    void OnMouseMove(InputAction.CallbackContext context)
-    {
-        if (!_isClick || _lastInteractable == null || _holdAnimation != null || !_isHolding) return;
+        if (_currentInteractingItem == null || _interactAnimation != null) return;
         
-        Vector2 delta = context.ReadValue<Vector2>();
-        _currentHoldRotation += delta.x * _rotationSensitivity * Time.deltaTime;
+        _interactAnimation = this.RunCoroutineWithCallback(_holdManager.OnDismiss(), () => _interactAnimation = null);
 
-        _currentHoldRotation = Mathf.Clamp01(_currentHoldRotation);
+        _currentInteractingItem = null;
 
-        RotateHoldedItem();
     }
-
-    
 
     void FixedUpdate()
     {
@@ -101,53 +102,21 @@ public class InteractionManager : MonoBehaviour
         if (!isInteractable)
         {
             if (_lastInteractable == null) return;
-            Debug.Log("not see interactable");
 
             _lastInteractable = null;
-            _lastInteractable = null;
+            _lastInteractableGO = null;
             return;
         }
-        if (hit.transform.gameObject == _lastInteractableGO) return;
+
+
+        if (hit.transform.gameObject == _lastInteractableGO)
+        {
+            _holdManager.OnItemHover(_lastInteractable as IHoldable, new HoverData(hit));
+            return;
+        }
 
         _lastInteractable = hit.transform.GetComponentInChildren<IInteractable>();
         _lastInteractableGO = hit.transform.gameObject;
-        Debug.Log("see interactable: " + _lastInteractableGO);
-    }
-
-    public void PickUp(IHoldable holdable)
-    {
-        holdable.Hold();
-        _isHolding = true;
-        _currentHoldRotation = 0;
-        _holdAnimation = StartCoroutine(GrabAnimation(holdable, 1));
-    }
-
-    IEnumerator GrabAnimation(IHoldable holdable,float time)
-    {
-        float currentTime = 0;
-        float t = 0;
-        holdable.Self.GetPositionAndRotation(out Vector3 startPos, out Quaternion startRot);
-
-        while (t < 1)
-        {
-            currentTime += Time.deltaTime;
-            t = currentTime / time;
-
-            holdable.Self.SetPositionAndRotation
-            (
-                Vector3.Slerp(startPos, _holdSpot.position, t), 
-                Quaternion.Slerp(startRot, _holdSpot.rotation, t)
-            );
-            yield return null;
-        }
-        holdable.Self.parent = _holdSpot;
-        holdable.Self.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-        _holdAnimation = null;
-    }
-
-    void RotateHoldedItem()
-    {
-        _holdSpot.forward = Vector3.Slerp(_faceDirection.forward, _backwardsDirection.forward, _currentHoldRotation);
     }
 
     void OnEnable()
