@@ -20,5 +20,5 @@ public abstract class InteractionBehavior<T> : MonoBehaviour where T : IInteract
 
     public virtual void OnItemHover(T interactable, HoverData hitInfo) { }
     public virtual void OnItemHoverStart(T interactable, HoverData hitInfo) { }
-    public virtual void OnItemHoverEnd(T interactable, HoverData hitInfo) { }
+    public virtual void OnItemHoverEnd(T interactable) { }
 }

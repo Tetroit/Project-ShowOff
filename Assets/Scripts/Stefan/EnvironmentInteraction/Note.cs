@@ -8,12 +8,14 @@ public class Note : MonoBehaviour, IHoldable
     [SerializeField] float _returnTime;
 
     Vector3 _initialPosition;
+    Quaternion _initialRotation;
 
     public Transform Self => transform;
 
     void Awake()
     {
         _initialPosition = transform.position;
+        _initialRotation = transform.rotation;
     }
 
     public IEnumerator Deselect()
@@ -29,5 +31,10 @@ public class Note : MonoBehaviour, IHoldable
     public Vector3 GetInitialPosition()
     {
         return _initialPosition;
+    }
+
+    public Quaternion GetInitialRotation()
+    {
+        return _initialRotation;
     }
 }

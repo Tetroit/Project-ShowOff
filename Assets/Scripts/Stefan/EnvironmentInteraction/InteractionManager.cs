@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public interface IInteractable
@@ -15,6 +16,7 @@ public interface IHoldable : IInteractable
 {
     Transform Self { get; }
     Vector3 GetInitialPosition();
+    Quaternion GetInitialRotation();
 }
 
 public readonly struct InputFacade
@@ -33,6 +35,10 @@ public readonly struct InputFacade
 
 public class InteractionManager : MonoBehaviour
 {
+    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHover{get;private set;}
+    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHoverStart{get;private set;}
+    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHoverEnd { get; private set; }
+
     [SerializeField] float _interactionRange;
     [SerializeField] float _interactionRadius;
     [SerializeField] LayerMask _interactionMask;
@@ -103,6 +109,9 @@ public class InteractionManager : MonoBehaviour
         {
             if (_lastInteractable == null) return;
 
+            _holdManager.OnItemHoverEnd(_lastInteractable as IHoldable);
+            OnHoverEnd?.Invoke(_lastInteractableGO, _lastInteractable);
+
             _lastInteractable = null;
             _lastInteractableGO = null;
             return;
@@ -112,11 +121,16 @@ public class InteractionManager : MonoBehaviour
         if (hit.transform.gameObject == _lastInteractableGO)
         {
             _holdManager.OnItemHover(_lastInteractable as IHoldable, new HoverData(hit));
+            OnHover?.Invoke(_lastInteractableGO, _lastInteractable);
             return;
         }
+        
 
         _lastInteractable = hit.transform.GetComponentInChildren<IInteractable>();
         _lastInteractableGO = hit.transform.gameObject;
+
+        _holdManager.OnItemHoverStart(_lastInteractable as IHoldable, new HoverData(hit));
+        OnHoverStart?.Invoke(_lastInteractableGO, _lastInteractable);
     }
 
     void OnEnable()

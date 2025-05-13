@@ -138,7 +138,7 @@ namespace amogus
                 if (flatness > Mathf.Cos(state.criticalAngle * Mathf.Deg2Rad))
                     isGrounded = true;
 
-                Debug.Log(flatness + " <----> " + state.criticalAngle);
+                //Debug.Log(flatness + " <----> " + state.criticalAngle);
             }
             //if (!isGrounded)
             //{
