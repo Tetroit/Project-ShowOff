@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
 namespace amogus
@@ -100,8 +101,13 @@ namespace amogus
 
         private void Awake()
         {
+            
             rb = GetComponent<Rigidbody>();
             coll = GetComponent<CapsuleCollider>();
+        }
+
+        private void OnEnable()
+        {
         }
         private void Start()
         {
@@ -211,31 +217,43 @@ namespace amogus
                 }
                 Vector3 right = Vector3.Cross(forward, Vector3.down);
 
-                if (inputDevice == InputDevice.Joystick)
-                {
-                    moveDirection += Input.GetAxisRaw("Vertical") * forward;
-                    moveDirection += Input.GetAxisRaw("Horizontal") * right;
-                }
-                if (inputDevice == InputDevice.Keyboard)
-                {
-                    //movement
-                    if (Input.GetKey(KeyCode.W)) moveDirection += forward;
-                    if (Input.GetKey(KeyCode.S)) moveDirection -= forward;
-                    if (Input.GetKey(KeyCode.D)) moveDirection += right;
-                    if (Input.GetKey(KeyCode.A)) moveDirection -= right;
+                //if (inputDevice == InputDevice.Joystick)
+                //{
+                //    moveDirection += Input.GetAxisRaw("Vertical") * forward;
+                //    moveDirection += Input.GetAxisRaw("Horizontal") * right;
+                //}
+                //if (inputDevice == InputDevice.Keyboard)
+                //{
+                //    //movement
+                //    if (Input.GetKey(KeyCode.W)) moveDirection += forward;
+                //    if (Input.GetKey(KeyCode.S)) moveDirection -= forward;
+                //    if (Input.GetKey(KeyCode.D)) moveDirection += right;
+                //    if (Input.GetKey(KeyCode.A)) moveDirection -= right;
 
-                    GizmoManager.Instance.StageLine(Vector3.zero, moveDirection * 10, Color.cyan, transform);
-                    //jump
-                    if (Input.GetKey(KeyCode.Space) && isGrounded) shouldJump = true;
+                //    GizmoManager.Instance.StageLine(Vector3.zero, moveDirection * 10, Color.cyan, transform);
+                //    //jump
+                //    if (Input.GetKey(KeyCode.Space) && isGrounded) shouldJump = true;
 
-                    //states
-                    if (Input.GetKey(KeyCode.LeftShift))
-                        SwitchState(1);
-                    else if (Input.GetKey(KeyCode.LeftControl))
-                        SwitchState(2);
-                    else 
-                        SwitchState(0);
-                };
+                //    //states
+                //    if (Input.GetKey(KeyCode.LeftShift))
+                //        SwitchState(1);
+                //    else if (Input.GetKey(KeyCode.LeftControl))
+                //        SwitchState(2);
+                //    else 
+                //        SwitchState(0);
+                //};
+
+                moveDirection += PlayerInputHandler.Instance.Move.y * forward;
+                moveDirection += PlayerInputHandler.Instance.Move.x * right;
+
+                if (PlayerInputHandler.Instance.JumpPressed && isGrounded) shouldJump = true;
+
+                if (PlayerInputHandler.Instance.CrouchPressed)
+                    SwitchState(1);
+                else if (PlayerInputHandler.Instance.SprintPressed)
+                    SwitchState(2);
+                else
+                    SwitchState(0);
             }
             //-------------STATE RESOLUTION-------------
 
@@ -324,7 +342,6 @@ namespace amogus
         {
             transform.position = cameraTransform.position;
             rb.position = cameraTransform.position;
-            rb.linearVelocity = Vector3.zero;
             coll.enabled = true;
             lockControls = false;
             rb.isKinematic = false;

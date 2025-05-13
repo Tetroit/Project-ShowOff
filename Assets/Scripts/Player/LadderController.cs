@@ -21,14 +21,7 @@ namespace amogus
 
         public void Update()
         {
-            if (Input.GetKey(KeyCode.W))
-            {
-                target.transform.position += Time.deltaTime * speed * Vector3.up;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                target.transform.position -= Time.deltaTime * speed * Vector3.up;
-            }
+            target.transform.position += Time.deltaTime * speed * PlayerInputHandler.Instance.Move.y * Vector3.up;
         }
     }
 }

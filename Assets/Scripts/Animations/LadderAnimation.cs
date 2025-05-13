@@ -30,7 +30,7 @@ namespace amogus
 
         public override void End(PlayerFSM target)
         {
-            target.ResetCamera();
+            target.ReadCamera();
         }
     }
 }

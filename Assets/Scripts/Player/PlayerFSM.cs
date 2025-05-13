@@ -31,6 +31,12 @@ namespace amogus
         public bool inAnimation = false;
         public Dictionary<ControllerType, PlayerController> controllerDict =>
             controllerList.ToDictionary(pair => pair.controllerType, pair => pair.playerController);
+
+
+        void Awake()
+        {
+            PlayerInputHandler.Create();
+        }
         private void OnEnable()
         {
             foreach (var pair in controllerList)
@@ -51,6 +57,10 @@ namespace amogus
                 return false;
             }
             return true;
+        }
+        public void DisableControls()
+        {
+            EnterAnimation();
         }
         public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation)
         {
@@ -133,7 +143,7 @@ namespace amogus
             if (cameraScript == null) return;
             cameraScript.isCinematic = true;
         }
-        public void ResetCamera()
+        public void ReadCamera()
         {
             if (cameraScript == null) return;
             cameraScript.ReadRotation();
