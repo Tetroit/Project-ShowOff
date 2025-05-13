@@ -160,7 +160,8 @@ Transform:
   m_LocalPosition: {x: 11.196924, y: -17.07881, z: 39.971275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1181805898}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &945150197
@@ -403,6 +404,64 @@ MonoBehaviour:
   m_ObsoleteUseShadowQualitySettings: 0
   m_ObsoleteCustomShadowResolution: 512
   m_ObsoleteContactShadows: 0
+--- !u!1 &1181805897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1181805898}
+  - component: {fileID: 1181805899}
+  m_Layer: 0
+  m_Name: FModEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1181805898
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181805897}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 547560213}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1181805899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181805897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c28d1b35944464eafbb69545490c0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ambience:
+    Guid:
+      Data1: -279567174
+      Data2: 1113847581
+      Data3: -797389930
+      Data4: -2147013760
+    Path: event:/Wind
+  footSteps:
+    Guid:
+      Data1: 145527981
+      Data2: 1101072481
+      Data3: -289442373
+      Data4: 473781813
+    Path: event:/Footsteps
 --- !u!1 &1824499762
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,13 +714,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7086a89e7d05f2442870137e2dc49d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footstepSound:
-    Guid:
-      Data1: 145527981
-      Data2: 1101072481
-      Data3: -289442373
-      Data4: 473781813
-    Path: event:/Footsteps
   DistanceUntilStep: 1
 --- !u!114 &1824499769
 MonoBehaviour:
