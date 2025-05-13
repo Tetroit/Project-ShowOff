@@ -1,18 +1,33 @@
+using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class Note : MonoBehaviour, IHoldable
 {
     [SerializeField] string _text;
+    [SerializeField] float _returnTime;
+
+    Vector3 _initialPosition;
 
     public Transform Self => transform;
 
-    public void Deselect()
+    void Awake()
     {
-
+        _initialPosition = transform.position;
     }
 
-    public void Hold()
+    public IEnumerator Deselect()
     {
-        Debug.Log("showing text");
+        yield return null;
+    }
+
+    public IEnumerator Interact()
+    {
+        yield return null;
+    }
+
+    public Vector3 GetInitialPosition()
+    {
+        return _initialPosition;
     }
 }
