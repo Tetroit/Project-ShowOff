@@ -7,6 +7,8 @@ namespace amogus
     {
         [SerializeField] Transform target; 
         [SerializeField] float speed;
+
+        Ladder ladderContext;
         public override void DisableControl()
         {
             enabled = false;
@@ -22,6 +24,11 @@ namespace amogus
         public void Update()
         {
             target.transform.position += Time.deltaTime * speed * PlayerInputHandler.Instance.Move.y * Vector3.up;
+        }
+
+        public void SetLadder(Ladder ladder)
+        {
+            ladderContext = ladder;
         }
     }
 }
