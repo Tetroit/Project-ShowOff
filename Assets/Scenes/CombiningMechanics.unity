@@ -1421,30 +1421,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   states:
-  - name: Sprinting
-    movementSpeed: 3
-    speedLimit: 10
-    airSpeed: 0.01
-    criticalAngle: 30
-    jumpHeight: 5
-    acceleration: 1
-    height: 2
-  - name: Crouching
-    movementSpeed: 2
-    speedLimit: 10
-    airSpeed: 0.01
-    criticalAngle: 30
-    jumpHeight: 5
-    acceleration: 1
-    height: 1
-  - name: Sprinting
-    movementSpeed: 3
-    speedLimit: 10
-    airSpeed: 0.01
-    criticalAngle: 30
-    jumpHeight: 5
-    acceleration: 1
-    height: 2
+  - {fileID: 11400000, guid: beeae9bcb50bbc741b583767a2dcc2a8, type: 2}
+  - {fileID: 11400000, guid: 836cd5036733ad7439ef5a9fe6b621d9, type: 2}
+  - {fileID: 11400000, guid: 801e8662d1f803a44b46e999b4ed74a8, type: 2}
   currentState: 0
   lockControls: 0
   inputDevice: 0
@@ -2606,9 +2585,9 @@ MonoBehaviour:
   <Interacted>k__BackingField:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1010903691}
-        m_TargetAssemblyTypeName: amogus.FreePlayerController, Assembly-CSharp
-        m_MethodName: DisableControl
+      - m_Target: {fileID: 1448919970}
+        m_TargetAssemblyTypeName: amogus.PlayerFSM, Assembly-CSharp
+        m_MethodName: DisableControls
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2645,9 +2624,9 @@ MonoBehaviour:
   <Dismissed>k__BackingField:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1010903691}
-        m_TargetAssemblyTypeName: amogus.FreePlayerController, Assembly-CSharp
-        m_MethodName: EnableControl
+      - m_Target: {fileID: 1448919970}
+        m_TargetAssemblyTypeName: amogus.PlayerFSM, Assembly-CSharp
+        m_MethodName: EnableControls
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
