@@ -1152,19 +1152,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 814055790}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1464428542}
-        m_TargetAssemblyTypeName: TextTest, Assembly-CSharp
-        m_MethodName: InteruptDialogue
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &814055790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2212,7 +2200,6 @@ GameObject:
   - component: {fileID: 1464428545}
   - component: {fileID: 1464428544}
   - component: {fileID: 1464428543}
-  - component: {fileID: 1464428542}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2241,30 +2228,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1464428542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1464428540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 224720a35b1fe5b479420e4f0bdf4c32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineView: {fileID: 167157561}
-  lines:
-  - characterName: Stefan
-    text: this line IS NOT made using yarn spinner
-  - characterName: Luis
-    text: Wow Stefan, you're such a good programmer
-  - characterName: Stefan
-    text: Look, you can also skip lines
-  - characterName: Boring guy
-    text: A boring line that I will skip
-  - characterName: Stefan
-    text: WOOOOOOOW
 --- !u!114 &1464428543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2343,6 +2306,7 @@ GameObject:
   - component: {fileID: 1500136795}
   - component: {fileID: 1500136796}
   - component: {fileID: 1500136797}
+  - component: {fileID: 1500136798}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2654,12 +2618,48 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1500136798}
+        m_TargetAssemblyTypeName: TextRunner, Assembly-CSharp
+        m_MethodName: EnableTextArea
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1500136798}
+        m_TargetAssemblyTypeName: TextRunner, Assembly-CSharp
+        m_MethodName: DisplayText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   <Dismissed>k__BackingField:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1010903691}
         m_TargetAssemblyTypeName: amogus.FreePlayerController, Assembly-CSharp
         m_MethodName: EnableControl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1500136798}
+        m_TargetAssemblyTypeName: TextRunner, Assembly-CSharp
+        m_MethodName: DisableTextArea
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2687,6 +2687,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _holdView: {fileID: 70820992}
   _openView: {fileID: 0}
+--- !u!114 &1500136798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500136790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71aa63872eb4d3949a20a0f86bf3d54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lineView: {fileID: 167157561}
+  _lines:
+  - characterName: 
+    text: Click to rotate
 --- !u!1 &1545340046
 GameObject:
   m_ObjectHideFlags: 0
