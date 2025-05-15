@@ -1,4 +1,5 @@
 using amogus;
+using System;
 using UnityEngine;
 
 namespace amogus
@@ -14,6 +15,25 @@ namespace amogus
         private LadderAnimation fromLadderAnimation;
         public override PlayerAnimation ForwardTransitionBase => toLadderAnimation;
         public override PlayerAnimation BackwardTransitionBase => fromLadderAnimation;
+
+        [field: SerializeField] public Ladder ladder { get; private set; }
+        [SerializeField] Ladder.EndType whichEnd;
+        public override void TransferData(PlayerController controller)
+        {
+            if (controller is LadderController)
+                TransferLadderData(controller as LadderController);
+        }
+
+        void TransferLadderData(LadderController controller)
+        {
+            controller.SetLadder(ladder);
+        }
+
+        private void OnEnable()
+        {
+            toLadderAnimation.LazyInitialiseFromSwitch(this, whichEnd);
+            fromLadderAnimation.LazyInitialiseFromSwitch(this, whichEnd);
+        }
     }
 }
 
