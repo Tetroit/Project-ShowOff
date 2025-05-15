@@ -5,5 +5,7 @@ namespace amogus
     {
         public abstract void EnableControl();
         public abstract void DisableControl();
-    }
+
+        public abstract bool isMoving { get; }
+}
 }
