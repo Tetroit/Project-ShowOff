@@ -261,14 +261,14 @@ MonoBehaviour:
   useBackwardAnimation: 1
   toLadderAnimation:
     totalDuration: 0.5
-    targetPos: {x: -6, y: 7, z: 0}
-    targetRot: {x: 0, y: -90, z: 0}
     ladder: {fileID: 0}
+    whichEnd: 0
   fromLadderAnimation:
     totalDuration: 0.5
-    targetPos: {x: -7, y: 7.5, z: 0}
-    targetRot: {x: 0, y: -90, z: 0}
     ladder: {fileID: 0}
+    whichEnd: 0
+  <ladder>k__BackingField: {fileID: 648878342}
+  whichEnd: 1
 --- !u!65 &454097902
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -425,6 +425,7 @@ GameObject:
   - component: {fileID: 648878340}
   - component: {fileID: 648878339}
   - component: {fileID: 648878338}
+  - component: {fileID: 648878342}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -521,6 +522,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &648878342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648878337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e120decff2320564c84ebb52d1ca3891, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  start: {x: 0.9, y: 2.6, z: 0}
+  end: {x: 0.9, y: -1.8, z: 0}
+  entryPointStart: {x: 1.73, y: -1.52, z: 0}
+  entryPointEnd: {x: -0.08, y: 3.7, z: 0}
+  facing: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &787090656
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,14 +717,14 @@ MonoBehaviour:
   useBackwardAnimation: 1
   toLadderAnimation:
     totalDuration: 0.25
-    targetPos: {x: -6, y: 2, z: 0}
-    targetRot: {x: 0, y: -90, z: 0}
     ladder: {fileID: 0}
+    whichEnd: 0
   fromLadderAnimation:
     totalDuration: 0.5
-    targetPos: {x: -5.5, y: 2.5, z: 0}
-    targetRot: {x: 0, y: 90, z: 0}
     ladder: {fileID: 0}
+    whichEnd: 0
+  <ladder>k__BackingField: {fileID: 648878342}
+  whichEnd: 0
 --- !u!1 &1010903685
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,30 +877,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   states:
-  - name: Normal
-    movementSpeed: 3
-    speedLimit: 10
-    airSpeed: 0.01
-    criticalAngle: 30
-    jumpHeight: 5
-    acceleration: 1
-    height: 2
-  - name: Crouching
-    movementSpeed: 2
-    speedLimit: 10
-    airSpeed: 0.01
-    criticalAngle: 30
-    jumpHeight: 2
-    acceleration: 1
-    height: 1
-  - name: Sprinting
-    movementSpeed: 10
-    speedLimit: 10
-    airSpeed: 0.01
-    criticalAngle: 30
-    jumpHeight: 5
-    acceleration: 1
-    height: 2
+  - {fileID: 11400000, guid: beeae9bcb50bbc741b583767a2dcc2a8, type: 2}
+  - {fileID: 11400000, guid: 836cd5036733ad7439ef5a9fe6b621d9, type: 2}
+  - {fileID: 11400000, guid: 801e8662d1f803a44b46e999b4ed74a8, type: 2}
   currentState: 0
   lockControls: 0
   inputDevice: 0

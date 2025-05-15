@@ -12,14 +12,20 @@ namespace amogus
     {
         Vector3 startPos;
         Quaternion startRot;
-        [SerializeField] Vector3 targetPos;
-        [SerializeField] Vector3 targetRot;
-        [SerializeField]
-        Ladder ladder;
+        Vector3 targetPos;
+        Vector3 targetRot;
+        [HideInInspector] public Ladder ladder;
+        [HideInInspector] public Ladder.EndType whichEnd;
         public override void Begin(PlayerFSM target)
         {
             startPos = target.transform.position;
             startRot = target.transform.rotation;
+
+            if (target.currentControllerID == PlayerFSM.ControllerType.FREE_MOVE)
+                targetPos = ladder.GetClosestPoint(startPos);
+
+            else if (target.currentControllerID == PlayerFSM.ControllerType.LADDER)
+                targetPos = ladder.GetEntryPoint(whichEnd);
         }
         public override void Animate(PlayerFSM target)
         {
@@ -27,10 +33,15 @@ namespace amogus
             target.transform.SetPositionAndRotation(Vector3.Lerp(startPos, targetPos, time01), q);
         }
 
-
         public override void End(PlayerFSM target)
         {
             target.ReadCamera();
+        }
+
+        public void LazyInitialiseFromSwitch(LadderSwitch lSwitch, Ladder.EndType end)
+        {
+            whichEnd = end;
+            ladder = lSwitch.ladder;
         }
     }
 }

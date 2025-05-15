@@ -14,63 +14,9 @@ namespace amogus
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     public class FreePlayerController : PlayerController
     {
-        [System.Serializable]
-        public struct PlayerState
-        {
-            public string name;
-            public float movementSpeed;
-            public float speedLimit;
-            public float airSpeed;
-            public float criticalAngle;
-            public float jumpHeight;
-            public float acceleration;
-            public float height;
-
-
-            public PlayerState(
-                string name = "lobotomy",
-                float movementSpeed = 5f,
-                float speedLimit = 10f,
-                float airSpeed = 1f,
-                float criticalAngle = 30f,
-                float jumpHeight = 5f,
-                float acceleration = 1f,
-                float height = 2f
-            )
-            {
-                this.name = name;
-                this.movementSpeed = movementSpeed;
-                this.speedLimit = speedLimit;
-                this.airSpeed = airSpeed;
-                this.criticalAngle = criticalAngle;
-                this.jumpHeight = jumpHeight;
-                this.acceleration = acceleration;
-                this.height = height;
-            }
-
-            public static PlayerState Lerp (PlayerState s1,  PlayerState s2, float fac)
-            {
-                return new PlayerState(
-                    $"lerp between {s1.name} and {s2.name}",
-                    Mathf.Lerp(s1.movementSpeed, s2.movementSpeed, fac),
-                    Mathf.Lerp(s1.speedLimit, s2.speedLimit, fac),
-                    Mathf.Lerp(s1.airSpeed, s2.airSpeed, fac),
-                    Mathf.Lerp(s1.criticalAngle, s2.criticalAngle, fac),
-                    Mathf.Lerp(s1.jumpHeight, s2.jumpHeight, fac),
-                    Mathf.Lerp(s1.acceleration, s2.acceleration, fac),
-                    Mathf.Lerp(s1.height, s2.height, fac)
-                    );
-            }
-
-            public override string ToString()
-            {
-                return name;
-            }
-        }
-
-        [SerializeField] List<PlayerState> states = new List<PlayerState>();
+        [SerializeField] List<PhysicsControllerState> states = new List<PhysicsControllerState>();
         [SerializeField] int currentState = 0;
-        public PlayerState state => states[currentState];
+        public PhysicsControllerState state => states[currentState];
 
         public float height
         {
@@ -191,7 +137,7 @@ namespace amogus
                     isGrounded = true;
                 }
 
-                Debug.Log(flatness + " <----> " + state.criticalAngle);
+                //Debug.Log(flatness + " <----> " + state.criticalAngle);
             }
             //if (!isGrounded)
             //{

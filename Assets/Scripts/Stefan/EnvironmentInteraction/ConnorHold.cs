@@ -58,13 +58,13 @@ public class ConnorHold : HoldManager
             );
             yield return null;
         }
-        holdable.Self.parent = _holdSpot;
-        holdable.Self.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        holdable.Self.SetPositionAndRotation(_holdSpot.position, _holdSpot.rotation);
     }
 
     public override IEnumerator OnInteract(IHoldable interactable)
     {
         CurrentInteractable = interactable;
+        Interacted?.Invoke(interactable.Self.gameObject ,interactable);
         StartCoroutine(interactable.Interact());
         yield return StartCoroutine(GrabAnimation(interactable, _grabTimeSeconds));
 
@@ -74,9 +74,11 @@ public class ConnorHold : HoldManager
 
     public override IEnumerator OnDismiss()
     {
-        CurrentInteractable.Self.DORotateQuaternion(Quaternion.identity, _grabTimeSeconds);
+        CurrentInteractable.Self.DORotateQuaternion(CurrentInteractable.GetInitialRotation(), _grabTimeSeconds);
         StopCoroutine(_itemHoldBehavior);
         yield return CurrentInteractable.Self.DOMove(CurrentInteractable.GetInitialPosition(), _grabTimeSeconds).WaitForCompletion();
+        Dismissed?.Invoke(CurrentInteractable.Self.gameObject, CurrentInteractable);
+
         CurrentInteractable = null;
     }
 
@@ -93,24 +95,17 @@ public class ConnorHold : HoldManager
 
             Transform objTransform = interactable.Self;
 
-            // Get mouse position in screen space
             Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
-
-            // Convert object position to screen space
             Camera cam = _cam;
             Vector3 objScreenPos = cam.WorldToScreenPoint(objTransform.position);
-
-            // Direction in screen space (2D)
             Vector2 screenDir = (mouseScreenPos - new Vector2(objScreenPos.x, objScreenPos.y)).normalized;
 
-            // Compute the axis and small angle based on screen direction
             float maxAngle = 10f;
             Quaternion slightRotation = Quaternion.AngleAxis(maxAngle, new Vector3(-screenDir.y * _rotationState, screenDir.x, 0f));
 
-            // Apply the slight tilt **relative to the base rotation**
+            //relative to the base rotation
             Quaternion desiredRotation = baseRotation * slightRotation;
 
-            // Smoothly interpolate toward the result
             float rotationSpeed = 5f;
             objTransform.rotation = Quaternion.Lerp(objTransform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
             yield return null;

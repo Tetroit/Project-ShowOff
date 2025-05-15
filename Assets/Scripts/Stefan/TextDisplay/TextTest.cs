@@ -6,6 +6,20 @@ public class TextTest : MonoBehaviour
     [SerializeField] LineView lineView;
     [SerializeField] DialogueLine[] lines;
     int currentDialogueIndex;
+    [SerializeField] bool _display;
+
+    private void Update()
+    {
+        if (_display)
+        {
+            _display = false;
+            if (lineView.gameObject.activeInHierarchy)
+            {
+                RecursiveAdvance(0);
+
+            }
+        }
+    }
 
     void Start()
     {

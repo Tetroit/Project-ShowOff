@@ -57,7 +57,6 @@ namespace amogus
             if (!isCinematic) 
             {
                 turn += PlayerInputHandler.Instance.View * 0.2f; //sensitivity here, 0.2 meanwhile
-                Debug.Log($"Camera view: {turn.x}, {turn.y}");
                 turn.y = Mathf.Clamp(turn.y, minAngle, maxAngle);
                 if (xRotator == yRotator)
                 {

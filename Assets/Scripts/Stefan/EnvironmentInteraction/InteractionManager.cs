@@ -1,8 +1,6 @@
-using DG.Tweening;
-using System;
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public interface IInteractable
@@ -15,6 +13,7 @@ public interface IHoldable : IInteractable
 {
     Transform Self { get; }
     Vector3 GetInitialPosition();
+    Quaternion GetInitialRotation();
 }
 
 public readonly struct InputFacade
@@ -33,6 +32,10 @@ public readonly struct InputFacade
 
 public class InteractionManager : MonoBehaviour
 {
+    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHover{get; protected set;}
+    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHoverStart{get;protected set;}
+    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHoverEnd { get; protected set; }
+
     [SerializeField] float _interactionRange;
     [SerializeField] float _interactionRadius;
     [SerializeField] LayerMask _interactionMask;
@@ -52,8 +55,8 @@ public class InteractionManager : MonoBehaviour
     {
         _input = new();
         
-        _input.Player.Interact.started += OnInteract;
-        _input.UI.Cancel.started += OnDissmised;
+        _input.Player.Interact.started += Interact;
+        _input.UI.Cancel.started += Dissmised;
     }
     
     void Start()
@@ -61,7 +64,7 @@ public class InteractionManager : MonoBehaviour
         _holdManager.Init(new InputFacade(_input));
     }
 
-    void OnInteract(InputAction.CallbackContext context)
+    void Interact(InputAction.CallbackContext context)
     {
         if (_lastInteractable == null || _interactAnimation != null) return;
         _currentInteractingItem = _lastInteractable;
@@ -77,7 +80,7 @@ public class InteractionManager : MonoBehaviour
     }
 
 
-    void OnDissmised(InputAction.CallbackContext context)
+    void Dissmised(InputAction.CallbackContext context)
     {
         if (_currentInteractingItem == null || _interactAnimation != null) return;
         
@@ -89,12 +92,13 @@ public class InteractionManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        bool isInteractable = Physics.SphereCast
+        RaycastHit hit = new();
+        bool isInteractable = _currentInteractingItem == null && _interactAnimation == null && Physics.SphereCast
         (
             transform.position, 
             _interactionRadius,
             transform.forward,
-            out RaycastHit hit,
+            out hit,
             _interactionRange,
             _interactionMask
         );
@@ -102,6 +106,9 @@ public class InteractionManager : MonoBehaviour
         if (!isInteractable)
         {
             if (_lastInteractable == null) return;
+
+            _holdManager.OnItemHoverEnd(_lastInteractable as IHoldable);
+            OnHoverEnd?.Invoke(_lastInteractableGO, _lastInteractable);
 
             _lastInteractable = null;
             _lastInteractableGO = null;
@@ -112,11 +119,16 @@ public class InteractionManager : MonoBehaviour
         if (hit.transform.gameObject == _lastInteractableGO)
         {
             _holdManager.OnItemHover(_lastInteractable as IHoldable, new HoverData(hit));
+            OnHover?.Invoke(_lastInteractableGO, _lastInteractable);
             return;
         }
+        
 
         _lastInteractable = hit.transform.GetComponentInChildren<IInteractable>();
         _lastInteractableGO = hit.transform.gameObject;
+
+        _holdManager.OnItemHoverStart(_lastInteractable as IHoldable, new HoverData(hit));
+        OnHoverStart?.Invoke(_lastInteractableGO, _lastInteractable);
     }
 
     void OnEnable()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace amogus
@@ -32,7 +33,6 @@ namespace amogus
         public Dictionary<ControllerType, PlayerController> controllerDict =>
             controllerList.ToDictionary(pair => pair.controllerType, pair => pair.playerController);
 
-
         void Awake()
         {
             PlayerInputHandler.Create();
@@ -53,14 +53,27 @@ namespace amogus
             if (id == ControllerType.NONE) return true;
             if (!controllerDict.ContainsKey(id))
             {
-                Debug.LogError("No controller found");
+                Debug.LogError($"No controller found of {id} type found");
                 return false;
             }
             return true;
         }
+
+        public PlayerController GetController(ControllerType id)
+        {
+            if (!ValidateController(id) || id == ControllerType.NONE) return null;
+            return controllerDict[id];
+        }
         public void DisableControls()
         {
             EnterAnimation();
+            controllerDict[currentControllerID].DisableControl();
+
+        }
+        public void EnableControls()
+        {
+            controllerDict[currentControllerID].EnableControl();
+            ExitAnimation();
         }
         public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation)
         {
@@ -75,10 +88,10 @@ namespace amogus
                 Debug.Log("Entered animation");
                 controllerDict[currentControllerID].DisableControl();
                 DisableCamera();
-                currentControllerID = ControllerType.NONE;
             }
             EnterAnimation();
             animation.StartAnimation(this);
+            currentControllerID = ControllerType.NONE;
         }
 
         public void SwitchController(ControllerType id)
