@@ -122,14 +122,19 @@ namespace amogus
 
         private void OnTriggerEnter(Collider other)
         {
-            ControllerSwitch sw = other.GetComponent<ControllerSwitch>();
-            if (sw == null || !sw.enabled)
-            {
-                Debug.Log("No switch found");
-                return;
-            }
             if (inAnimation) return;
-            ActivateSwitch(sw);
+            ControllerSwitch sw = other.GetComponent<ControllerSwitch>();
+            if (sw != null && sw.enabled)
+            {
+                ActivateSwitch(sw);
+            }
+            CutsceneTrigger cutsceneTrigger = other.GetComponent<CutsceneTrigger>();
+            if (cutsceneTrigger != null && cutsceneTrigger.enabled)
+            {
+                DisableControls();
+                cutsceneTrigger.Cutscene.OnEnd += EnableControls;
+                cutsceneTrigger.StartCutscene(this);
+            }
         }
 
 

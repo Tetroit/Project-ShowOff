@@ -304,6 +304,8 @@ namespace amogus
             coll.enabled = false;
             lockControls = true;
 
+            _isMoving = false;
+
             Debug.Log("disabled free move controls");
         }
     }
