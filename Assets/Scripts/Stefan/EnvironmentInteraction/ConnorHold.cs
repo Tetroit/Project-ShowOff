@@ -64,6 +64,7 @@ public class ConnorHold : HoldManager
     public override IEnumerator OnInteract(IHoldable interactable)
     {
         CurrentInteractable = interactable;
+        Interacted?.Invoke(interactable.Self.gameObject ,interactable);
         StartCoroutine(interactable.Interact());
         yield return StartCoroutine(GrabAnimation(interactable, _grabTimeSeconds));
 
@@ -76,6 +77,8 @@ public class ConnorHold : HoldManager
         CurrentInteractable.Self.DORotateQuaternion(CurrentInteractable.GetInitialRotation(), _grabTimeSeconds);
         StopCoroutine(_itemHoldBehavior);
         yield return CurrentInteractable.Self.DOMove(CurrentInteractable.GetInitialPosition(), _grabTimeSeconds).WaitForCompletion();
+        Dismissed?.Invoke(CurrentInteractable.Self.gameObject, CurrentInteractable);
+
         CurrentInteractable = null;
     }
 

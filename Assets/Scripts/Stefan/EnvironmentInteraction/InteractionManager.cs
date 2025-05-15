@@ -1,7 +1,4 @@
-using DG.Tweening;
-using System;
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -35,9 +32,9 @@ public readonly struct InputFacade
 
 public class InteractionManager : MonoBehaviour
 {
-    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHover{get;private set;}
-    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHoverStart{get;private set;}
-    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHoverEnd { get; private set; }
+    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHover{get; protected set;}
+    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHoverStart{get;protected set;}
+    [field: SerializeField] public UnityEvent<GameObject, IInteractable> OnHoverEnd { get; protected set; }
 
     [SerializeField] float _interactionRange;
     [SerializeField] float _interactionRadius;
@@ -58,8 +55,8 @@ public class InteractionManager : MonoBehaviour
     {
         _input = new();
         
-        _input.Player.Interact.started += OnInteract;
-        _input.UI.Cancel.started += OnDissmised;
+        _input.Player.Interact.started += Interact;
+        _input.UI.Cancel.started += Dissmised;
     }
     
     void Start()
@@ -67,7 +64,7 @@ public class InteractionManager : MonoBehaviour
         _holdManager.Init(new InputFacade(_input));
     }
 
-    void OnInteract(InputAction.CallbackContext context)
+    void Interact(InputAction.CallbackContext context)
     {
         if (_lastInteractable == null || _interactAnimation != null) return;
         _currentInteractingItem = _lastInteractable;
@@ -83,7 +80,7 @@ public class InteractionManager : MonoBehaviour
     }
 
 
-    void OnDissmised(InputAction.CallbackContext context)
+    void Dissmised(InputAction.CallbackContext context)
     {
         if (_currentInteractingItem == null || _interactAnimation != null) return;
         
@@ -95,12 +92,13 @@ public class InteractionManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        bool isInteractable = Physics.SphereCast
+        RaycastHit hit = new();
+        bool isInteractable = _currentInteractingItem == null && _interactAnimation == null && Physics.SphereCast
         (
             transform.position, 
             _interactionRadius,
             transform.forward,
-            out RaycastHit hit,
+            out hit,
             _interactionRange,
             _interactionMask
         );
