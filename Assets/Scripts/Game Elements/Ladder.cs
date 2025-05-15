@@ -19,6 +19,8 @@ public class Ladder : MonoBehaviour
     /// </summary>
     [SerializeField] Vector3 entryPointEnd;
 
+    [SerializeField] Quaternion facing;
+
     public Vector3 startGS => start + transform.position; 
     public Vector3 endGS => end + transform.position;
     public Vector3 entryPointStartGS => entryPointStart + transform.position;
