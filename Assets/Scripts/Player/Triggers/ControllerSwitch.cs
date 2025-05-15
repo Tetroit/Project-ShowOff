@@ -16,7 +16,8 @@ namespace amogus
         public abstract PlayerAnimation BackwardTransitionBase { get; }
         public bool useForwardAnimation;
         public bool useBackwardAnimation;
-        public Action OnTrigger;
+
+        public abstract void TransferData(PlayerController controller);
     }
 
     public abstract class ControllerSwitch<T,U> : ControllerSwitch 

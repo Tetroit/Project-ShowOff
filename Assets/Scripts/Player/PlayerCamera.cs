@@ -22,7 +22,6 @@ namespace amogus
         public float movementSmoothness = 0.5f;
         public void UpdateTransform(Vector3 pos)
         {
-            Debug.Log(pos - Movement.position);
             Movement.position = Vector3.Lerp(pos, Movement.position, movementSmoothness);
             //turn.x = hDir;
         }
@@ -31,16 +30,33 @@ namespace amogus
         {
             ReadRotation();
         }
+        public void SetViewRotation(Vector2 rotation)
+        {
+            if (xRotator == yRotator)
+            {
+                xRotator.localRotation = Quaternion.Euler(-rotation.y, rotation.x, 0);
+            }
+            else
+            {
+                xRotator.localRotation = Quaternion.Euler(-rotation.y, 0, 0);
+                yRotator.localRotation = Quaternion.Euler(0, rotation.x, 0);
+            }
+        }
         public void ReadRotation()
         {
-            turn.x = xRotator.rotation.eulerAngles.y;
+            turn.x = yRotator.rotation.eulerAngles.y;
             turn.y = -yRotator.rotation.eulerAngles.x;
+
+            if (turn.y < -90)
+                turn.y += 360;
+            if (turn.y > 90)
+                turn.y -= 360;
         }
         private void LateUpdate()
         {
             if (!isCinematic) 
             {
-                turn += new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+                turn += PlayerInputHandler.Instance.View * 0.2f; //sensitivity here, 0.2 meanwhile
                 turn.y = Mathf.Clamp(turn.y, minAngle, maxAngle);
                 if (xRotator == yRotator)
                 {
@@ -49,7 +65,6 @@ namespace amogus
                 }
                 else
                 {
-                    Debug.Log("GFEIB");
                     Quaternion targetYRotation = Quaternion.Euler(-turn.y, 0, 0);
                     Quaternion targetXRotation = Quaternion.Euler(0, turn.x, 0);
                     xRotator.localRotation = Quaternion.Slerp(targetXRotation, xRotator.localRotation, cameraSmoothness);
