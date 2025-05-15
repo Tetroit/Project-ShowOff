@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
 
     private List<EventInstance> eventInstances;
 
-    private EventInstance ambienceEventInstance;
+    public EventInstance ambienceEventInstance;
 
     private void Awake()
     {
