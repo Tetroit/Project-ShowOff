@@ -67,6 +67,13 @@ namespace amogus
         public void DisableControls()
         {
             EnterAnimation();
+            controllerDict[currentControllerID].DisableControl();
+
+        }
+        public void EnableControls()
+        {
+            controllerDict[currentControllerID].EnableControl();
+            ExitAnimation();
         }
         public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation)
         {

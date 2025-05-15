@@ -538,6 +538,7 @@ MonoBehaviour:
   end: {x: 0.9, y: -1.8, z: 0}
   entryPointStart: {x: 1.73, y: -1.52, z: 0}
   entryPointEnd: {x: -0.08, y: 3.7, z: 0}
+  facing: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &787090656
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,30 +877,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   states:
-  - name: Normal
-    movementSpeed: 3
-    speedLimit: 10
-    airSpeed: 0.01
-    criticalAngle: 30
-    jumpHeight: 5
-    acceleration: 1
-    height: 2
-  - name: Crouching
-    movementSpeed: 2
-    speedLimit: 10
-    airSpeed: 0.01
-    criticalAngle: 30
-    jumpHeight: 2
-    acceleration: 1
-    height: 1
-  - name: Sprinting
-    movementSpeed: 10
-    speedLimit: 10
-    airSpeed: 0.01
-    criticalAngle: 30
-    jumpHeight: 5
-    acceleration: 1
-    height: 2
+  - {fileID: 11400000, guid: beeae9bcb50bbc741b583767a2dcc2a8, type: 2}
+  - {fileID: 11400000, guid: 836cd5036733ad7439ef5a9fe6b621d9, type: 2}
+  - {fileID: 11400000, guid: 801e8662d1f803a44b46e999b4ed74a8, type: 2}
   currentState: 0
   lockControls: 0
   inputDevice: 0
