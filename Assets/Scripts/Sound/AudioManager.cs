@@ -42,6 +42,11 @@ public class AudioManager : MonoBehaviour
         ambienceEventInstance.start();
     }
 
+    public void SetAmbienceByParameter(string parameterName, float parameterValue)
+    {
+        ambienceEventInstance.setParameterByName(parameterName, parameterValue);
+    }
+
     public EventInstance CreateInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
