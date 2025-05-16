@@ -7,6 +7,7 @@ public class LegManager : MonoBehaviour
     public bool IsMoving { get; private set; }
 
     [SerializeField] Curve _path;
+    [SerializeField] LayerMask _groundMask;
     [SerializeField] float _pathLerpTime = 10;
     [SerializeField] BoxCollider _legPrefab;
     [SerializeField, Range(1, 20)] int _jointCount = 1;
@@ -31,6 +32,7 @@ public class LegManager : MonoBehaviour
 
     [SerializeField] BoxCollider firstLeg;
     [SerializeField] BoxCollider firstSecondLeg;
+
     Leg[] _legs;
     public bool Step;
     float _lastBodyHeight;
@@ -42,18 +44,19 @@ public class LegManager : MonoBehaviour
     {
         _legs = new Leg[]
         {
-           new (AngleX, 0, firstLeg, _jointCount, this                    , ForwardReach),
-           new (AngleX, -AngleY, _legPrefab, _jointCount, this            , ForwardReach),
-           new (AngleX, -AngleY*2, _legPrefab, _jointCount, this          , ForwardReach),
+           new (AngleX, 0, firstLeg, _jointCount, this                    , ForwardReach, _groundMask),
+           //new (AngleX, -AngleY, _legPrefab, _jointCount, this            , ForwardReach, _groundMask),
+           new (AngleX, -AngleY*2, _legPrefab, _jointCount, this          , ForwardReach, _groundMask),
 
-           new (AngleX, -AngleY*2 - 135, firstSecondLeg, _jointCount, this, ForwardReach),
-           new (AngleX, -AngleY-135, _legPrefab, _jointCount, this        , ForwardReach),
-           new (AngleX, - 135, _legPrefab, _jointCount, this              , ForwardReach),
+           new (AngleX, -AngleY*2 - 135, firstSecondLeg, _jointCount, this, ForwardReach, _groundMask),
+           //new (AngleX, -AngleY-135, _legPrefab, _jointCount, this        , ForwardReach, _groundMask),
+           new (AngleX, - 135, _legPrefab, _jointCount, this              , ForwardReach, _groundMask),
 
         };
 
         SetAdjacentLegs(_legs);
     }
+
     void SetAdjacentLegs( Leg[] arr)
     {
         Debug.Assert(arr.Length % 2 == 0);

@@ -30,18 +30,20 @@ public class Leg
 
     public float StepSize;
     public float ForwardReach;
+    LayerMask _groundMask;
 
-    public Leg(float angleX, float angleY, BoxCollider legPrefab, int jointCount, LegManager data, float forwardReach)
+    public Leg(float angleX, float angleY, BoxCollider legPrefab, int jointCount, LegManager data, float forwardReach, LayerMask groundMask)
     {
         this.data = data;
         _angleX = angleX;
         _angleY = angleY;
         ForwardReach = forwardReach;
         StepSize = data.StepDistance;
+        _groundMask = groundMask;
         members = new Member[jointCount];
         for (int i = 0; i < jointCount; i++)
             members[i] = new Member(GameObject.Instantiate(legPrefab, data.transform));
-
+        
         //initial positioning
         if (!GetGroundTarget(out Vector3 groundPoint))
         {
@@ -125,7 +127,14 @@ public class Leg
         //in case the ground is higher than the body position, so the ray doesn't ignore the mesh 
         Vector3 abovePoint = data.transform.up * 3;
 
-        bool hasHit = Physics.Raycast(data.transform.position + abovePoint + direction, -data.transform.up, out RaycastHit hit, GetLegReach() + abovePoint.magnitude, 1 << LayerMask.NameToLayer("Ground"));
+        bool hasHit = Physics.Raycast
+        (
+            data.transform.position + abovePoint + direction,
+            -data.transform.up, 
+            out RaycastHit hit, 
+            GetLegReach() + abovePoint.magnitude, 
+            _groundMask
+        );
         target = hit.point;
         return hasHit;
     }
