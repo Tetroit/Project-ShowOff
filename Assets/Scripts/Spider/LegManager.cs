@@ -42,6 +42,7 @@ public class LegManager : MonoBehaviour
 
     void Start()
     {
+        _lastBodyHeight = transform.position.y;
         _legs = new Leg[]
         {
            new (AngleX, 0, firstLeg, _jointCount, this                    , ForwardReach, _groundMask),
@@ -190,10 +191,9 @@ public class LegManager : MonoBehaviour
         {
             UnityEngine.Gizmos.color = Color.yellow;
             Vector3 currentTarget = _path.points[_currentPathNode];
-            Vector3 forward = transform.forward;
 
             UnityEngine.Gizmos.DrawLine(transform.position, transform.position + (currentTarget - transform.position).normalized);
-            UnityEngine.Gizmos.DrawSphere(currentTarget, .6f);
+            UnityEngine.Gizmos.DrawSphere(currentTarget, .1f);
         }
 
 
@@ -204,8 +204,6 @@ public class LegManager : MonoBehaviour
 
     void OnDisable()
     {
-        
-
         foreach (var leg in _legs) leg.ClearEvents();
     }
 }
