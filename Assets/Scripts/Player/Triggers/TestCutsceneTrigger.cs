@@ -4,13 +4,10 @@ using UnityEngine;
 
 namespace amogus
 {
-    public class TestCutsceneTrigger : CutsceneTrigger
+    public class TestCutsceneTrigger : CutsceneTrigger<PlayerFSM>
     {
         [SerializeField] private TestCutsceneAnimation cutscene;
-        public override PlayerAnimation Cutscene => cutscene;
-        public override void TransferData(PlayerController controller)
-        {
-        }
+        public override ScriptedAnimation<PlayerFSM> Cutscene => cutscene;
     }
     [Serializable]
     public class TestCutsceneAnimation : PlayerAnimation
@@ -24,10 +21,11 @@ namespace amogus
         public override void Begin(PlayerFSM target)
         {
             startPos = target.transform.position;
-
+            target.DisableControls();
         }
         public override void End(PlayerFSM target)
         {
+            target.EnableControls();
             // Implement logic to end the animation here
         }
     }

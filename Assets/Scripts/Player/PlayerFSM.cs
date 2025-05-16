@@ -128,13 +128,13 @@ namespace amogus
             {
                 ActivateSwitch(sw);
             }
-            CutsceneTrigger cutsceneTrigger = other.GetComponent<CutsceneTrigger>();
-            if (cutsceneTrigger != null && cutsceneTrigger.enabled)
-            {
-                DisableControls();
-                cutsceneTrigger.Cutscene.OnEnd += EnableControls;
-                cutsceneTrigger.StartCutscene(this);
-            }
+            //CutsceneTrigger cutsceneTrigger = other.GetComponent<CutsceneTrigger>();
+            //if (cutsceneTrigger != null && cutsceneTrigger.enabled)
+            //{
+            //    DisableControls();
+            //    cutsceneTrigger.Cutscene.OnEnd += EnableControls;
+            //    cutsceneTrigger.StartCutscene(this);
+            //}
         }
 
 
