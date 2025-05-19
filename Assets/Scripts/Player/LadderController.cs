@@ -18,6 +18,7 @@ namespace amogus
 
         public override void EnableControl()
         {
+            OnCameraShakeChange?.Invoke(CameraWalkingShake.State.LADDER);
             enabled = true;
             Debug.Log("ladder controls enabled");
         }
