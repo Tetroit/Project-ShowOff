@@ -21,6 +21,7 @@ public class InventoryController : MonoBehaviour
         _input.Enable();
         _input.UI.ScrollWheel.performed += OnScroll;
         _input.Player.Interact.started += OnInteract;
+        _input.UI.InventoryModes.started += OnInventoryChange;
     }
 
     void OnDisable()
@@ -28,7 +29,16 @@ public class InventoryController : MonoBehaviour
         _input.Disable();
         _input.UI.ScrollWheel.performed -= OnScroll;
         _input.Player.Interact.started -= OnInteract;
+        _input.UI.InventoryModes.started -= OnInventoryChange;
 
+    }
+
+    private void Start()
+    {
+        foreach (var i in _inventories)
+            i.gameObject.SetActive(false);
+
+        GetCurrentInventory().gameObject.SetActive(true);
     }
 
     void OnInteract(InputAction.CallbackContext context)
@@ -39,9 +49,11 @@ public class InventoryController : MonoBehaviour
     void OnInventoryChange(InputAction.CallbackContext context)
     {
         //monodirectional
+        GetCurrentInventory().gameObject.SetActive(false);
         _currentInventoryIndex++;
         if(_currentInventoryIndex >=  _inventories.Count)
             _currentInventoryIndex = 0;
+        GetCurrentInventory().gameObject.SetActive(true);
 
     }
 

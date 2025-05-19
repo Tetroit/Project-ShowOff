@@ -5,26 +5,35 @@ public enum SelectDirection
 {
     Left = -1, Right = 1
 }
+public enum NavigationMode
+{
+    Clamp,
+    Cycle
+}
 
 public class InventoryView : MonoBehaviour
 {
     [SerializeField] protected int capacity;
-   
     [SerializeField] GameObject _user;
-
+    [SerializeField] NavigationMode navigationMode; 
     [SerializeField] List<InventoryItemView> items = new();
-    int _curentItemIndex;
+
     [field: SerializeField] public UnityEvent<InventoryItemView> ItemSelected { get; private set; }
     [field: SerializeField] public UnityEvent<InventoryItemView> ItemDeselected { get; private set; }
-
-
+    int _curentItemIndex;
     void Awake()
     {
-        _curentItemIndex = -1;
+        OnAwake();
+        
     }
-
+    void Start()
+    {
+        OnStart(); 
+    }
     void OnEnable()
     {
+        GetCurrentItem().Select();
+
     }
 
     void OnDisable()
@@ -47,7 +56,14 @@ public class InventoryView : MonoBehaviour
 
     void ChangeItemPosition(int index)
     {
-        index = Mathf.Clamp(index, 0, items.Count - 1);
+        if(navigationMode == NavigationMode.Clamp)
+            index = Mathf.Clamp(index, 0, items.Count - 1);
+        else if(navigationMode == NavigationMode.Cycle)
+        {
+            if (index < 0) index = items.Count - 1;
+            else if(index > items.Count - 1) index = 0;
+        }
+
         if (index == _curentItemIndex) return;
         _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
 

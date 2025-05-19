@@ -11,7 +11,8 @@ public abstract class InventoryItemView : MonoBehaviour
 
     public virtual void Deselect()
     {
-        gameObject.SetActive(false);
+        if(gameObject != null)
+            gameObject.SetActive(false);
 
     }
 
