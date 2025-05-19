@@ -23,7 +23,8 @@ namespace amogus
             get => coll.height;
             set => coll.height = value;
         }
-        public bool isMoving { get; private set; }
+        public override bool isMoving => _isMoving;
+        public bool _isMoving { get; private set; }
         public bool isGrounded { get; private set; }
 
         public bool isSprinting { get; private set; }
@@ -205,11 +206,11 @@ namespace amogus
 
             if (moveDirection.magnitude > 0.1f)
             {
-                isMoving = true;
+                _isMoving = true;
             }
             else
             {
-                isMoving = false;
+                _isMoving = false;
             }
 
             moveDirection = moveDirection.normalized * state.movementSpeed;
@@ -302,6 +303,8 @@ namespace amogus
             rb.isKinematic = true;
             coll.enabled = false;
             lockControls = true;
+
+            _isMoving = false;
 
             Debug.Log("disabled free move controls");
         }

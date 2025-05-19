@@ -13,7 +13,7 @@ namespace amogus
         Vector3 startPos;
         Quaternion startRot;
         Vector3 targetPos;
-        Vector3 targetRot;
+        Quaternion targetRot;
         [HideInInspector] public Ladder ladder;
         [HideInInspector] public Ladder.EndType whichEnd;
         public override void Begin(PlayerFSM target)
@@ -22,14 +22,20 @@ namespace amogus
             startRot = target.transform.rotation;
 
             if (target.currentControllerID == PlayerFSM.ControllerType.FREE_MOVE)
+            {
                 targetPos = ladder.GetClosestPoint(startPos);
+                targetRot = ladder.facing;
+            }
 
             else if (target.currentControllerID == PlayerFSM.ControllerType.LADDER)
+            {
                 targetPos = ladder.GetEntryPoint(whichEnd);
+                targetRot = ladder.GetEntryRotation(whichEnd);
+            }
         }
         public override void Animate(PlayerFSM target)
         {
-            var q = Quaternion.Slerp(startRot, Quaternion.Euler(targetRot), time01);
+            var q = Quaternion.Slerp(startRot, targetRot, time01);
             target.transform.SetPositionAndRotation(Vector3.Lerp(startPos, targetPos, time01), q);
         }
 
