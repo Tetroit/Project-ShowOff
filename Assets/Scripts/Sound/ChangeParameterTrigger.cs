@@ -11,6 +11,7 @@ public class ChangeParameterTrigger : MonoBehaviour
         {
             AudioManager.instance.SetAmbienceByParameter(parameterName, newValue);
             Debug.Log("changed");
+
         }
     }
 }

@@ -31,6 +31,10 @@
 		<relationship name="parameters">
 			<destination>{aa94c84c-ceff-48ea-a5ff-b7a3cd551761}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{2435567a-bec9-4a3c-b59a-dc4a13e4d9cf}</destination>
+			<destination>{0a5451ec-c839-4ad3-b677-8121abdce64b}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{9085f1d3-ecd7-40d5-a17b-451ba1d69270}">
 		<relationship name="masterBus">
@@ -85,9 +89,15 @@
 		</relationship>
 	</object>
 	<object class="EventSound" id="{8a978ce9-2c06-4b26-82ec-572af8ebac05}">
+		<property name="isCutoff">
+			<value>true</value>
+		</property>
 		<property name="start">
 			<value>1</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{27341f0a-4f89-44d6-847a-e11bc7423ee6}</destination>
+		</relationship>
 		<relationship name="parameters">
 			<destination>{6e8aabdb-273d-4a34-8b1b-184bc1c5466c}</destination>
 		</relationship>
@@ -96,6 +106,12 @@
 		</relationship>
 	</object>
 	<object class="EventSound" id="{6b7740b2-0630-4828-b466-b32021c80901}">
+		<property name="isCutoff">
+			<value>true</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{ae033b35-9bcf-4543-8343-23043d937e09}</destination>
+		</relationship>
 		<relationship name="parameters">
 			<destination>{c1f65549-2c41-4474-b8d6-2acdc043edda}</destination>
 			<destination>{30d1b2ef-75eb-43df-aa4a-1125a727a690}</destination>
@@ -116,10 +132,41 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{b63de6c5-2197-4b9d-8d62-d39df70e91d0}" />
+	<object class="ADSRModulator" id="{27341f0a-4f89-44d6-847a-e11bc7423ee6}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="releaseTime">
+			<value>5615.38525</value>
+		</property>
+		<property name="releaseShape">
+			<value>0.0158339217</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
+	</object>
 	<object class="ParameterProperty" id="{6e8aabdb-273d-4a34-8b1b-184bc1c5466c}">
 		<relationship name="parameter">
 			<destination>{9e95a365-14af-496f-a79c-34d40a44b5cc}</destination>
 		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{ae033b35-9bcf-4543-8343-23043d937e09}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="releaseTime">
+			<value>5846.15283</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
 	</object>
 	<object class="ParameterProperty" id="{c1f65549-2c41-4474-b8d6-2acdc043edda}">
 		<relationship name="parameter">
