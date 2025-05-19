@@ -30,6 +30,7 @@ namespace amogus
         List<ControllerTypeToControllerPair> controllerList = new();
         [SerializeField]
         PlayerCamera cameraScript;
+        CameraWalkingShake shake;
         public bool inAnimation = false;
         public bool isMoving
         {
@@ -49,13 +50,24 @@ namespace amogus
         }
         private void OnEnable()
         {
+            shake = GetComponentInChildren<CameraWalkingShake>();
             foreach (var pair in controllerList)
             {
+                pair.playerController.OnCameraShakeChange += SetShake;
                 if (startControllerType == pair.controllerType) pair.playerController.EnableControl();
                 else pair.playerController.DisableControl();
             }
             currentControllerID = startControllerType;
             inAnimation = false;
+        }
+
+        private void OnDisable()
+        {
+            foreach (var pair in controllerList)
+            {
+                pair.playerController.DisableControl();
+                pair.playerController.OnCameraShakeChange -= SetShake;
+            }
         }
 
         public bool ValidateController(ControllerType id)
@@ -184,6 +196,12 @@ namespace amogus
         {
             if (cameraScript == null) return;
             cameraScript.ReadRotation();
+        }
+
+        public void SetShake(CameraWalkingShake.State shakeID)
+        {
+            if (shake != null)
+                shake.ChangeState(shakeID);
         }
     }
 }
