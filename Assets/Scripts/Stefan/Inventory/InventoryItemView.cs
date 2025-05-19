@@ -17,14 +17,10 @@ public class InventoryItemView : MonoBehaviour
 
     public void Select()
     {
-        //placeholder
-        //could use dotween
-        _itemImage.transform.localScale = Vector3.one * 1.2f;
     }
 
     public void Deselect()
     {
-        _itemImage.transform.localScale = Vector3.one;
 
     }
 }
