@@ -207,6 +207,8 @@ namespace Dialogue
         /// </remarks>
         public bool autoAdvance = false;
 
+        public bool matchAudioTime = false;
+
         /// <summary>
         /// The current <see cref="LocalizedLine"/> that this line view is
         /// displaying.
@@ -398,15 +400,29 @@ namespace Dialogue
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
 
-            yield return StartCoroutine(Effects.PausableTypewriter(
-                lineText,
-                typewriterEffectSpeed,
-                () => onCharacterTyped.Invoke(),
-                () => onPauseStarted.Invoke(),
-                () => onPauseEnded.Invoke(),
-                pauses,
-                currentStopToken
-            ));
+            Coroutine typeWriterEffect;
+            if (matchAudioTime)
+                typeWriterEffect = typeWriterEffect = StartCoroutine(Effects.PausableTypewriterTotalTime(
+                    lineText,
+                    dialogueLine.playTimeSeconds,
+                    onCharacterTyped.Invoke,
+                    onPauseStarted.Invoke,
+                    onPauseEnded.Invoke,
+                    pauses,
+                    currentStopToken
+                ));
+            else
+                typeWriterEffect = StartCoroutine(Effects.PausableTypewriter(
+                    lineText,
+                    typewriterEffectSpeed,
+                    () => onCharacterTyped.Invoke(),
+                    () => onPauseStarted.Invoke(),
+                    () => onPauseEnded.Invoke(),
+                    pauses,
+                    currentStopToken
+                ));
+
+            yield return typeWriterEffect; 
 
             if (currentStopToken.WasInterrupted)
             {

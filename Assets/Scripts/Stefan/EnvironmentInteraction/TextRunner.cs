@@ -8,6 +8,7 @@ public class TextRunner : MonoBehaviour
     [SerializeField] DialogueLine[] _lines;
     [SerializeField] bool _runOnStart;
     [SerializeField] bool _disableAfterFinish;
+    [SerializeField] bool _useDialogueTime;
 
     int currentDialogueIndex;
     void Start()
@@ -33,6 +34,8 @@ public class TextRunner : MonoBehaviour
             Debug.LogWarning("No text lines to display");
             return;
         }
+        _lineView.matchAudioTime = _useDialogueTime;
+
         EnableTextArea();
         RecursiveAdvance(0);
     }
