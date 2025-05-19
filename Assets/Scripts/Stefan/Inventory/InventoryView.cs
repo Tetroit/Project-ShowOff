@@ -6,14 +6,13 @@ public enum SelectDirection
     Left = -1, Right = 1
 }
 
-public abstract class InventoryView : MonoBehaviour
+public class InventoryView : MonoBehaviour
 {
     [SerializeField] protected int capacity;
    
-    [SerializeField] Inventory _logic;
-    [SerializeField] GameObject _holder;
+    [SerializeField] GameObject _user;
 
-    protected readonly List<InventoryItemView> items = new();
+    [SerializeField] List<InventoryItemView> items = new();
     int _curentItemIndex;
     [field: SerializeField] public UnityEvent<InventoryItemView> ItemSelected { get; private set; }
     [field: SerializeField] public UnityEvent<InventoryItemView> ItemDeselected { get; private set; }
@@ -24,20 +23,21 @@ public abstract class InventoryView : MonoBehaviour
         _curentItemIndex = -1;
     }
 
-    void Start()
+    void OnEnable()
     {
-        UpdateUI(_logic.Items);
     }
 
-    public abstract void UpdateUI(IEnumerable<InventoryItem> items);
-    
+    void OnDisable()
+    {
+        GetCurrentItem().Deselect();
+    }
 
-//DON'T FORGET TO SET THE NOTE AS A PARENT WHILE HOLDING ITEM
+    //DON'T FORGET TO SET THE NOTE AS A PARENT WHILE HOLDING ITEM
     public void InteractCurrent()
     {
         _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
 
-        items[_curentItemIndex].Item.Interact(_holder);
+        items[_curentItemIndex].Interact(_user);
     }
 
     public void ChangeItemPosition(SelectDirection selectDirection)

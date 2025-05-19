@@ -4,6 +4,7 @@ namespace amogus
 {
     public class Door : MonoBehaviour
     {
+        public string unlockCode;
         [field: SerializeField] public bool isOpen { get; private set; } = false;
         [SerializeField] Quaternion openRotation;
         [SerializeField] Quaternion closedRotation;
@@ -34,6 +35,7 @@ namespace amogus
             isOpen = true;
             transform.rotation = openRotation;
         }
+
         public void Close()
         {
             isOpen = false;
