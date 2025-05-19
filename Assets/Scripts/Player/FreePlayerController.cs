@@ -58,7 +58,7 @@ namespace amogus
         }
         private void Start()
         {
-
+            Cursor.visible = false;
             isSafe = true;
 
             if (cameraTransform != null)
