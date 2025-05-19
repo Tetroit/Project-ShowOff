@@ -15,6 +15,7 @@ namespace Dialogue
         public string characterName;
         [TextArea]
         public string text;
+        public float playTimeSeconds;
 
         public DialogueLine(string characterName, string text)
         {

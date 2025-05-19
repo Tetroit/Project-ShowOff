@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,12 +33,18 @@ public class ConnorHold : HoldManager
 
     IEnumerator Rotate()
     {
-        baseRotation = _holdSpot.rotation * Quaternion.Euler(0, 180, 0);
+        Quaternion startRotation = baseRotation;
+        Quaternion endRotation = baseRotation * Quaternion.Euler(0, 180, 0);
         _rotationState *= -1;
-        yield return _holdSpot.DORotateQuaternion(baseRotation, _rotationTimeSeconds)
-            .SetEase(_rotationEase)
-            .WaitForCompletion();
 
+        float duration = _rotationTimeSeconds;
+        yield return DOVirtual.Float(0f, 1f, duration, t =>
+        {
+            Quaternion currentRotation = Quaternion.Slerp(startRotation, endRotation, t);
+
+            baseRotation = currentRotation;
+
+        }).SetEase(_rotationEase).WaitForCompletion();
     }
 
     IEnumerator GrabAnimation(IHoldable holdable, float time)
@@ -65,10 +72,11 @@ public class ConnorHold : HoldManager
     {
         CurrentInteractable = interactable;
         Interacted?.Invoke(interactable.Self.gameObject ,interactable);
+        baseRotation = _holdSpot.rotation;
+
         StartCoroutine(interactable.Interact());
         yield return StartCoroutine(GrabAnimation(interactable, _grabTimeSeconds));
 
-        baseRotation = transform.rotation;
         _itemHoldBehavior = StartCoroutine(OnItemHold(interactable));
     }
 

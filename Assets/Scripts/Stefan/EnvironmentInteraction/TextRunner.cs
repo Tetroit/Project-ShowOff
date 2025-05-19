@@ -1,12 +1,23 @@
 using Dialogue;
 using UnityEngine;
-using Yarn;
+using UnityEngine.InputSystem;
 
 public class TextRunner : MonoBehaviour
 {
     [SerializeField] LineView _lineView;
     [SerializeField] DialogueLine[] _lines;
+    [SerializeField] bool _runOnStart;
+    [SerializeField] bool _disableAfterFinish;
+    [SerializeField] bool _useDialogueTime;
+
     int currentDialogueIndex;
+    void Start()
+    {
+        if(_runOnStart)
+        {
+            DisplayText();
+        }
+    }
 
     public void EnableTextArea()
     {
@@ -18,8 +29,14 @@ public class TextRunner : MonoBehaviour
     }
     public void DisplayText()
     {
-        if (_lines.Length == 0) return;
+        if (_lines.Length == 0)
+        {
+            Debug.LogWarning("No text lines to display");
+            return;
+        }
+        _lineView.matchAudioTime = _useDialogueTime;
 
+        EnableTextArea();
         RecursiveAdvance(0);
     }
     
@@ -36,7 +53,7 @@ public class TextRunner : MonoBehaviour
         var line = _lines[i];
         i++;
         if (i > _lines.Length - 1)
-            _lineView.RunLine(line);
+            _lineView.RunLine(line, () => { if (_disableAfterFinish) DisableTextArea(); });
         else
         {
             _lineView.RunLine(line, () => {
