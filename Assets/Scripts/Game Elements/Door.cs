@@ -5,6 +5,7 @@ namespace amogus
     public class Door : MonoBehaviour
     {
         [field: SerializeField] public bool isOpen { get; private set; } = false;
+        [field: SerializeField] public bool isLocked { get; private set; } = false;
         [SerializeField] Quaternion openRotation;
         [SerializeField] Quaternion closedRotation;
 

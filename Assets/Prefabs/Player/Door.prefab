@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <isOpen>k__BackingField: 0
+  <isLocked>k__BackingField: 0
   openRotation: {x: 0, y: 0.70710677, z: 0, w: -0.70710677}
   closedRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &2472318140063114229
@@ -223,11 +224,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984af9caa590f904a94adb6cf05c7c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  continiousDetection: 1
+  triggerType: 2
+  action: Interact
+  targetsInQuestion: []
   disableControls: 0
   target: {fileID: 150861125051368009}
   cutscene:
     totalDuration: 1
     pause: 0
+    OnEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    users: []
     startRotation: {x: 0, y: 0, z: 0, w: 0}
     targetRotation: {x: 0, y: 0, z: 0, w: 0}

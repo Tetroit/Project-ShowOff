@@ -9,9 +9,11 @@ namespace amogus
     public class DoorCutsceneTrigger : CutsceneTrigger<PlayerFSM, Door>
     {
         [SerializeField] private DoorCutsceneAnimation cutscene;
+
         public override ScriptedAnimation<Door> Cutscene => cutscene;
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
-            return InputSystem.actions.FindActionMap("Player").FindAction("Interact").WasPressedThisFrame();
+            if (target.isLocked) return false;
+            return true;
         };
     }
     [Serializable]
@@ -21,7 +23,6 @@ namespace amogus
 
         [SerializeField] Quaternion startRotation;
         [SerializeField] Quaternion targetRotation;
-        public Door door { get; private set; }
         public override void Animate(Door target)
         {
             target.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, time01);
