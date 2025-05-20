@@ -46,7 +46,7 @@ namespace amogus
 
             OnEnd?.Invoke();
             End(executor);
-            OnEnd = null;
+            OnEnd.RemoveAllListeners();
         }
         public void Pause()
         {
@@ -80,7 +80,7 @@ namespace amogus
             Debug.Log("Scripted Animation: Animation Ended");
             time = totalDuration;
             End(target);
-            OnEnd = null;
+            OnEnd.RemoveAllListeners();
             users?.Remove(target);
         }
         public abstract void Animate(T target);
