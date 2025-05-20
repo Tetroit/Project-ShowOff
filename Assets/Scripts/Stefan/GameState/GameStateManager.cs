@@ -55,6 +55,9 @@ public class GameStateManager : MonoBehaviour
         foreach (KeyValuePair<GameState, State> kv in _states)
             kv.Value.Init(this);
 
+
+        if (_playAction == null) return;
+
         _playAction.action.started += ctx => SwitchState(GameState.Play);
         _playAction.action.Enable();
         _pauseAction.action.started += ctx => SwitchState(GameState.Pause);
