@@ -11,73 +11,31 @@ namespace amogus
     /// <typeparam name="T">Trigger object type</typeparam>
     /// <typeparam name="U">Executor object type</typeparam>
     [RequireComponent(typeof(Collider))]
-    public abstract class CutsceneTrigger<Tr, Ex> : MonoBehaviour 
+    public abstract class CutsceneTrigger<Tr, Ex> : SimpleTrigger<Tr> 
         where Tr : MonoBehaviour 
         where Ex : MonoBehaviour
     {
-        public bool continiousDetection = false;
         public bool disableControls = true;
-        [SerializeField] protected Ex target;
-        public Tr triggerObject { get; protected set; }
-        [SerializeField] List<Tr> shouldCheck = new();
-        public virtual Predicate<Tr> Predicate => (Tr target) => true;
+        [SerializeField] protected Ex target;   
         public abstract ScriptedAnimation<Ex> Cutscene { get; }
-        public virtual void StartCutscene(Ex target)
+        public override void Trigger()
         {
             Cutscene.StartAnimation(target);
         }
-
-        //Trigger is a part of fixed update, so input is not kinda working good
-        private void OnTriggerEnter(Collider other)
+        protected override void TryTrigger(Tr other)
         {
-            var triggerObjectCandidate = other.GetComponent<Tr>();
-            if (triggerObjectCandidate == null) return;
-
-            if (!continiousDetection)
-            {
-                CheckTrigger(triggerObjectCandidate);
-                return;
-            }
-            if (shouldCheck.Contains(triggerObjectCandidate)) return;
-            shouldCheck.Add(triggerObjectCandidate);
-
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (!continiousDetection) return;
-
-            var triggerObjectCandidate = other.GetComponent<Tr>();
-            if (triggerObjectCandidate == null) return;
-
-            if (!shouldCheck.Contains(triggerObjectCandidate)) return;
-            shouldCheck.Remove(triggerObjectCandidate);
-        }
-
-        private void Update()
-        {
-            Debug.Log(shouldCheck.Count);
-            for (int i=shouldCheck.Count - 1; i >= 0; i--)
-            {
-                var other = shouldCheck[i];
-                if (other != null)
-                {
-                    CheckTrigger(other);
-                }
-            }
-        }
-        protected virtual void CheckTrigger(Tr other)
-        {
+            Debug.Log("Tried activating " + this);
             if (other == null) return;
 
-            if (Predicate(other) && enabled && !Cutscene.isRunningOn(target))
+            if (enabled && !Cutscene.isRunningOn(target))
             {
-                triggerObject = other;
-                StartCutscene(target);
+                Debug.Log(Predicate(other));
+                if (Predicate(other))
+                {
+                    triggerObject = other;
+                    Trigger();
+                    Debug.Log("Activated " + this);
+                }
             }
         }
         //protected virtual void OnDrawGizmos()
@@ -89,7 +47,7 @@ namespace amogus
 
     public abstract class CutsceneTrigger<T> : CutsceneTrigger<T, T> where T : MonoBehaviour 
     {
-        protected override void CheckTrigger(T other)
+        protected override void TryTrigger(T other)
         {
             target = other.GetComponent<T>();
             if (target == null) return;
@@ -97,7 +55,7 @@ namespace amogus
             if (Predicate(target) && enabled && !Cutscene.isRunningOn(target))
             {
                 triggerObject = target;
-                StartCutscene(target);
+                Trigger();
             }
         }
     }

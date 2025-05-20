@@ -11,7 +11,7 @@ namespace amogus
     [CreateAssetMenu(fileName = "PhysicsControllerState", menuName = "Player/PhysicsControllerState", order = 1)]
     public class PhysicsControllerState : ScriptableObject
     {
-        public string name;
+        public string controllerName;
         public float movementSpeed;
         public float speedLimit;
         public float airSpeed;
@@ -32,7 +32,7 @@ namespace amogus
             float height = 2f
         )
         {
-            this.name = name;
+            this.controllerName = name;
             this.movementSpeed = movementSpeed;
             this.speedLimit = speedLimit;
             this.airSpeed = airSpeed;
@@ -44,7 +44,7 @@ namespace amogus
         public static PhysicsControllerState Lerp(PhysicsControllerState s1, PhysicsControllerState s2, float fac)
         {
             return new PhysicsControllerState(
-            $"lerp between {s1.name} and {s2.name}",
+            $"lerp between {s1.controllerName} and {s2.controllerName}",
                 Mathf.Lerp(s1.movementSpeed, s2.movementSpeed, fac),
                 Mathf.Lerp(s1.speedLimit, s2.speedLimit, fac),
                 Mathf.Lerp(s1.airSpeed, s2.airSpeed, fac),
@@ -57,7 +57,7 @@ namespace amogus
 
         public override string ToString()
         {
-            return name;
+            return controllerName;
         }
     }
 }

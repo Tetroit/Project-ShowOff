@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using static UnityEngine.GraphicsBuffer;
 
 namespace amogus
@@ -19,8 +20,9 @@ namespace amogus
         public float time10 => 1 - time01;
 
         public bool pause;
+        public UnityEvent OnEnd;
 
-        List<T> users = new List<T>();
+        [SerializeField] List<T> users = new List<T>();
         public bool isRunningOn(T executor)
         {
             return users.Contains(executor);
@@ -29,7 +31,6 @@ namespace amogus
         {
             return users.Count > 0;
         }
-        public Action OnEnd;
 
         public virtual void StartAnimation(T executor, float time = 0)
         {

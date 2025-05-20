@@ -34,7 +34,7 @@ public class CameraWalkingShake : MonoBehaviour
 
     bool _rightSide;
     float _amplitude = 0;
-    int _currentClipID = 0;
+    //int _currentClipID = 0;
     
 
     void Start()

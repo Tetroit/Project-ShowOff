@@ -100,10 +100,10 @@ namespace amogus
         public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation)
         {
             if (!ValidateController(id)) return;
-            animation.OnEnd += () => { 
+            animation.OnEnd.AddListener( () => { 
                 SwitchController(id); 
                 ExitAnimation(); 
-            };
+            });
 
             if (currentControllerID != ControllerType.NONE)
             {
