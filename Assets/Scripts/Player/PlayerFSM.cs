@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -29,7 +30,17 @@ namespace amogus
         List<ControllerTypeToControllerPair> controllerList = new();
         [SerializeField]
         PlayerCamera cameraScript;
+        CameraWalkingShake shake;
         public bool inAnimation = false;
+        public bool isMoving
+        {
+            get
+            {
+                if (currentControllerID == ControllerType.NONE) return false;
+                if (!ValidateController(currentControllerID)) return false;
+                return controllerDict[currentControllerID].isMoving;
+            }
+        }
         public Dictionary<ControllerType, PlayerController> controllerDict =>
             controllerList.ToDictionary(pair => pair.controllerType, pair => pair.playerController);
 
@@ -39,13 +50,24 @@ namespace amogus
         }
         private void OnEnable()
         {
+            shake = GetComponentInChildren<CameraWalkingShake>();
             foreach (var pair in controllerList)
             {
+                pair.playerController.OnCameraShakeChange += SetShake;
                 if (startControllerType == pair.controllerType) pair.playerController.EnableControl();
                 else pair.playerController.DisableControl();
             }
             currentControllerID = startControllerType;
             inAnimation = false;
+        }
+
+        private void OnDisable()
+        {
+            foreach (var pair in controllerList)
+            {
+                pair.playerController.DisableControl();
+                pair.playerController.OnCameraShakeChange -= SetShake;
+            }
         }
 
         public bool ValidateController(ControllerType id)
@@ -78,10 +100,10 @@ namespace amogus
         public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation)
         {
             if (!ValidateController(id)) return;
-            animation.OnEnd += () => { 
+            animation.OnEnd.AddListener( () => { 
                 SwitchController(id); 
                 ExitAnimation(); 
-            };
+            });
 
             if (currentControllerID != ControllerType.NONE)
             {
@@ -104,19 +126,32 @@ namespace amogus
                 controllerDict[currentControllerID].DisableControl();
 
             if (id != ControllerType.NONE)
+            {
                 controllerDict[id].EnableControl();
+            }
             currentControllerID = id;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            ControllerSwitch sw = other.GetComponent<ControllerSwitch>();
-            if (sw == null || !sw.enabled)
-            {
-                Debug.Log("No switch found");
-                return;
-            }
             if (inAnimation) return;
+            ControllerSwitch sw = other.GetComponent<ControllerSwitch>();
+            if (sw != null && sw.enabled)
+            {
+                ActivateSwitch(sw);
+            }
+            //CutsceneTrigger cutsceneTrigger = other.GetComponent<CutsceneTrigger>();
+            //if (cutsceneTrigger != null && cutsceneTrigger.enabled)
+            //{
+            //    DisableControls();
+            //    cutsceneTrigger.Cutscene.OnEnd += EnableControls;
+            //    cutsceneTrigger.StartCutscene(this);
+            //}
+        }
+
+
+        public void ActivateSwitch(ControllerSwitch sw)
+        {
             if (sw.FromType == currentControllerID)
             {
                 Debug.Log("Forward transition triggered");
@@ -124,18 +159,19 @@ namespace amogus
                     SwitchController(sw.ToType, sw.ForwardTransitionBase);
                 else
                     SwitchController(sw.ToType);
+                sw.TransferData(controllerDict[sw.ToType]);
             }
             else if (sw.ToType == currentControllerID)
             {
 
-                Debug.Log("Forward transition triggered");
+                Debug.Log("Backward transition triggered");
                 if (sw.useBackwardAnimation)
                     SwitchController(sw.FromType, sw.BackwardTransitionBase);
                 else
                     SwitchController(sw.ToType);
+                sw.TransferData(controllerDict[sw.ToType]);
             }
         }
-
         public void EnterAnimation()
         {
             inAnimation = true;
@@ -160,6 +196,12 @@ namespace amogus
         {
             if (cameraScript == null) return;
             cameraScript.ReadRotation();
+        }
+
+        public void SetShake(CameraWalkingShake.State shakeID)
+        {
+            if (shake != null)
+                shake.ChangeState(shakeID);
         }
     }
 }
