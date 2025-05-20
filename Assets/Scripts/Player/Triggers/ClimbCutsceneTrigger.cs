@@ -12,7 +12,7 @@ namespace amogus
         [SerializeField] private ClimbCutsceneAnimation cutscene;
         public override ScriptedAnimation<PlayerFSM> Cutscene => cutscene;
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
-            return InputSystem.actions.FindActionMap("Player").FindAction("Interact").WasPressedThisFrame();
+            return true;
         };
 
         [ExecuteInEditMode]

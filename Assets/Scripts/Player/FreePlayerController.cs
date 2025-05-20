@@ -30,13 +30,9 @@ namespace amogus
 
         public bool isSprinting { get; private set; }
         public bool isCrouching { get; private set; }
-        bool isSafe;
         public bool lockControls;
-        float accelerationFac = 0;
 
         bool needsCrouchHandling = false;
-
-        Vector3 lastSafePos;
 
         public InputDevice inputDevice;
 
@@ -62,7 +58,6 @@ namespace amogus
         private void Start()
         {
             Cursor.visible = false;
-            isSafe = true;
 
             if (cameraTransform != null)
             {
