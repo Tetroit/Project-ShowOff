@@ -5,12 +5,10 @@ using UnityEngine;
 public class ScrollHUD : MonoBehaviour
 {
     // Icons
-    [SerializeField] private GameObject bookLeft; // State 1
-    [SerializeField] private GameObject bookRight; // State 0
-    [SerializeField] private GameObject lighterLeft; // State 0
-    [SerializeField] private GameObject lighterRight; // State 2
-    [SerializeField] private GameObject handLeft; // State 2
-    [SerializeField] private GameObject handRight; // State 1
+    [SerializeField] private GameObject bookDown; // State 0
+    [SerializeField] private GameObject lighterUp; // State 0
+    [SerializeField] private GameObject handDown; // State 1
+    [SerializeField] private GameObject handUp; // State -1
 
     [SerializeField] private GameObject tabKeysIcon;
     [SerializeField] private GameObject tabHandsIcon;
@@ -55,15 +53,18 @@ public class ScrollHUD : MonoBehaviour
         if (!inKeyMenu)
         {
             int oldState = normalState;
+            if (Input.GetKeyDown(KeyCode.Alpha1)) normalState = 0;
+            if (Input.GetKeyDown(KeyCode.Alpha2)) normalState = 1;
+            if (Input.GetKeyDown(KeyCode.Alpha3)) normalState = -1;
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
                 normalState += 1;
-                if (normalState >= 3) normalState = 0;
+                if (normalState >= 2) normalState = 1;
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
                 normalState -= 1;
-                if (normalState <= -1) normalState = 2;
+                if (normalState <= -2) normalState = -1;
             }
             if (normalState != oldState)
             {
@@ -94,31 +95,33 @@ public class ScrollHUD : MonoBehaviour
     }
     private void DisableAllIcons()
     {
-        bookLeft.SetActive(false);
-        bookRight.SetActive(false);
-        lighterLeft.SetActive(false);
-        lighterRight.SetActive(false);
-        handLeft.SetActive(false);
-        handRight.SetActive(false);
+        bookDown.SetActive(false);
+        lighterUp.SetActive(false);
+        handDown.SetActive(false);
+        handUp.SetActive(false);
     }
     private void EnableCorrectIcons()
     {
         switch (normalState)
         {
-            case 0:
+            case 1: // Holding Lighter
+                UnityEngine.Debug.Log("Holding Lighter");
                 DisableAllIcons();
-                bookRight.SetActive(true);
-                lighterLeft.SetActive(true);
+
+                handUp.SetActive(true);
                 break;
-            case 1:
+            case 0: // Holding Nothing
+                UnityEngine.Debug.Log("Holding Nothing");
                 DisableAllIcons();
-                bookLeft.SetActive(true);
-                handRight.SetActive(true);
+
+                bookDown.SetActive(true);
+                lighterUp.SetActive(true);
                 break;
-            case 2:
+            case -1: // Holding Book
+                UnityEngine.Debug.Log("Holding Book");
                 DisableAllIcons();
-                handLeft.SetActive(true);
-                lighterRight.SetActive(true);
+
+                handDown.SetActive(true);
                 break;
         }
     }
