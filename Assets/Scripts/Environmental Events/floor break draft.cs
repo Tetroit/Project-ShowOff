@@ -1,14 +1,11 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class floorbreakdraft : MonoBehaviour
+public class FloorBreak : MonoBehaviour
 {
-    float i = 0;
-    private void OnCollisionEnter(Collision collision)
+    [SerializeField] Collider collider;
+    public void Fall()
     {
-        if (i >= 1)
-            Destroy(gameObject);
-       
+        collider.enabled = false;
     }
-    
 }
