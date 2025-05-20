@@ -18,4 +18,6 @@ public abstract class InventoryItemView : MonoBehaviour
     }
 
     public virtual void Interact(GameObject user) { }
+
+    public virtual void AddInInventory(GameObject user) { }
 }

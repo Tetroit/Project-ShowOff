@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace amogus
 {
     public class DoorCutsceneTrigger : CutsceneTrigger<PlayerFSM, Door>
     {
         [SerializeField] private DoorCutsceneAnimation cutscene;
+        public string unlockCode;
+        public bool isLocked = false;
 
         public override ScriptedAnimation<Door> Cutscene => cutscene;
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
-            if (target.isLocked) return false;
+            if (isLocked) return false;
             return true;
         };
     }

@@ -1,5 +1,4 @@
 using amogus;
-using System.Linq;
 using UnityEngine;
 
 public class Key : InventoryItemView
@@ -9,15 +8,19 @@ public class Key : InventoryItemView
     public override void Interact(GameObject user)
     {
         base.Interact(user);
-
-        RaycastHit[] hits = Physics.RaycastAll(user.transform.position, user.transform.forward, 1);
+        Collider[] hits = Physics.OverlapSphere(user.transform.position, 1,int.MaxValue, QueryTriggerInteraction.Collide);
         if (hits.Length == 0) return;
-        Door door = null;
-        foreach (RaycastHit h in hits)
-            if (h.transform.TryGetComponent(out door)) break;
+        DoorCutsceneTrigger door = null;
+        foreach (Collider c in hits)
+            if (c.transform.TryGetComponent(out door)) break;
 
-        if(door == null || door.unlockCode != _doorCode) return;
+        if(door == null || !door.isLocked || door.unlockCode != _doorCode) return;
 
-        door.Open();
+        door.isLocked = false;
+    }
+
+    public override void AddInInventory(GameObject user)
+    {
+        Debug.Log("Spawn in inventory");
     }
 }
