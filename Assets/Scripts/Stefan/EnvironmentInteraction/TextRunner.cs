@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class TextRunner : MonoBehaviour
 {
-    [SerializeField] LineView _lineView;
+    public LineView LineView;
     [SerializeField] DialogueLine[] _lines;
     [SerializeField] bool _runOnStart;
     [SerializeField] bool _disableAfterFinish;
@@ -21,11 +21,11 @@ public class TextRunner : MonoBehaviour
 
     public void EnableTextArea()
     {
-        _lineView.gameObject.SetActive(true);
+        LineView.gameObject.SetActive(true);
     }
     public void DisableTextArea()
     {
-        _lineView.gameObject.SetActive(false);
+        LineView.gameObject.SetActive(false);
     }
     public void DisplayText()
     {
@@ -34,7 +34,7 @@ public class TextRunner : MonoBehaviour
             Debug.LogWarning("No text lines to display");
             return;
         }
-        _lineView.matchAudioTime = _useDialogueTime;
+        LineView.matchAudioTime = _useDialogueTime;
 
         EnableTextArea();
         RecursiveAdvance(0);
@@ -43,7 +43,7 @@ public class TextRunner : MonoBehaviour
     public void DisplayText(string txt)
     {
         if(string.IsNullOrEmpty(txt)) return;
-        _lineView.RunLine(new DialogueLine("", txt));
+        LineView.RunLine(new DialogueLine("", txt));
 
     }
 
@@ -53,10 +53,10 @@ public class TextRunner : MonoBehaviour
         var line = _lines[i];
         i++;
         if (i > _lines.Length - 1)
-            _lineView.RunLine(line, () => { if (_disableAfterFinish) DisableTextArea(); });
+            LineView.RunLine(line, () => { if (_disableAfterFinish) DisableTextArea(); });
         else
         {
-            _lineView.RunLine(line, () => {
+            LineView.RunLine(line, () => {
                 RecursiveAdvance(i);
             });
         }
@@ -68,9 +68,9 @@ public class TextRunner : MonoBehaviour
     {
         var currentDialogue = _lines[currentDialogueIndex];
         if (currentDialogueIndex >= _lines.Length - 1)
-            _lineView.InterruptLine(currentDialogue, null);
+            LineView.InterruptLine(currentDialogue, null);
         else
-            _lineView.InterruptLine(currentDialogue, () => RecursiveAdvance(++currentDialogueIndex));
+            LineView.InterruptLine(currentDialogue, () => RecursiveAdvance(++currentDialogueIndex));
 
     }
 }

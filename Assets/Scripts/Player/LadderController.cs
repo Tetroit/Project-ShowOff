@@ -9,7 +9,7 @@ namespace amogus
         [SerializeField] Transform target; 
         [SerializeField] float speed;
 
-        [SerializeField] Ladder ladderContext;
+        Ladder ladderContext;
         public override void DisableControl()
         {
             enabled = false;
