@@ -102,7 +102,7 @@ namespace amogus
             if (!ValidateController(id)) return;
             animation.OnEnd.AddListener( () => { 
                 SwitchController(id); 
-                ExitAnimation(); 
+                ExitAnimation();
             });
 
             if (currentControllerID != ControllerType.NONE)
