@@ -5,7 +5,8 @@ public abstract class InventoryItemView : MonoBehaviour
 
     public virtual void Select()
     {
-        gameObject.SetActive(true);
+        if (gameObject != null)
+            gameObject.SetActive(true);
 
     }
 

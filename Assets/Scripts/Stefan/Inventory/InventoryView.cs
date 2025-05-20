@@ -21,6 +21,9 @@ public class InventoryView : MonoBehaviour
     [field: SerializeField] public UnityEvent<InventoryItemView> ItemSelected { get; private set; }
     [field: SerializeField] public UnityEvent<InventoryItemView> ItemDeselected { get; private set; }
     int _curentItemIndex;
+    
+    public int ItemCount => items.Count;
+    
     void Awake()
     {
         OnAwake();
@@ -30,15 +33,16 @@ public class InventoryView : MonoBehaviour
     {
         OnStart(); 
     }
+
     void OnEnable()
     {
-        GetCurrentItem().Select();
+        GetCurrentItem()?.Select();
 
     }
 
     void OnDisable()
     {
-        GetCurrentItem().Deselect();
+        GetCurrentItem()?.Deselect();
     }
 
     //DON'T FORGET TO SET THE NOTE AS A PARENT WHILE HOLDING ITEM
@@ -78,6 +82,7 @@ public class InventoryView : MonoBehaviour
 
     protected InventoryItemView GetCurrentItem()
     {
+        if(items.Count == 0) return null;
         return items[_curentItemIndex];
     }
 

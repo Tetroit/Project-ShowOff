@@ -14,7 +14,7 @@ public class Key : InventoryItemView
         if (hits.Length == 0) return;
         Door door = null;
         foreach (RaycastHit h in hits)
-            if (h.transform.TryGetComponent(out door)) ;
+            if (h.transform.TryGetComponent(out door)) break;
 
         if(door == null || door.unlockCode != _doorCode) return;
 

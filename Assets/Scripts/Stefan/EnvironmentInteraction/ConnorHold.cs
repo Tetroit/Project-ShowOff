@@ -114,7 +114,11 @@ public class ConnorHold : HoldManager
             Quaternion desiredRotation = baseRotation * slightRotation;
 
             float rotationSpeed = 5f;
-            objTransform.rotation = Quaternion.Lerp(objTransform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
+            objTransform.SetPositionAndRotation
+            (
+                Vector3.Lerp(objTransform.position, _holdSpot.position, .3f), 
+                Quaternion.Lerp(objTransform.rotation, desiredRotation, Time.deltaTime * rotationSpeed)
+            );
             yield return null;
 
         }

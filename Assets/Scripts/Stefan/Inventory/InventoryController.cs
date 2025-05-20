@@ -37,7 +37,8 @@ public class InventoryController : MonoBehaviour
     {
         foreach (var i in _inventories)
             i.gameObject.SetActive(false);
-
+        if (GetCurrentInventory().ItemCount == 0) _currentInventoryIndex++;
+        WrapIndexOnOverflow();
         GetCurrentInventory().gameObject.SetActive(true);
     }
 
@@ -51,10 +52,18 @@ public class InventoryController : MonoBehaviour
         //monodirectional
         GetCurrentInventory().gameObject.SetActive(false);
         _currentInventoryIndex++;
-        if(_currentInventoryIndex >=  _inventories.Count)
-            _currentInventoryIndex = 0;
+        WrapIndexOnOverflow();
+        if (GetCurrentInventory().ItemCount == 0) _currentInventoryIndex++;
+        WrapIndexOnOverflow();
+
         GetCurrentInventory().gameObject.SetActive(true);
 
+    }
+
+    void WrapIndexOnOverflow()
+    {
+        if (_currentInventoryIndex >= _inventories.Count)
+            _currentInventoryIndex = 0;
     }
 
     void OnScroll(InputAction.CallbackContext context)
