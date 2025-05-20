@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
@@ -29,11 +30,9 @@ namespace amogus
 
         public bool isSprinting { get; private set; }
         public bool isCrouching { get; private set; }
-        bool isSafe;
         public bool lockControls;
-        float accelerationFac = 0;
 
-        Vector3 lastSafePos;
+        bool needsCrouchHandling = false;
 
         public InputDevice inputDevice;
 
@@ -58,8 +57,7 @@ namespace amogus
         }
         private void Start()
         {
-            Cursor.visible = false;
-            isSafe = true;
+
 
             if (cameraTransform != null)
             {
@@ -72,6 +70,10 @@ namespace amogus
         {
             if (lockControls) return;
             cameraTransform.GetComponent<PlayerCamera>().UpdateTransform(transform.position);
+            if (PlayerInputHandler.Instance.CrouchPressedThisFrame)
+            {
+                needsCrouchHandling = true;
+            }
         }
         private void LateUpdate()
         {
@@ -195,12 +197,29 @@ namespace amogus
 
                 if (PlayerInputHandler.Instance.JumpPressed && isGrounded) shouldJump = true;
 
-                if (PlayerInputHandler.Instance.CrouchPressed)
-                    SwitchState(1);
-                else if (PlayerInputHandler.Instance.SprintPressed)
-                    SwitchState(2);
+
+                if (isCrouching)
+                {
+                    if (needsCrouchHandling)
+                    {
+                        SwitchState(0);
+                        needsCrouchHandling = false;
+                    }
+                    else if (PlayerInputHandler.Instance.SprintPressed)
+                        SwitchState(2);
+                }
                 else
-                    SwitchState(0);
+                {
+                    if (needsCrouchHandling)
+                    {
+                        SwitchState(1);
+                        needsCrouchHandling = false;
+                    }
+                    else if (PlayerInputHandler.Instance.SprintPressed)
+                        SwitchState(2);
+                    else
+                        SwitchState(0);
+                }
             }
             //-------------STATE RESOLUTION-------------
 
@@ -282,11 +301,17 @@ namespace amogus
 
         public void SwitchState (int newState)
         {
+            if (currentState == newState) return;
             rb.position += new Vector3(0, (states[newState].height - state.height) / 2f, 0);
             currentState = newState;
+            isCrouching = newState == 1;
+            isSprinting = newState == 2;
+
+            OnCameraShakeChange?.Invoke((CameraWalkingShake.State)newState);
         }
         public override void EnableControl()
         {
+            OnCameraShakeChange?.Invoke(CameraWalkingShake.State.WALKING);
             transform.position = cameraTransform.position;
             rb.position = cameraTransform.position;
             coll.enabled = true;
@@ -303,6 +328,8 @@ namespace amogus
             rb.isKinematic = true;
             coll.enabled = false;
             lockControls = true;
+
+            _isMoving = false;
 
             Debug.Log("disabled free move controls");
         }

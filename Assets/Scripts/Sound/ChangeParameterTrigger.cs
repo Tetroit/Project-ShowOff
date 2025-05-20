@@ -10,7 +10,8 @@ public class ChangeParameterTrigger : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             AudioManager.instance.SetAmbienceByParameter(parameterName, newValue);
-            Debug.Log("changed");
+            Debug.Log("changed" + parameterName);
+
         }
     }
 }

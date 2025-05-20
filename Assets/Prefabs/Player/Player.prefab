@@ -783,18 +783,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8544192298419466385}
         m_TargetAssemblyTypeName: TextRunner, Assembly-CSharp
-        m_MethodName: EnableTextArea
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8544192298419466385}
-        m_TargetAssemblyTypeName: TextRunner, Assembly-CSharp
         m_MethodName: DisplayText
         m_Mode: 1
         m_Arguments:
@@ -866,6 +854,10 @@ MonoBehaviour:
   _lines:
   - characterName: 
     text: Click to rotate
+    playTimeSeconds: 0
+  _runOnStart: 0
+  _disableAfterFinish: 0
+  _useDialogueTime: 0
 --- !u!114 &5794955200590595110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,64 +870,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 376cbb5d30823f74fac79b408e6f3bb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frequency: 0.5
   soundRotation: 0
-  XShake:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.0041656494
-      value: -0.19880149
-      inSlope: 0.39788207
-      outSlope: 0.39788207
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0.19742316
-      inSlope: 0.39788207
-      outSlope: 0.39788207
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  YShake:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.004147661
-      value: 0.001380414
-      inSlope: -0.000000052387882
-      outSlope: -0.000000052387882
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.13333336
-    - serializedVersion: 3
-      time: 0.499944
-      value: 0.15022923
-      inSlope: -0.0028666316
-      outSlope: -0.0028666316
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.0166664
-      value: 0.00050594914
-      inSlope: 0.0061775227
-      outSlope: 0.0061775227
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.15833332
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   controls: {fileID: 815316779487328362}
-  rotationIntensity: 10
+  states:
+  - {fileID: 11400000, guid: 3cdcfb575961e7b469860ce3445f98a0, type: 2}
+  - {fileID: 11400000, guid: 89a044d671cb4f540bd2a70302fb4d53, type: 2}
+  - {fileID: 11400000, guid: 77e24d53c38abf84499360e8ab4e5cf6, type: 2}
+  - {fileID: 11400000, guid: 5301029c3ae42d741a834351c6877cac, type: 2}

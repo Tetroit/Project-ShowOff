@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -55,16 +56,24 @@ public class InteractionManager : MonoBehaviour
     {
         _input = new();
         
-        _input.Player.Interact.started += Interact;
-        _input.UI.Cancel.started += Dissmised;
+        _input.Player.Interact.started += InteractInput;
+        _input.UI.Cancel.started += (c)=> Dissmised();
     }
-    
+
     void Start()
     {
         _holdManager.Init(new InputFacade(_input));
     }
 
-    void Interact(InputAction.CallbackContext context)
+    void InteractInput(InputAction.CallbackContext context)
+    {
+        if (_currentInteractingItem == null)
+            Interact();
+        else
+            Dissmised();
+    }
+
+    void Interact()
     {
         if (_lastInteractable == null || _interactAnimation != null) return;
         _currentInteractingItem = _lastInteractable;
@@ -80,7 +89,7 @@ public class InteractionManager : MonoBehaviour
     }
 
 
-    void Dissmised(InputAction.CallbackContext context)
+    void Dissmised()
     {
         if (_currentInteractingItem == null || _interactAnimation != null) return;
         

@@ -30,6 +30,7 @@ namespace amogus
         List<ControllerTypeToControllerPair> controllerList = new();
         [SerializeField]
         PlayerCamera cameraScript;
+        CameraWalkingShake shake;
         public bool inAnimation = false;
         public bool isMoving
         {
@@ -49,13 +50,24 @@ namespace amogus
         }
         private void OnEnable()
         {
+            shake = GetComponentInChildren<CameraWalkingShake>();
             foreach (var pair in controllerList)
             {
+                pair.playerController.OnCameraShakeChange += SetShake;
                 if (startControllerType == pair.controllerType) pair.playerController.EnableControl();
                 else pair.playerController.DisableControl();
             }
             currentControllerID = startControllerType;
             inAnimation = false;
+        }
+
+        private void OnDisable()
+        {
+            foreach (var pair in controllerList)
+            {
+                pair.playerController.DisableControl();
+                pair.playerController.OnCameraShakeChange -= SetShake;
+            }
         }
 
         public bool ValidateController(ControllerType id)
@@ -88,10 +100,10 @@ namespace amogus
         public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation)
         {
             if (!ValidateController(id)) return;
-            animation.OnEnd += () => { 
+            animation.OnEnd.AddListener( () => { 
                 SwitchController(id); 
                 ExitAnimation(); 
-            };
+            });
 
             if (currentControllerID != ControllerType.NONE)
             {
@@ -122,14 +134,19 @@ namespace amogus
 
         private void OnTriggerEnter(Collider other)
         {
-            ControllerSwitch sw = other.GetComponent<ControllerSwitch>();
-            if (sw == null || !sw.enabled)
-            {
-                Debug.Log("No switch found");
-                return;
-            }
             if (inAnimation) return;
-            ActivateSwitch(sw);
+            ControllerSwitch sw = other.GetComponent<ControllerSwitch>();
+            if (sw != null && sw.enabled)
+            {
+                ActivateSwitch(sw);
+            }
+            //CutsceneTrigger cutsceneTrigger = other.GetComponent<CutsceneTrigger>();
+            //if (cutsceneTrigger != null && cutsceneTrigger.enabled)
+            //{
+            //    DisableControls();
+            //    cutsceneTrigger.Cutscene.OnEnd += EnableControls;
+            //    cutsceneTrigger.StartCutscene(this);
+            //}
         }
 
 
@@ -179,6 +196,12 @@ namespace amogus
         {
             if (cameraScript == null) return;
             cameraScript.ReadRotation();
+        }
+
+        public void SetShake(CameraWalkingShake.State shakeID)
+        {
+            if (shake != null)
+                shake.ChangeState(shakeID);
         }
     }
 }
