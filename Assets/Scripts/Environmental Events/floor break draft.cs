@@ -8,8 +8,7 @@ public class floorbreakdraft : MonoBehaviour
     {
         if (i >= 1)
             Destroy(gameObject);
-        else
-        i++;
+       
     }
     
 }
