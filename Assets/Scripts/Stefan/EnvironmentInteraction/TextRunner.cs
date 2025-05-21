@@ -1,4 +1,5 @@
 using Dialogue;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,8 @@ public class TextRunner : MonoBehaviour
     [SerializeField] bool _useDialogueTime;
 
     public bool IsTextAreaActive { get;private set; }
+
+    [SerializeField] EventReference voiceLines;
 
     int currentDialogueIndex;
     DialogueLine _currentDialogue;
@@ -35,6 +38,12 @@ public class TextRunner : MonoBehaviour
     }
     public void DisplayText()
     {
+        //Addition for voicelines
+        if(AudioManager.instance != null && !voiceLines.IsNull)
+        {
+            AudioManager.instance.PlayOneShot(voiceLines, Vector3.zero);
+        }
+
         if (_lines.Length == 0)
         {
             Debug.LogWarning("No text lines to display");
