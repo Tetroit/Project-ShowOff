@@ -17,6 +17,13 @@ public interface IHoldable : IInteractable
     Quaternion GetInitialRotation();
 }
 
+public interface ITextDisplayer
+{
+    public void Activate();
+    public void Deactivate();
+    public void Toggle();
+}
+
 public interface IPickupable : IInteractable
 {
     InventoryItemView ItemData { get; }
