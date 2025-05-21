@@ -97,21 +97,20 @@ namespace amogus
             controllerDict[currentControllerID].EnableControl();
             ExitAnimation();
         }
-        public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation)
+        public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation, bool enableCamera = false)
         {
             if (!ValidateController(id)) return;
             animation.OnEnd.AddListener( () => { 
                 SwitchController(id); 
-                ExitAnimation();
+                ExitAnimation(enableCamera);
             });
 
             if (currentControllerID != ControllerType.NONE)
             {
                 Debug.Log("Entered animation");
                 controllerDict[currentControllerID].DisableControl();
-                DisableCamera();
             }
-            EnterAnimation();
+            EnterAnimation(!enableCamera);
             animation.StartAnimation(this);
             currentControllerID = ControllerType.NONE;
         }
@@ -156,7 +155,7 @@ namespace amogus
             {
                 Debug.Log("Forward transition triggered");
                 if (sw.useForwardAnimation)
-                    SwitchController(sw.ToType, sw.ForwardTransitionBase);
+                    SwitchController(sw.ToType, sw.ForwardTransitionBase, sw.enableCamera);
                 else
                     SwitchController(sw.ToType);
                 sw.TransferData(controllerDict[sw.ToType]);
@@ -166,21 +165,23 @@ namespace amogus
 
                 Debug.Log("Backward transition triggered");
                 if (sw.useBackwardAnimation)
-                    SwitchController(sw.FromType, sw.BackwardTransitionBase);
+                    SwitchController(sw.FromType, sw.BackwardTransitionBase, sw.enableCamera);
                 else
                     SwitchController(sw.ToType);
                 sw.TransferData(controllerDict[sw.ToType]);
             }
         }
-        public void EnterAnimation()
+        public void EnterAnimation(bool disableCamera = true)
         {
             inAnimation = true;
-            DisableCamera();
+            if (disableCamera)
+                DisableCamera();
         }
-        public void ExitAnimation()
+        public void ExitAnimation(bool enableCamera = true)
         {
             inAnimation = false;
-            EnableCamera();
+            if (enableCamera)
+                EnableCamera();
         }
         public void EnableCamera()
         {

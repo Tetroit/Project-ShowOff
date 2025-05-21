@@ -5,6 +5,7 @@ namespace amogus
 {
     public class Ladder : MonoBehaviour
     {
+        public const bool noRotation = true;
         public enum EndType
         {
             Start = 0,
