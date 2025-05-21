@@ -62,6 +62,7 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
 
     public void Deactivate()
     {
+        _runner.InteruptDialogue();
         _runner.DisableTextArea();
     }
 
