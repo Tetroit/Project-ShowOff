@@ -18137,6 +18137,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5016133296133080745, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1071410083}
+    - targetCorrespondingSourceObject: {fileID: 5016133296133080745, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1071410084}
   m_SourcePrefab: {fileID: 100100000, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
 --- !u!1 &737061645 stripped
 GameObject:
@@ -36195,13 +36198,37 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: aca1da869e0f430428708b27ee959e3a, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: -8556565551402276985, guid: aca1da869e0f430428708b27ee959e3a, type: 2}
+    value: {fileID: 1071410084}
   m_ExposedReferences:
     m_References: []
+--- !u!95 &1071410084
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737061645}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1072021379
 GameObject:
   m_ObjectHideFlags: 0
@@ -48873,13 +48900,16 @@ MonoBehaviour:
   disableControls: 1
   target: {fileID: 0}
   cutscene:
-    totalDuration: 5
+    totalDuration: 6
     pause: 0
     OnEnd:
       m_PersistentCalls:
         m_Calls: []
     users: []
+    trigger: {fileID: 1130878788}
     director: {fileID: 0}
+  targetPos: {x: 0.59, y: 0.78, z: 0}
+  targetFacing: {x: 0, y: 0.9748585, z: 0, w: 0.22282477}
 --- !u!65 &1130878789
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48895,7 +48925,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
