@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonsUI : MonoBehaviour
 {
@@ -19,8 +20,10 @@ public class ButtonsUI : MonoBehaviour
     }
     public void ClickPlay()
     {   // Do start of game stuff here
+        SceneManager.LoadScene(1);
         _gameCanvas.SetActive(true);
         _menuCanvas.SetActive(false);
+      
     }
     public void ClickSettings()
     {
