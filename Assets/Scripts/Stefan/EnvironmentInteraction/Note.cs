@@ -20,12 +20,17 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
         _initialPosition = transform.position;
         _initialRotation = transform.rotation;
 
-        if( _textDisplay == null )
+        try
         {
-            _textDisplay = FindFirstObjectByType<Canvas>().transform.FindDeepChild("NoteContentTextArea").GetComponent<LineView>();
+            if (_textDisplay == null)
+            {
+                _textDisplay = FindFirstObjectByType<Canvas>().transform.FindDeepChild("NoteContentTextArea").GetComponent<LineView>();
+            }
+            if (_runner == null) GetComponent<TextRunner>();
+            _runner.LineView = _textDisplay;
+
         }
-        if (_runner == null) GetComponent<TextRunner>();
-        _runner.LineView = _textDisplay;
+        catch { }
 
     }
     public Vector3 GetInitialPosition()

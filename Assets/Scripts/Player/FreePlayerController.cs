@@ -308,6 +308,11 @@ namespace amogus
             isSprinting = newState == 2;
 
             OnCameraShakeChange?.Invoke((CameraWalkingShake.State)newState);
+
+            if (newState == 2)
+                OnFOVChange?.Invoke(80);
+            else
+                OnFOVChange?.Invoke(60);
         }
         public override void EnableControl()
         {

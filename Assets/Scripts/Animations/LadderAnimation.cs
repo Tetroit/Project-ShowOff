@@ -19,29 +19,38 @@ namespace amogus
         public override void Begin(PlayerFSM target)
         {
             startPos = target.transform.position;
-            startRot = target.transform.rotation;
+            if (!Ladder.noRotation)
+                startRot = target.transform.rotation;
 
             if (target.currentControllerID == PlayerFSM.ControllerType.FREE_MOVE)
             {
                 targetPos = ladder.GetClosestPoint(startPos);
-                targetRot = ladder.facing;
+                if (!Ladder.noRotation)
+                    targetRot = ladder.facing;
             }
 
             else if (target.currentControllerID == PlayerFSM.ControllerType.LADDER)
             {
                 targetPos = ladder.GetEntryPoint(whichEnd);
-                targetRot = ladder.GetEntryRotation(whichEnd);
+                if (!Ladder.noRotation)
+                    targetRot = ladder.GetEntryRotation(whichEnd);
             }
         }
         public override void Animate(PlayerFSM target)
         {
-            var q = Quaternion.Slerp(startRot, targetRot, time01);
-            target.transform.SetPositionAndRotation(Vector3.Lerp(startPos, targetPos, time01), q);
+            if (Ladder.noRotation)
+                target.transform.position = Vector3.Lerp(startPos, targetPos, time01);
+            else
+            {
+                var q = Quaternion.Slerp(startRot, targetRot, time01);
+                target.transform.SetPositionAndRotation(Vector3.Lerp(startPos, targetPos, time01), q);
+            }
         }
 
         public override void End(PlayerFSM target)
         {
-            target.ReadCamera();
+            if (!Ladder.noRotation)
+                target.ReadCamera();
         }
 
         public void LazyInitialiseFromSwitch(LadderSwitch lSwitch, Ladder.EndType end)

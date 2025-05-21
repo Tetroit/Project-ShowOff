@@ -8,5 +8,6 @@ namespace amogus
         public abstract void DisableControl();
         public abstract bool isMoving { get; }
         public Action<CameraWalkingShake.State> OnCameraShakeChange;
-}
+        public Action<float> OnFOVChange;
+    }
 }

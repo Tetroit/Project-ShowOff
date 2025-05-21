@@ -6,10 +6,12 @@ namespace amogus
     public class LadderController : PlayerController
     {
         [SerializeField] PlayerFSM playerFSM;
-        [SerializeField] Transform target; 
+        [SerializeField] Transform target;
+        [SerializeField] Transform cameraTransform;
         [SerializeField] float speed;
 
-        Ladder ladderContext;
+        [SerializeField] Ladder ladderContext;
+        Vector3 facing => cameraTransform.rotation * Vector3.forward;
         public override void DisableControl()
         {
             enabled = false;
@@ -33,8 +35,10 @@ namespace amogus
         float playerAction;
         public void Update()
         {
+            bool flipCamera = Vector3.Dot(facing, ladderContext.facing * Vector3.forward) < 0;
+            
             playerAction = PlayerInputHandler.Instance.Move.y;
-            target.transform.position += Time.deltaTime * speed * playerAction * ladderContext.GetDir();
+            target.transform.position += Time.deltaTime * speed * playerAction * (flipCamera? -1 : 1) * ladderContext.GetDir();
             //target.transform.position += Time.deltaTime * speed * playerAction * Vector3.up;
 
             if (playerAction < 0 && ladderContext.GetHeight(target.position) <= 0)

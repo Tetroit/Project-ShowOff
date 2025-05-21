@@ -9,6 +9,7 @@ namespace amogus
         public override PlayerFSM.ControllerType FromType => PlayerFSM.ControllerType.FREE_MOVE;
         public override PlayerFSM.ControllerType ToType => PlayerFSM.ControllerType.LADDER;
 
+        public override bool enableCamera => true;
         [SerializeField]
         private LadderAnimation toLadderAnimation;
         [SerializeField]
