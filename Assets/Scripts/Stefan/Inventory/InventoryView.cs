@@ -36,16 +36,17 @@ public class InventoryView : MonoBehaviour
 
     void OnEnable()
     {
-        GetCurrentItem()?.Select();
+        if(GetCurrentItem() != null)
+            GetCurrentItem().Select();
 
     }
 
     void OnDisable()
     {
-        GetCurrentItem()?.Deselect();
+        if(GetCurrentItem() != null)
+            GetCurrentItem().Deselect();
     }
 
-    //DON'T FORGET TO SET THE NOTE AS A PARENT WHILE HOLDING ITEM
     public void InteractCurrent()
     {
         _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
@@ -88,4 +89,10 @@ public class InventoryView : MonoBehaviour
 
     protected virtual void OnAwake() { }
     protected virtual void OnStart() { }
+
+    public void AddItem(InventoryItemView item)
+    {
+        items.Add(item);
+        item.AddInInventory(_user);
+    }
 }

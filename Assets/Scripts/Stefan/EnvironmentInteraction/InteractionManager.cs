@@ -17,6 +17,11 @@ public interface IHoldable : IInteractable
     Quaternion GetInitialRotation();
 }
 
+public interface IPickupable : IInteractable
+{
+    InventoryItemView ItemData { get; }
+}
+
 public readonly struct InputFacade
 {
     readonly InputSystem_Actions _input;
@@ -41,6 +46,7 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] float _interactionRadius;
     [SerializeField] LayerMask _interactionMask;
     [SerializeField] HoldManager _holdManager;
+    [SerializeField] PickupManager _pickupManager;
     
     Coroutine _interactAnimation;
 
@@ -83,6 +89,18 @@ public class InteractionManager : MonoBehaviour
             case IHoldable holdable:
                 _interactAnimation = this.RunCoroutineWithCallback(_holdManager.OnInteract(holdable), () => _interactAnimation = null);
                 break;
+            case IPickupable pickupable:
+                _interactAnimation = this.RunCoroutineWithCallback(_pickupManager.OnInteract(pickupable), () => 
+                {
+                    _interactAnimation = null;
+
+                    if (_currentInteractingItem == null) return;
+
+                    _interactAnimation = this.RunCoroutineWithCallback(_pickupManager.OnDismiss(), () => _interactAnimation = null);
+
+                    _currentInteractingItem = null;
+                });
+                break;
             default:
                 break;
         }
@@ -96,9 +114,8 @@ public class InteractionManager : MonoBehaviour
         _interactAnimation = this.RunCoroutineWithCallback(_holdManager.OnDismiss(), () => _interactAnimation = null);
 
         _currentInteractingItem = null;
-
     }
-
+    
     void FixedUpdate()
     {
         RaycastHit hit = new();
