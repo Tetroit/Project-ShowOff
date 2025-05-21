@@ -35,11 +35,12 @@ public class PlayerSetup : MonoBehaviour
             foreach (var arm in arms)
                 itemInventory.AddItem(arm);
             itemInventory.AddItem(book);
+            itemInventory.User = interactionManager.gameObject;
             EditorUtility.SetDirty(itemInventory);
 
-
             pickupManager.KeyInventory.User = interactionManager.gameObject;
-            itemInventory.User = interactionManager.gameObject;
+            EditorUtility.SetDirty(pickupManager.KeyInventory);
+
             //UnityEventUtility.CleanMissingUnityEvents(holdManager);
             //UnityEventUtility.AddPersistentListenerIfMissing(holdManager.Interacted, holdManager, (x,y) => stateManager.SwitchToUI());
             //UnityEventUtility.AddPersistentListenerIfMissing(holdManager.Dismissed, holdManager, (x, y) => stateManager.SwitchToPlay());
