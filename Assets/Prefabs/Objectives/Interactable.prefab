@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 221511404138756896}
   - component: {fileID: 1249940904486105913}
   - component: {fileID: 5053662682017623792}
+  - component: {fileID: 6401850189536414502}
   - component: {fileID: 4915511862828520058}
   m_Layer: 6
   m_Name: Interactable
@@ -101,8 +102,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc80a96399494343aada6f26fb55367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: Placeholder note
+  _text: 'Placeholder note Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
+    ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+    Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum '
   _returnTime: 1
+  _runner: {fileID: 6401850189536414502}
+--- !u!114 &6401850189536414502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100838188419066627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71aa63872eb4d3949a20a0f86bf3d54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LineView: {fileID: 0}
+  _lines: []
+  _runOnStart: 0
+  _disableAfterFinish: 0
+  _useDialogueTime: 0
 --- !u!65 &4915511862828520058
 BoxCollider:
   m_ObjectHideFlags: 0

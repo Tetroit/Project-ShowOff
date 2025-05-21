@@ -10,6 +10,8 @@ public class TextRunner : MonoBehaviour
     [SerializeField] bool _disableAfterFinish;
     [SerializeField] bool _useDialogueTime;
 
+    public bool IsTextAreaActive { get;private set; }
+
     int currentDialogueIndex;
     void Start()
     {
@@ -21,11 +23,13 @@ public class TextRunner : MonoBehaviour
 
     public void EnableTextArea()
     {
-        LineView.gameObject.SetActive(true);
+        IsTextAreaActive = true;
+        LineView.gameObject.SetActive(IsTextAreaActive);
     }
     public void DisableTextArea()
     {
-        LineView.gameObject.SetActive(false);
+        IsTextAreaActive = false;
+        LineView.gameObject.SetActive(IsTextAreaActive);
     }
     public void DisplayText()
     {
@@ -43,6 +47,9 @@ public class TextRunner : MonoBehaviour
     public void DisplayText(string txt)
     {
         if(string.IsNullOrEmpty(txt)) return;
+        LineView.matchAudioTime = _useDialogueTime;
+
+        EnableTextArea();
         LineView.RunLine(new DialogueLine("", txt));
 
     }

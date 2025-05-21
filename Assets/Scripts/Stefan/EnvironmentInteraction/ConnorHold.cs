@@ -27,7 +27,12 @@ public class ConnorHold : HoldManager
     {
         if (InteractionAnimation != null || CurrentInteractable == null) return;
 
-        InteractionAnimation = this.RunCoroutineWithCallback(Rotate(), ()=> InteractionAnimation = null);
+        InteractionAnimation = this.RunCoroutineWithCallback(Rotate(), ()=> 
+        {
+            if (CurrentInteractable is ITextDisplayer textDisplayer)
+                textDisplayer.Toggle();
+            InteractionAnimation = null;
+        });
     }
 
     IEnumerator Rotate()
@@ -83,6 +88,7 @@ public class ConnorHold : HoldManager
     {
         CurrentInteractable.Self.DORotateQuaternion(CurrentInteractable.GetInitialRotation(), _grabTimeSeconds);
         StopCoroutine(_itemHoldBehavior);
+        StartCoroutine(CurrentInteractable.Deselect());
         yield return CurrentInteractable.Self.DOMove(CurrentInteractable.GetInitialPosition(), _grabTimeSeconds).WaitForCompletion();
         Dismissed?.Invoke(CurrentInteractable.Self.gameObject, CurrentInteractable);
 
