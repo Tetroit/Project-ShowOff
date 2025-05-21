@@ -54,6 +54,7 @@ namespace amogus
             foreach (var pair in controllerList)
             {
                 pair.playerController.OnCameraShakeChange += SetShake;
+                pair.playerController.OnFOVChange += cameraScript.ChangeFOV;
                 if (startControllerType == pair.controllerType) pair.playerController.EnableControl();
                 else pair.playerController.DisableControl();
             }
@@ -67,6 +68,7 @@ namespace amogus
             {
                 pair.playerController.DisableControl();
                 pair.playerController.OnCameraShakeChange -= SetShake;
+                pair.playerController.OnFOVChange -= cameraScript.ChangeFOV;
             }
         }
 
