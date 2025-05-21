@@ -283,9 +283,11 @@ MonoBehaviour:
   minAngle: -70
   maxAngle: 70
   isCinematic: 0
+  targetFOV: 60
   xRotator: {fileID: 3234403363261146957}
   yRotator: {fileID: 8236100994749169734}
   Movement: {fileID: 3234403363261146957}
+  fovSpeed: 3
   cameraSmoothness: 0.5
   movementSmoothness: 0.5
 --- !u!114 &815316779487328362
@@ -325,6 +327,7 @@ MonoBehaviour:
   target: {fileID: 3234403363261146957}
   cameraTransform: {fileID: 241725800075610130}
   speed: 3
+  ladderContext: {fileID: 0}
 --- !u!54 &6736891569577627229
 Rigidbody:
   m_ObjectHideFlags: 0
