@@ -22,6 +22,8 @@ namespace amogus
         [SerializeField] Transform yRotator;
         [SerializeField] Transform Movement;
 
+        [SerializeField] float fovSpeed = 3;
+
         [Range(0f, 1f)]
         public float cameraSmoothness = 0.5f;
         [Range(0f, 1f)]
@@ -65,7 +67,7 @@ namespace amogus
         }
         private void Update()
         {
-            cam.fieldOfView = Mathf.Lerp(currentFOV, targetFOV, Time.deltaTime * 3);
+            cam.fieldOfView = Mathf.Lerp(currentFOV, targetFOV, Time.deltaTime * fovSpeed);
         }
         private void LateUpdate()
         {
