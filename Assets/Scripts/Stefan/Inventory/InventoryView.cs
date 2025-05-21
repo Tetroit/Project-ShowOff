@@ -95,4 +95,8 @@ public class InventoryView : MonoBehaviour
         items.Add(item);
         item.AddInInventory(_user);
     }
+    public void Clear()
+    {
+        items.Clear();
+    }
 }

@@ -1,6 +1,6 @@
 using Dialogue;
 using UnityEngine;
-
+[ExecuteInEditMode]
 public class PlayerSetup : MonoBehaviour
 {
     [SerializeField] bool _startSetup;
@@ -19,13 +19,19 @@ public class PlayerSetup : MonoBehaviour
             var pickupManager = interactionManager.GetComponent<PickupManager>();
 
             var holdManager = interactionManager.GetComponent<ConnorHold>();
-
+            var itemInventory = canvas.transform.FindDeepChild("Inventory").GetComponent<InventoryView>();
+            var arms = interactionManager.GetComponentsInChildren<InventoryItemView>(true);
+            var book = canvas.GetComponent<Book>();
             
-            UnityEventUtility.AddPersistentListenerIfMissing(holdManager.Interacted, holdManager, stateManager.SwitchToUI);
-            UnityEventUtility.AddPersistentListenerIfMissing(holdManager.Dismissed, holdManager, stateManager.SwitchToPlay);
-            interactionTextRunner.LineView = canvas.transform.Find("InteractionTextArea").GetComponent<LineView>();
-            pickupManager.KeyInventory = canvas.transform.Find("KeyInventory").GetComponent<InventoryView>();
-
+            
+            interactionTextRunner.LineView = canvas.transform.FindDeepChild("InteractionTextArea").GetComponent<LineView>();
+            pickupManager.KeyInventory = canvas.transform.FindDeepChild("KeyInventory").GetComponent<InventoryView>();
+            itemInventory.Clear();
+            foreach (var arm in arms)
+                itemInventory.AddItem(arm);
+            //UnityEventUtility.CleanMissingUnityEvents(holdManager);
+            //UnityEventUtility.AddPersistentListenerIfMissing(holdManager.Interacted, holdManager, (x,y) => stateManager.SwitchToUI());
+            //UnityEventUtility.AddPersistentListenerIfMissing(holdManager.Dismissed, holdManager, (x, y) => stateManager.SwitchToPlay());
         }
     }
 #endif
