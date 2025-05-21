@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 275430798}
   - component: {fileID: 275430797}
   m_Layer: 0
-  m_Name: s (1)
+  m_Name: EndFootstepTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -874,6 +874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: 
   _returnTime: 0
+  _runner: {fileID: 0}
 --- !u!1 &1044731917
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,7 +2389,7 @@ GameObject:
   - component: {fileID: 1721632395}
   - component: {fileID: 1721632398}
   m_Layer: 0
-  m_Name: scary stuff
+  m_Name: FootSteps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2474,9 +2475,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cedf01dc4a003d4db8a6a7854968f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: {x: 0, y: 3, z: 0}
-  end: {x: 0, y: 3, z: -10}
-  speed: 1
+  speed: 10
+  curve: {fileID: 1790079806}
 --- !u!1 &1781862131
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,6 +2600,69 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1790079804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1790079805}
+  - component: {fileID: 1790079806}
+  m_Layer: 0
+  m_Name: Curve
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1790079805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790079804}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.0100002, y: 1.774, z: -13.39}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1790079806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790079804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e009f85c0569d53499595488cb3de1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0.47361088, y: 0, z: 1.8186951}
+  - {x: 1.0924921, y: 0, z: 2.6954508}
+  - {x: 2.6201727, y: 0, z: 2.4346209}
+  - {x: 3.650528, y: 0, z: -0.26121265}
+  - {x: 5.0277295, y: 0, z: 1.9296552}
+  - {x: 5.9385047, y: 0, z: 1.5167525}
+  - {x: 6.844034, y: 0, z: -0.98935443}
+  - {x: 5.6664987, y: 0, z: -1.8916523}
+  - {x: 4.1109743, y: 0, z: -0.67284614}
+  - {x: 5.560372, y: 0, z: -6.397693}
+  - {x: 3.8184423, y: 0, z: -8.366524}
+  - {x: 1.7259116, y: 0, z: -6.9749827}
+  - {x: 1.8739274, y: 0, z: -5.40974}
+  - {x: 3.4643059, y: 0, z: -0.37932712}
+  - {x: 1.579483, y: 0, z: -1.0890868}
+  - {x: -0.012073278, y: 0, z: -0.15855247}
+  AddOnMouse: 0
 --- !u!1 &1879019008
 GameObject:
   m_ObjectHideFlags: 0
@@ -2612,7 +2675,7 @@ GameObject:
   - component: {fileID: 1879019010}
   - component: {fileID: 1879019009}
   m_Layer: 0
-  m_Name: s
+  m_Name: FootstepTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3038,9 +3101,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3234403363261146957, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.45
+      objectReference: {fileID: 0}
     - target: {fileID: 4252457874729850611, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_Name
       value: '#oPlayer'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7383816030633284379, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.45
       objectReference: {fileID: 0}
     - target: {fileID: 8779041887700218328, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3178,6 +3249,7 @@ SceneRoots:
   - {fileID: 340347413}
   - {fileID: 1879019011}
   - {fileID: 275430799}
+  - {fileID: 1790079805}
   - {fileID: 1721632397}
   - {fileID: 1203412872}
   - {fileID: 788274212}

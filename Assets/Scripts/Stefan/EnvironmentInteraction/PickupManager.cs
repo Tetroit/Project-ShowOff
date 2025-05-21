@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PickupManager : InteractionBehavior<IPickupable>
 {
-    [SerializeField] InventoryView _keyInventory; 
+    public InventoryView KeyInventory; 
     IPickupable _item;
     public override void Init(InputFacade input)
     {
@@ -20,7 +20,7 @@ public class PickupManager : InteractionBehavior<IPickupable>
     public override IEnumerator OnInteract(IPickupable interactable)
     {
         _item = interactable;
-        _keyInventory.AddItem(interactable.ItemData);
+        KeyInventory.AddItem(interactable.ItemData);
         yield return null;
     }
 }

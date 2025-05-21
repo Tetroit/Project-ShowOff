@@ -12,10 +12,18 @@ namespace amogus
         public bool isCinematic;
         Quaternion targetRotation;
         Vector2 turn;
+        Camera cam;
 
+        public float targetFOV = 60;
+        public float currentFOV { 
+            get => cam.fieldOfView;
+        }
         [SerializeField] Transform xRotator;
         [SerializeField] Transform yRotator;
         [SerializeField] Transform Movement;
+
+        [SerializeField] float fovSpeed = 3;
+
         [Range(0f, 1f)]
         public float cameraSmoothness = 0.5f;
         [Range(0f, 1f)]
@@ -28,6 +36,11 @@ namespace amogus
 
         private void Start()
         {
+            cam = GetComponentInChildren<Camera>();
+            if (cam == null)
+                Debug.Log("Camera not found");
+            else
+                targetFOV = cam.fieldOfView;
             ReadRotation();
         }
         public void SetViewRotation(Vector2 rotation)
@@ -52,6 +65,10 @@ namespace amogus
             if (turn.y > 90)
                 turn.y -= 360;
         }
+        private void Update()
+        {
+            cam.fieldOfView = Mathf.Lerp(currentFOV, targetFOV, Time.deltaTime * fovSpeed);
+        }
         private void LateUpdate()
         {
             if (!isCinematic) 
@@ -73,5 +90,10 @@ namespace amogus
             }
         }
 
+        public void ChangeFOV(float FOV)
+        {
+            if (cam == null) return;
+            targetFOV = FOV;
+        }
     }
 }

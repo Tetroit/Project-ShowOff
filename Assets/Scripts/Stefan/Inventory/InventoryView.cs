@@ -13,8 +13,8 @@ public enum NavigationMode
 
 public class InventoryView : MonoBehaviour
 {
+    public GameObject User;
     [SerializeField] protected int capacity;
-    [SerializeField] GameObject _user;
     [SerializeField] NavigationMode navigationMode; 
     [SerializeField] List<InventoryItemView> items = new();
 
@@ -49,9 +49,10 @@ public class InventoryView : MonoBehaviour
 
     public void InteractCurrent()
     {
+        
         _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
 
-        items[_curentItemIndex].Interact(_user);
+        items[_curentItemIndex].Interact(User);
     }
 
     public void ChangeItemPosition(SelectDirection selectDirection)
@@ -92,7 +93,12 @@ public class InventoryView : MonoBehaviour
 
     public void AddItem(InventoryItemView item)
     {
-        items.Add(item);
-        item.AddInInventory(_user);
+        var instance = Instantiate(item);
+        items.Add(instance);
+        instance.AddInInventory(User);
+    }
+    public void Clear()
+    {
+        items.Clear();
     }
 }

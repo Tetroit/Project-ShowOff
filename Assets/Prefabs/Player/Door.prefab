@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 2153981439795401628}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3647719, y: 0, z: 0}
-  m_LocalScale: {x: 0.43933785, y: 0.7652342, z: 0.28493118}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.98, y: 1.7, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7180430508082666935}
@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <isOpen>k__BackingField: 0
-  <isLocked>k__BackingField: 0
   openRotation: {x: 0, y: 0.70710677, z: 0, w: -0.70710677}
   closedRotation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &2472318140063114229
@@ -77,9 +76,9 @@ Transform:
   m_GameObject: {fileID: 2472318140063114229}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8, y: 0, z: 0}
-  m_LocalScale: {x: 1.47, y: 2.3249998, z: 0.135}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: -0.5, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6887296111755133824}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -183,9 +182,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3081579085155451398}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.0395683, y: 2.509, z: -10.85}
-  m_LocalScale: {x: 2.2761526, y: 1.3067895, z: 3.5096197}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6887296111755133824}
@@ -210,8 +209,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.09, y: 1, z: 3.21}
+  m_Center: {x: -1.14, y: 0.87, z: 0}
 --- !u!114 &7707857676598599744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +223,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984af9caa590f904a94adb6cf05c7c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnTrigger:
+    m_PersistentCalls:
+      m_Calls: []
   triggerType: 2
   action: Interact
   targetsInQuestion: []
@@ -238,3 +240,5 @@ MonoBehaviour:
     users: []
     startRotation: {x: 0, y: 0, z: 0, w: 0}
     targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  unlockCode: 
+  isLocked: 0
