@@ -12,11 +12,11 @@ namespace amogus
         {
             if (isOpen)
             {
-                transform.rotation = openRotation;
+                Open();
             }
             else
             {
-                transform.rotation = closedRotation;
+                Close();
             }
         }
 
@@ -32,13 +32,13 @@ namespace amogus
         public void Open()
         {
             isOpen = true;
-            transform.rotation = openRotation;
+            transform.localRotation = openRotation;
         }
 
         public void Close()
         {
             isOpen = false;
-            transform.rotation = closedRotation;
+            transform.localRotation = closedRotation;
         }
     }
 }
