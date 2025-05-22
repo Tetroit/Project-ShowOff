@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 8779041887700218328}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -833,6 +833,7 @@ GameObject:
   - component: {fileID: 8544192298419466385}
   - component: {fileID: 5794955200590595110}
   - component: {fileID: 8685794089382742371}
+  - component: {fileID: 8019692904916381855}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1215,6 +1216,13 @@ MonoBehaviour:
   _runOnStart: 0
   _disableAfterFinish: 0
   _useDialogueTime: 0
+  voiceLines:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &5794955200590595110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1253,6 +1261,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   KeyInventory: {fileID: 0}
+--- !u!114 &8019692904916381855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9047221866948527922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1001 &2721594018766357974
 PrefabInstance:
   m_ObjectHideFlags: 0

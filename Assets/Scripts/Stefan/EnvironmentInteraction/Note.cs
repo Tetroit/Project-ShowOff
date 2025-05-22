@@ -53,6 +53,7 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
     {
         yield return null;
         _runner.DisplayText(_text);
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.paperHandling, transform.position);
     }
 
     public void Activate()

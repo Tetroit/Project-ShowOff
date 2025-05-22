@@ -64,6 +64,9 @@ namespace amogus
         {
             director = target.GetComponent<PlayableDirector>();
 
+
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.woodBreak, target.transform.position);
+
             // Save current position
             target.transform.GetPositionAndRotation
             (
