@@ -48,6 +48,20 @@ MonoBehaviour:
   <isOpen>k__BackingField: 0
   openRotation: {x: 0, y: 0.70710677, z: 0, w: -0.70710677}
   closedRotation: {x: 0, y: 0, z: 0, w: 1}
+  doorOpenSFX:
+    Guid:
+      Data1: -959898537
+      Data2: 1254648825
+      Data3: -670861398
+      Data4: 966524801
+    Path: event:/DoorOpen
+  doorCloseSFX:
+    Guid:
+      Data1: -1075180239
+      Data2: 1142233235
+      Data3: -1420732242
+      Data4: 533534587
+    Path: event:/DoorClose
 --- !u!1 &2472318140063114229
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +127,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 25bf1ea14c131f441af4be4e480f72b1, type: 2}
+  - {fileID: 2100000, guid: 6d5b6c0132043194d89471d38df277e8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

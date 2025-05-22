@@ -1,12 +1,9 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonsUI : MonoBehaviour
 {
-    // Canvases
-    [SerializeField] private GameObject _menuCanvas;
-    [SerializeField] private GameObject _gameCanvas;
-
     // Pages
     [SerializeField] private GameObject _mMainPage;
     [SerializeField] private GameObject _mSettingsPage;
@@ -15,12 +12,11 @@ public class ButtonsUI : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-        Debug.Log("quit");
     }
     public void ClickPlay()
-    {   // Do start of game stuff here
-        _gameCanvas.SetActive(true);
-        _menuCanvas.SetActive(false);
+    {   
+        // Do start of game stuff here
+        SceneManager.LoadScene(1);
     }
     public void ClickSettings()
     {
