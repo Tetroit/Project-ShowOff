@@ -12,9 +12,9 @@ namespace amogus
 {
     public class FollowingSteps : MonoBehaviour
     {
-        [SerializeField] Vector3 start;
-        [SerializeField] Vector3 end;
         [SerializeField] float speed;
+
+        [SerializeField] Curve curve;
 
         Coroutine movement;
         public void StartFollowing()
@@ -23,19 +23,18 @@ namespace amogus
         }
         public void EndFollowing()
         {
-            StopCoroutine(movement);
+            if (movement != null)
+                StopCoroutine(movement);
         }
 
         IEnumerator Step()
         {
-
-            Vector3 d = end - start;
-            float dist = d.magnitude;
+            float dist = curve.Getlength();
             float fac = 0;
             while (fac < 1)
             {
                 fac += speed / dist * Time.deltaTime;
-                transform.position = Vector3.Lerp(start, end, fac);
+                transform.position = curve.GetPositionFromDistanceGS(fac * dist);
                 yield return new WaitForEndOfFrame();
             }
             yield break;
@@ -43,7 +42,7 @@ namespace amogus
 
         public void Start()
         {
-            transform.position = start;
+            transform.position = curve.startGS;
         }
     }
 }

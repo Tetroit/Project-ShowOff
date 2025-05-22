@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &271025347787612886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5837507882639577121}
+  - component: {fileID: 3607549220693005601}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5837507882639577121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271025347787612886}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.196924, y: -17.07881, z: 39.971275}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8489765596310530706}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3607549220693005601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271025347787612886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb8b83e15c6d7744b4b3fd720c2558f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &6310440755164915173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8489765596310530706}
+  - component: {fileID: 915834848648413455}
+  m_Layer: 0
+  m_Name: FModEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8489765596310530706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310440755164915173}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5837507882639577121}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &915834848648413455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310440755164915173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c28d1b35944464eafbb69545490c0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ambience:
+    Guid:
+      Data1: 1255448701
+      Data2: 1090162390
+      Data3: 993646224
+      Data4: 70659495
+    Path: event:/Ambience/Ambience
+  footSteps:
+    Guid:
+      Data1: 145527981
+      Data2: 1101072481
+      Data3: -289442373
+      Data4: 473781813
+    Path: event:/SFX/FootstepsOnWood
+  paperHandling:
+    Guid:
+      Data1: -1461337572
+      Data2: 1097968758
+      Data3: 39838632
+      Data4: -1130188581
+    Path: event:/SFX/PaperHandling
+  keyPickup:
+    Guid:
+      Data1: 905209569
+      Data2: 1176535169
+      Data3: 548627094
+      Data4: -216718276
+    Path: event:/SFX/KeyPickup
+  woodBreak:
+    Guid:
+      Data1: -1657985342
+      Data2: 1178583087
+      Data3: 2137700767
+      Data4: 1692452473
+    Path: event:/SFX/WoodBreak
+  voicemail:
+    Guid:
+      Data1: -802618882
+      Data2: 1186625240
+      Data3: -1972667224
+      Data4: -309990102
+    Path: event:/Voicemail

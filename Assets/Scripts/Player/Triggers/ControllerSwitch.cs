@@ -17,6 +17,8 @@ namespace amogus
         public bool useForwardAnimation;
         public bool useBackwardAnimation;
 
+        public virtual bool enableCamera => false;
+
         public abstract void TransferData(PlayerController controller);
     }
 
