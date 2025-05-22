@@ -33,12 +33,12 @@ public class InventoryController : MonoBehaviour
 
     }
 
-    void Start()
+    private void Start()
     {
         foreach (var i in _inventories)
             i.gameObject.SetActive(false);
         if (GetCurrentInventory().ItemCount == 0) _currentInventoryIndex++;
-        WrapCurrentIndex();
+        WrapIndexOnOverflow();
         GetCurrentInventory().gameObject.SetActive(true);
     }
 
@@ -47,40 +47,23 @@ public class InventoryController : MonoBehaviour
         GetCurrentInventory().InteractCurrent();
     }
 
-    //UI
-    //book in arm inventory -> can pause, can interact with items but it will close book by switching to noArm
-    //pause -> goes on top of every UI element, prevents any interaction
-    //hold item screen -> can pause, cannot change inventory
-
-    //make the armInventoryView a window, remove the No arm item view and add another empty inventory
-
     void OnInventoryChange(InputAction.CallbackContext context)
     {
-        var nextInventoryIndex = WrapIndexOnOverflow(_currentInventoryIndex + 1, _inventories.Count);
-        bool canChange = WindowManager.Instance.CanSwitchToWindow(_inventories[nextInventoryIndex].GetComponent<Window>());
-        
-        if (!canChange) return;
-
         //monodirectional
         GetCurrentInventory().gameObject.SetActive(false);
-        
         _currentInventoryIndex++;
-        WrapCurrentIndex();
+        WrapIndexOnOverflow();
         if (GetCurrentInventory().ItemCount == 0) _currentInventoryIndex++;
-        WrapCurrentIndex();
+        WrapIndexOnOverflow();
 
         GetCurrentInventory().gameObject.SetActive(true);
+
     }
 
-    void WrapCurrentIndex()
+    void WrapIndexOnOverflow()
     {
-        _currentInventoryIndex = WrapIndexOnOverflow(_currentInventoryIndex, _inventories.Count);
-    }
-
-    int WrapIndexOnOverflow(int index, int count)
-    {
-        if (index >= count) index = 0;
-        return index;
+        if (_currentInventoryIndex >= _inventories.Count)
+            _currentInventoryIndex = 0;
     }
 
     void OnScroll(InputAction.CallbackContext context)

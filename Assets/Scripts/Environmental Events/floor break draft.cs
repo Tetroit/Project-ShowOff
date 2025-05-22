@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class FloorBreak : MonoBehaviour
 {
-    [SerializeField] Collider collider;
+    [SerializeField] Collider floorCollider;
     public void Fall()
     {
-        collider.enabled = false;
+        floorCollider.enabled = false;
     }
 }

@@ -34,7 +34,6 @@ namespace amogus
                 {
                     triggerObject = other;
                     Trigger();
-                    OnTrigger?.Invoke();
                     Debug.Log("Activated " + this);
                 }
             }

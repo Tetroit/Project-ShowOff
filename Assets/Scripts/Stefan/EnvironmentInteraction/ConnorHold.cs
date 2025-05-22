@@ -25,14 +25,6 @@ public class ConnorHold : HoldManager
 
     void OnMouseClick(InputAction.CallbackContext context)
     {
-        if(!(Physics.Raycast(_cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit)
-            &&
-            hit.transform.TryGetComponent<IHoldable>(out _))
-        )
-        {
-            return;
-        }
-
         if (InteractionAnimation != null || CurrentInteractable == null) return;
 
         InteractionAnimation = this.RunCoroutineWithCallback(Rotate(), ()=> 

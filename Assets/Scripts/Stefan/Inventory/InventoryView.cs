@@ -93,10 +93,8 @@ public class InventoryView : MonoBehaviour
 
     public void AddItem(InventoryItemView item)
     {
-        var instance = Instantiate(item);
-        items.Add(instance);
-        instance.AddInInventory(User);
-        ChangeItemPosition(SelectDirection.Right);
+        items.Add(item);
+        item.AddInInventory(User);
     }
     public void Clear()
     {
