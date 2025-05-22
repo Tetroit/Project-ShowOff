@@ -15,6 +15,8 @@ public class GameStateManager : MonoBehaviour
     [field: SerializeField] public PlayerFSM PlayerController { get; private set; }
     [field: SerializeField] public InventoryController InventoryController { get; private set; }
     [field: SerializeField] public InteractionManager InteractionManager { get; private set; }
+    [field: SerializeField] public Window PauseWindow { get; private set; }
+
 
     [SerializeField] GameState _gameState;
 
@@ -22,9 +24,8 @@ public class GameStateManager : MonoBehaviour
     State _currentState;
     Dictionary<GameState, State> _states;
 
-    [SerializeField] InputActionReference _playAction;
-    [SerializeField] InputActionReference _uiAction;
-    [SerializeField] InputActionReference _pauseAction;
+    public GameState CurrentState => _currentStateKey;
+
 
 #if UNITY_EDITOR
     bool _dependenciesMissing;
@@ -54,16 +55,6 @@ public class GameStateManager : MonoBehaviour
 
         foreach (KeyValuePair<GameState, State> kv in _states)
             kv.Value.Init(this);
-
-
-        if (_playAction == null) return;
-
-        _playAction.action.started += ctx => SwitchState(GameState.Play);
-        _playAction.action.Enable();
-        _pauseAction.action.started += ctx => SwitchState(GameState.Pause);
-        _pauseAction.action.Enable();
-        _uiAction.action.started += ctx => SwitchState(GameState.UI);
-        _uiAction.action.Enable();
     }
 
     void Update()

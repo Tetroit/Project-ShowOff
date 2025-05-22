@@ -10,6 +10,7 @@ public class S_Pause : State
     float _gameTime;
     bool _inventoryControl;
     bool _interactionsEnabled;
+    bool _gameHUD;
 
     public override void Enter()
     {
@@ -20,15 +21,18 @@ public class S_Pause : State
         _inventoryControl = fsm.InventoryController.gameObject.activeSelf;
         _interactionsEnabled = fsm.InteractionManager.enabled;
 
-        SetStates(true, CursorLockMode.None, false, 0.0f, false, false);
+        SetStates(true, CursorLockMode.None, false, 0.0f, false, false, false);
+        WindowManager.Instance.TrySwitchWindow(fsm.PauseWindow);
     }
 
     public override void Exit()
     {
-        SetStates(_visibility, _lockMode, _movement, _gameTime, _inventoryControl, _interactionsEnabled);
+        SetStates(_visibility, _lockMode, _movement, _gameTime, _inventoryControl, _interactionsEnabled, _gameHUD);
+        WindowManager.Instance.SwitchToPrevious();
+
     }
 
-    void SetStates(bool cursoreVisibility, CursorLockMode lockMode, bool movement, float time, bool inventoryControl, bool interactionsEnabled)
+    void SetStates(bool cursoreVisibility, CursorLockMode lockMode, bool movement, float time, bool inventoryControl, bool interactionsEnabled, bool hud)
     {
         Cursor.visible = cursoreVisibility;
         Cursor.lockState = lockMode;

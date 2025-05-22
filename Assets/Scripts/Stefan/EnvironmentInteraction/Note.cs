@@ -57,8 +57,8 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
     public IEnumerator Interact()
     {
         yield return null;
-
         if (!WindowManager.Instance.TrySwitchWindow(_textDisplayWindow)) yield break;
+
 
         _runner.DisplayText(_text);
         AudioManager.instance.PlayOneShot(FMODEvents.instance.paperHandling, transform.position);
