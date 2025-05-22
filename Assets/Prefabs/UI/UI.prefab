@@ -235,11 +235,11 @@ MonoBehaviour:
   _lines:
   - characterName: Landlord
     text: 'first off, congrats on your purchase of the northern mill! '
-    playTimeSeconds: 5
+    playTimeSeconds: 3
   - characterName: Landlord
     text: "Not sure what you plan to do with the place, might make for a nice museum,
       but it\u2019s all yours now!"
-    playTimeSeconds: 2
+    playTimeSeconds: 3
   - characterName: Landlord
     text: "To be honest, the place always gave me the creeps, but in summer it\u2019s
       beautiful."
@@ -247,17 +247,24 @@ MonoBehaviour:
   - characterName: Landlord
     text: Now, i gotta level with you, i may have forgotten to keep the door unlocked
       for you.
-    playTimeSeconds: 0
+    playTimeSeconds: 5
   - characterName: Landlord
     text: "But it\u2019s an old mill in need of renovation anyways, so i\u2019m sure
       you can find a way in so you can explore a bit."
-    playTimeSeconds: 0
+    playTimeSeconds: 5
   - characterName: Landlord
     text: Good luck!
-    playTimeSeconds: 0
+    playTimeSeconds: 1
   _runOnStart: 1
   _disableAfterFinish: 1
   _useDialogueTime: 1
+  voiceLines:
+    Guid:
+      Data1: -802618882
+      Data2: 1186625240
+      Data3: -1972667224
+      Data4: -309990102
+    Path: event:/Voicemail
 --- !u!1001 &222927163344735331
 PrefabInstance:
   m_ObjectHideFlags: 0
