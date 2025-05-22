@@ -1,7 +1,6 @@
 using Dialogue;
 using FMODUnity;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class TextRunner : MonoBehaviour
 {
@@ -31,11 +30,13 @@ public class TextRunner : MonoBehaviour
         IsTextAreaActive = true;
         LineView.gameObject.SetActive(IsTextAreaActive);
     }
+    
     public void DisableTextArea()
     {
         IsTextAreaActive = false;
         LineView.gameObject.SetActive(IsTextAreaActive);
     }
+
     public void DisplayText()
     {
         //Addition for voicelines

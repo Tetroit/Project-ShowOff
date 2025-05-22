@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public interface IInteractable
 {
+//    bool CanInteract();
+
     IEnumerator Interact();
     IEnumerator Deselect();
 }
@@ -138,6 +140,7 @@ public class InteractionManager : MonoBehaviour
 
         if (!isInteractable)
         {
+
             if (_lastInteractable == null) return;
 
             _holdManager.OnItemHoverEnd(_lastInteractable as IHoldable);
@@ -147,7 +150,6 @@ public class InteractionManager : MonoBehaviour
             _lastInteractableGO = null;
             return;
         }
-
 
         if (hit.transform.gameObject == _lastInteractableGO)
         {
