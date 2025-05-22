@@ -46,7 +46,7 @@ public class BakedLightManager : MonoBehaviour
     [System.Serializable]
     private class SkyboxInfo
     {
-        public CubemapParameter cubemap;
+        //public CubemapParameter cubemap;
     }
     [SerializeField]
     private LightingScenarioData lightingScenariosData;
@@ -290,7 +290,7 @@ public class BakedLightManager : MonoBehaviour
         CopyTextureToResources(resourceDir, lightingScenariosData.lightmapsShadow);
 
         string json = JsonUtility.ToJson(lightingScenariosData, true);
-        JsonUtils.WriteJsonFile(resourceDir + jsonFileNameLightmaps, json);
+        JsonUtils.WriteJsonFile(Path.Combine(resourceDir, jsonFileNameLightmaps), json);
     }
 
     private void CopyTextureToResources(string toPath, Texture2D[] textures)
@@ -302,10 +302,10 @@ public class BakedLightManager : MonoBehaviour
             {
                 FileUtil.ReplaceFile(
                     AssetDatabase.GetAssetPath(texture),
-                    toPath + Path.GetFileName(AssetDatabase.GetAssetPath(texture))
+                    Path.Combine(toPath, Path.GetFileName(AssetDatabase.GetAssetPath(texture)))
                 );
                 AssetDatabase.Refresh(); // Refresh so the newTexture file can be found and loaded.
-                Texture2D newTexture = Resources.Load<Texture2D>(m_resourceFolder + "/" + texture.name); // Load the new texture as an object.
+                Texture2D newTexture = Resources.Load<Texture2D>(Path.Combine(m_resourceFolder,texture.name)); // Load the new texture as an object.
 
                 CopyTextureImporterProperties(textures[i], newTexture); // Ensure new texture takes on same properties as origional texture.
 
@@ -340,11 +340,13 @@ public class BakedLightManager : MonoBehaviour
     {
         SkyboxInfo newSkyboxInfo = new SkyboxInfo();
         var volume = GetComponent<Volume>();
-        volume.profile.TryGet<HDRISky>(out var skyboxOverride);
-        var cubemap = skyboxOverride.hdriSky;
-        newSkyboxInfo.cubemap = cubemap;
-
+        if (volume.profile.TryGet<PhysicallyBasedSky>(out var skyboxOverride))
+        {
+            var cubemap = skyboxOverride;
+        }
+        //newSkyboxInfo.cubemap = cubemap;
         JsonUtils.WriteJsonData(GetResourcesFile(jsonFileNameSkybox), newSkyboxInfo);
+
     }
 
     public void LoadSkybox()
@@ -358,6 +360,6 @@ public class BakedLightManager : MonoBehaviour
 
         var volume = GetComponent<Volume>();
         volume.profile.TryGet<HDRISky>(out var skyboxOverride);
-        skyboxOverride.hdriSky.Override(skyboxInfo.cubemap.value);
+        //skyboxOverride.hdriSky.Override(skyboxInfo.cubemap.value);
     }
 }
