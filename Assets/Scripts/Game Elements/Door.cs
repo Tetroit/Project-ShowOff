@@ -1,3 +1,4 @@
+using FMODUnity;
 using UnityEngine;
 
 namespace amogus
@@ -7,6 +8,8 @@ namespace amogus
         [field: SerializeField] public bool isOpen { get; private set; } = false;
         [SerializeField] Quaternion openRotation;
         [SerializeField] Quaternion closedRotation;
+        [SerializeField] EventReference doorOpenSFX;
+        [SerializeField] EventReference doorCloseSFX;
 
         public void OnEnable()
         {
@@ -33,12 +36,14 @@ namespace amogus
         {
             isOpen = true;
             transform.localRotation = openRotation;
+            AudioManager.instance.PlayOneShot(doorOpenSFX, transform.position);
         }
 
         public void Close()
         {
             isOpen = false;
             transform.localRotation = closedRotation;
+            AudioManager.instance.PlayOneShot(doorCloseSFX, transform.position);
         }
     }
 }
