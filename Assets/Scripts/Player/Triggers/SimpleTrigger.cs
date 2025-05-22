@@ -85,7 +85,6 @@ public abstract class SimpleTrigger<TargetType> : MonoBehaviour
         {
             Trigger();
             OnTrigger?.Invoke();
-
         }
     }
     public abstract void Trigger();

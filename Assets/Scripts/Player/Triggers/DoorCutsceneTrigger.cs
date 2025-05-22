@@ -18,11 +18,13 @@ namespace amogus
     [Serializable]
     public class DoorCutsceneAnimation : ScriptedAnimation<Door>
     {
+        Vector3 startPos;
+
         [SerializeField] Quaternion startRotation;
         [SerializeField] Quaternion targetRotation;
         public override void Animate(Door target)
         {
-            target.transform.localRotation = Quaternion.Slerp(startRotation, targetRotation, time01);
+            target.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, time01);
         }
         public override void Begin(Door target)
         {

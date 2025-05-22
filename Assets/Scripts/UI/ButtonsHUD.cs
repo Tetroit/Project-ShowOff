@@ -55,5 +55,18 @@ public class ButtonsHUD : MonoBehaviour
         _pausedView.SetActive(true);
         _unpausedView.SetActive(false);
     }
-
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_isPaused)
+            {
+                UnpauseGame();
+            }
+            else if (!_isPaused)
+            {
+                PauseGame();
+            }
+        }
+    }
 }

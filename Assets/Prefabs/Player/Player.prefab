@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 8779041887700218328}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -283,11 +283,9 @@ MonoBehaviour:
   minAngle: -70
   maxAngle: 70
   isCinematic: 0
-  targetFOV: 60
   xRotator: {fileID: 3234403363261146957}
   yRotator: {fileID: 8236100994749169734}
   Movement: {fileID: 3234403363261146957}
-  fovSpeed: 3
   cameraSmoothness: 0.5
   movementSmoothness: 0.5
 --- !u!114 &815316779487328362
@@ -327,7 +325,6 @@ MonoBehaviour:
   target: {fileID: 3234403363261146957}
   cameraTransform: {fileID: 241725800075610130}
   speed: 3
-  ladderContext: {fileID: 0}
 --- !u!54 &6736891569577627229
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -826,6 +823,7 @@ GameObject:
   m_Component:
   - component: {fileID: 241725800075610130}
   - component: {fileID: 1336785661345011341}
+  - component: {fileID: 2342839452981715275}
   - component: {fileID: 3130902080756953927}
   - component: {fileID: 1527948907905499707}
   - component: {fileID: 67645630954950277}
@@ -833,7 +831,6 @@ GameObject:
   - component: {fileID: 8544192298419466385}
   - component: {fileID: 5794955200590595110}
   - component: {fileID: 8685794089382742371}
-  - component: {fileID: 8019692904916381855}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -910,6 +907,14 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!81 &2342839452981715275
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9047221866948527922}
+  m_Enabled: 1
 --- !u!114 &3130902080756953927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1216,13 +1221,6 @@ MonoBehaviour:
   _runOnStart: 0
   _disableAfterFinish: 0
   _useDialogueTime: 0
-  voiceLines:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
 --- !u!114 &5794955200590595110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1238,9 +1236,9 @@ MonoBehaviour:
   soundRotation: 0
   controls: {fileID: 815316779487328362}
   states:
-  - {fileID: 11400000, guid: 7a7a2e51f94af2b4c8ca0256f0cdf000, type: 2}
-  - {fileID: 11400000, guid: f0b3d5f71436b0b428f33e34a1622ded, type: 2}
-  - {fileID: 11400000, guid: a3a217d35a1981b439c8bd985818e2c9, type: 2}
+  - {fileID: 11400000, guid: 3cdcfb575961e7b469860ce3445f98a0, type: 2}
+  - {fileID: 11400000, guid: 89a044d671cb4f540bd2a70302fb4d53, type: 2}
+  - {fileID: 11400000, guid: 77e24d53c38abf84499360e8ab4e5cf6, type: 2}
   - {fileID: 11400000, guid: 5301029c3ae42d741a834351c6877cac, type: 2}
 --- !u!114 &8685794089382742371
 MonoBehaviour:
@@ -1261,20 +1259,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   KeyInventory: {fileID: 0}
---- !u!114 &8019692904916381855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9047221866948527922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 0}
 --- !u!1001 &2721594018766357974
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -61,11 +61,6 @@ public class CameraWalkingShake : MonoBehaviour
             {
                 _cooldown -= frequency;
                 _rightSide = !_rightSide;
-                if(FMODEvents.instance != null)
-                {
-                    AudioManager.instance.PlayOneShot(FMODEvents.instance.footSteps, transform.position);
-                }
-
                 //if (stepSource != null && stepSounds.Length != 0)
                 //{
                 //    if (soundRotation)
