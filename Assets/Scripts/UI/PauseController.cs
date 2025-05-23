@@ -21,15 +21,25 @@ public class PauseController : MonoBehaviour
         _isPaused = _gameStateManager.CurrentState == GameState.Pause;
     }
 
-    void TogglePause(InputAction.CallbackContext context)
+    public void TogglePause(InputAction.CallbackContext context)
     {
         if (_isPaused)
         {
-            _gameStateManager.SwitchState(_previousState);
+            DisablePause();
+
         }
         else
         {
+            _previousState = _gameStateManager.CurrentState;
             _gameStateManager.SwitchState(GameState.Pause);
+            _isPaused = true;
         }
+    }
+
+    public void DisablePause()
+    {
+        _gameStateManager.SwitchState(_previousState);
+        _isPaused = false;
+
     }
 }
