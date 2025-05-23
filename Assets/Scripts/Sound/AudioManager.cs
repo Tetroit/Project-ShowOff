@@ -63,6 +63,23 @@ public class AudioManager : MonoBehaviour
         return eventInstance;
     }
 
+    public void PauseAllAudio()
+    {
+        foreach (var eventInstance in eventInstances)
+        {
+            eventInstance.setPaused(true);
+        }
+
+    }
+
+    public void UnPauseAllAudio()
+    {
+        foreach (var eventInstance in eventInstances)
+        {
+            eventInstance.setPaused(false);
+        }
+    }
+
     public void CleanUp()
     {
         foreach (var eventInstance in eventInstances)
@@ -72,7 +89,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         CleanUp();
     }

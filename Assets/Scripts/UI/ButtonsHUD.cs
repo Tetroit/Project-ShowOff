@@ -4,22 +4,19 @@ using System.Collections;
 public class ButtonsHUD : MonoBehaviour
 {
     // Canvases
-    [SerializeField] private GameObject _menuCanvas;
-    [SerializeField] private GameObject _gameCanvas;
+    [SerializeField] GameObject _menuCanvas;
+    [SerializeField] GameObject _gameCanvas;
 
     // Pages
-    [SerializeField] private GameObject _unpausedView;
-    [SerializeField] private GameObject _pausedView;
-    [SerializeField] private GameObject _pMainPage;
-    [SerializeField] private GameObject _pControlsPage;
-    [SerializeField] private GameObject _pAudioPage;
+    [SerializeField] GameObject _unpausedView;
+    [SerializeField] GameObject _pausedView;
+    [SerializeField] GameObject _pMainPage;
+    [SerializeField] GameObject _pControlsPage;
+    [SerializeField] GameObject _pAudioPage;
 
-    // Variables
-    private bool _isPaused = false;
 
     public void QuitMenu()
     { // Return to menu stuff here
-        _isPaused = false;
         _menuCanvas.SetActive(true);
         _pausedView.SetActive(false);
         _gameCanvas.SetActive(false);
@@ -42,7 +39,6 @@ public class ButtonsHUD : MonoBehaviour
     }
     public void UnpauseGame()
     {
-        _isPaused = false;
         _pControlsPage.SetActive(false);
         _pAudioPage.SetActive(false);
         _pMainPage.SetActive(true);
@@ -51,7 +47,6 @@ public class ButtonsHUD : MonoBehaviour
     }
     public void PauseGame()
     {
-        _isPaused = true;
         _pausedView.SetActive(true);
         _unpausedView.SetActive(false);
     }

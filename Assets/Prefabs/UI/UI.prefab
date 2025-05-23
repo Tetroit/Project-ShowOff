@@ -7007,7 +7007,6 @@ GameObject:
   - component: {fileID: 5702581087696870097}
   - component: {fileID: 4822800725171938519}
   - component: {fileID: 6680377283373064235}
-  - component: {fileID: 1147023245152124582}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -7076,52 +7075,6 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
---- !u!114 &1147023245152124582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7615875984478639976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71aa63872eb4d3949a20a0f86bf3d54e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LineView: {fileID: 509143256402324231}
-  _lines:
-  - characterName: Landlord
-    text: 'first off, congrats on your purchase of the northern mill! '
-    playTimeSeconds: 3
-  - characterName: Landlord
-    text: "Not sure what you plan to do with the place, might make for a nice museum,
-      but it\u2019s all yours now!"
-    playTimeSeconds: 3
-  - characterName: Landlord
-    text: "To be honest, the place always gave me the creeps, but in summer it\u2019s
-      beautiful."
-    playTimeSeconds: 3
-  - characterName: Landlord
-    text: Now, i gotta level with you, i may have forgotten to keep the door unlocked
-      for you.
-    playTimeSeconds: 5
-  - characterName: Landlord
-    text: "But it\u2019s an old mill in need of renovation anyways, so i\u2019m sure
-      you can find a way in so you can explore a bit."
-    playTimeSeconds: 5
-  - characterName: Landlord
-    text: Good luck!
-    playTimeSeconds: 1
-  _runOnStart: 1
-  _disableAfterFinish: 1
-  _useDialogueTime: 1
-  voiceLines:
-    Guid:
-      Data1: -802618882
-      Data2: 1186625240
-      Data3: -1972667224
-      Data4: -309990102
-    Path: event:/Voicemail
 --- !u!1 &7640222074539128026
 GameObject:
   m_ObjectHideFlags: 0
@@ -8652,17 +8605,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
---- !u!114 &509143256402324231 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3925854365560373307, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
-  m_PrefabInstance: {fileID: 3561142956868102972}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ee8765ec5738ba4ebccf8474788a160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &2742494089232706713 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1685739886420887461, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
