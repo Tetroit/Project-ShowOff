@@ -49,6 +49,7 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
     {
         yield return null;
         Deactivate();
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.paperHandling, transform.position);
 
         //remove from window manager current selected
         WindowManager.Instance.CloseCurrentWindow();
