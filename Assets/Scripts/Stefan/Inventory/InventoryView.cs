@@ -71,9 +71,13 @@ public class InventoryView : MonoBehaviour
         }
 
         if (index == _curentItemIndex) return;
-        _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
 
+        bool canChange = !items[index].TryGetComponent<Window>(out var window) || WindowManager.Instance.CanSwitchToWindow(window);
+
+        if (!canChange) return;
+        _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
         InventoryItemView current = GetCurrentItem();
+
         current.Deselect();
         ItemDeselected?.Invoke(current);
         _curentItemIndex = index;
