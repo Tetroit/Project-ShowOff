@@ -1,45 +1,82 @@
 using Dialogue;
+using FMODUnity;
 using UnityEngine;
-using Yarn;
 
 public class TextRunner : MonoBehaviour
 {
-    [SerializeField] LineView _lineView;
+    public LineView LineView;
     [SerializeField] DialogueLine[] _lines;
+    [SerializeField] bool _runOnStart;
+    [SerializeField] bool _disableAfterFinish;
+    [SerializeField] bool _useDialogueTime;
+
+    public bool IsTextAreaActive { get;private set; }
+
+    [SerializeField] EventReference voiceLines;
+
     int currentDialogueIndex;
+    DialogueLine _currentDialogue;
+
+    void Start()
+    {
+        if(_runOnStart)
+        {
+            DisplayText();
+        }
+    }
 
     public void EnableTextArea()
     {
-        _lineView.gameObject.SetActive(true);
+        IsTextAreaActive = true;
+        LineView.gameObject.SetActive(IsTextAreaActive);
     }
+    
     public void DisableTextArea()
     {
-        _lineView.gameObject.SetActive(false);
+        IsTextAreaActive = false;
+        LineView.gameObject.SetActive(IsTextAreaActive);
     }
+
     public void DisplayText()
     {
-        if (_lines.Length == 0) return;
+        //Addition for voicelines
+        if(AudioManager.instance != null && !voiceLines.IsNull)
+        {
+            AudioManager.instance.PlayOneShot(voiceLines, Vector3.zero);
+        }
 
+        if (_lines.Length == 0)
+        {
+            Debug.LogWarning("No text lines to display");
+            return;
+        }
+        LineView.matchAudioTime = _useDialogueTime;
+
+        EnableTextArea();
         RecursiveAdvance(0);
     }
     
     public void DisplayText(string txt)
     {
         if(string.IsNullOrEmpty(txt)) return;
-        _lineView.RunLine(new DialogueLine("", txt));
+        LineView.matchAudioTime = _useDialogueTime;
 
+        EnableTextArea();
+        _currentDialogue = new DialogueLine("", txt);
+        LineView.RunLine(_currentDialogue, ()=> _currentDialogue = null);
     }
 
     void RecursiveAdvance(int i)
     {
         currentDialogueIndex = i;
         var line = _lines[i];
+        _currentDialogue = line;
         i++;
         if (i > _lines.Length - 1)
-            _lineView.RunLine(line);
+            LineView.RunLine(line, () => { if (_disableAfterFinish) DisableTextArea(); });
         else
         {
-            _lineView.RunLine(line, () => {
+            LineView.RunLine(line, () => {
                 RecursiveAdvance(i);
             });
         }
@@ -49,11 +86,11 @@ public class TextRunner : MonoBehaviour
 
     public void InteruptDialogue()
     {
-        var currentDialogue = _lines[currentDialogueIndex];
-        if (currentDialogueIndex >= _lines.Length - 1)
-            _lineView.InterruptLine(currentDialogue, null);
-        else
-            _lineView.InterruptLine(currentDialogue, () => RecursiveAdvance(++currentDialogueIndex));
+        if (_currentDialogue == null) return;
 
+        if (currentDialogueIndex >= _lines.Length - 1)
+            LineView.InterruptLine(_currentDialogue, null);
+        else
+            LineView.InterruptLine(_currentDialogue, () => RecursiveAdvance(++currentDialogueIndex));
     }
 }

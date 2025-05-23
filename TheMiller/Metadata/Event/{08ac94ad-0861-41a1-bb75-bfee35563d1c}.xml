@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{08ac94ad-0861-41a1-bb75-bfee35563d1c}">
 		<property name="name">
-			<value>Footsteps</value>
+			<value>FootstepsOnWood</value>
 		</property>
 		<property name="outputFormat">
 			<value>2</value>
 		</property>
 		<relationship name="folder">
-			<destination>{f1aafe2a-874e-4a16-a3a2-87a762ab78f9}</destination>
+			<destination>{dfd5d448-04d8-4853-a023-b78d5a79528b}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{ae847451-c3ac-49be-a13c-52dedf89dcf3}</destination>
@@ -28,6 +28,9 @@
 		<relationship name="timeline">
 			<destination>{f9638ed8-6535-421f-a99a-249ed55f02b8}</destination>
 		</relationship>
+		<relationship name="parameters">
+			<destination>{21d1700b-7508-42f4-bd46-42216fe7849a}</destination>
+		</relationship>
 		<relationship name="banks">
 			<destination>{cc0c0c84-bbeb-4bf3-87ba-ca098f8132a3}</destination>
 		</relationship>
@@ -38,6 +41,9 @@
 		</relationship>
 	</object>
 	<object class="MasterTrack" id="{5fec552c-7c41-4c66-a396-79f94510864e}">
+		<relationship name="automationTracks">
+			<destination>{38192195-28ee-4fb2-a423-c5e6ef261545}</destination>
+		</relationship>
 		<relationship name="modules">
 			<destination>{48555e61-d003-4b6a-bcf2-4486267261b7}</destination>
 		</relationship>
@@ -53,7 +59,7 @@
 			<destination>{da8edf55-e3f3-465d-8345-486a9c4cb479}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{da5c06b3-1ba9-41c3-8869-ea331d9935d7}</destination>
+			<destination>{6d8a39af-1cc2-4da4-84eb-acb05bc7e528}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{de5fd923-5456-45da-9695-9c9d6fbdeb73}" />
@@ -63,7 +69,18 @@
 			<destination>{48555e61-d003-4b6a-bcf2-4486267261b7}</destination>
 		</relationship>
 	</object>
+	<object class="ParameterProxy" id="{21d1700b-7508-42f4-bd46-42216fe7849a}">
+		<relationship name="preset">
+			<destination>{6fd199d1-50ac-4686-8917-84b38857fdad}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{0f075b17-81e3-4d30-97d9-cd35688667a9}">
+		<property name="pitch">
+			<value>-3.60000014</value>
+		</property>
+		<relationship name="automators">
+			<destination>{213f5214-f902-4feb-8c23-111d795b6b5c}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{e21f606f-9bff-430b-b388-ce7290888483}</destination>
 		</relationship>
@@ -74,9 +91,17 @@
 			<destination>{ae847451-c3ac-49be-a13c-52dedf89dcf3}</destination>
 		</relationship>
 	</object>
+	<object class="AutomationTrack" id="{38192195-28ee-4fb2-a423-c5e6ef261545}">
+		<relationship name="automator">
+			<destination>{213f5214-f902-4feb-8c23-111d795b6b5c}</destination>
+		</relationship>
+	</object>
 	<object class="MultiSound" id="{48555e61-d003-4b6a-bcf2-4486267261b7}">
 		<property name="length">
 			<value>0.80000000000000004</value>
+		</property>
+		<property name="name">
+			<value>FootstepsWood</value>
 		</property>
 		<relationship name="sounds">
 			<destination>{335bc900-2664-4975-8fdd-1dcc88a122eb}</destination>
@@ -95,6 +120,11 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{da8edf55-e3f3-465d-8345-486a9c4cb479}" />
+	<object class="Automator" id="{213f5214-f902-4feb-8c23-111d795b6b5c}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>volume</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{e21f606f-9bff-430b-b388-ce7290888483}">
 		<relationship name="effects">
 			<destination>{f7328537-ba3c-4630-9cb1-b9e73a6515af}</destination>

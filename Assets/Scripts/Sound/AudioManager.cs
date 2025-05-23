@@ -8,7 +8,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance { get; private set; }
-
+    private Bus masterBus;
     private List<EventInstance> eventInstances;
 
     public EventInstance ambienceEventInstance;
@@ -26,6 +26,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        masterBus = RuntimeManager.GetBus("bus:/");
         InitializeAmbience(FMODEvents.instance.ambience);
     }
 
@@ -44,7 +45,16 @@ public class AudioManager : MonoBehaviour
 
     public void SetAmbienceByParameter(string parameterName, float parameterValue)
     {
-        ambienceEventInstance.setParameterByName(parameterName, parameterValue);
+        var result = ambienceEventInstance.setParameterByName(parameterName, parameterValue);
+        if(result != RESULT.OK)
+        {
+            RuntimeManager.StudioSystem.setParameterByName(parameterName, parameterValue);
+        }
+    }
+
+    public void SetAmbienceArea(AmbienceArea area)
+    {
+        ambienceEventInstance.setParameterByName("AreaMusic", (float)area);
     }
 
     public EventInstance CreateInstance(EventReference eventReference)
@@ -52,6 +62,16 @@ public class AudioManager : MonoBehaviour
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
         eventInstances.Add(eventInstance);
         return eventInstance;
+    }
+
+    public void PauseAllAudio()
+    { 
+            masterBus.setPaused(true);
+    }
+
+    public void UnPauseAllAudio()
+    {
+            masterBus.setPaused(false);
     }
 
     public void CleanUp()
@@ -63,7 +83,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         CleanUp();
     }

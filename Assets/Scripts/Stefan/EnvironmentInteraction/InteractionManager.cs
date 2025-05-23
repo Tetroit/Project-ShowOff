@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -5,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public interface IInteractable
 {
+//    bool CanInteract();
+
     IEnumerator Interact();
     IEnumerator Deselect();
 }
@@ -14,6 +17,18 @@ public interface IHoldable : IInteractable
     Transform Self { get; }
     Vector3 GetInitialPosition();
     Quaternion GetInitialRotation();
+}
+
+public interface ITextDisplayer
+{
+    public void Activate();
+    public void Deactivate();
+    public void Toggle();
+}
+
+public interface IPickupable : IInteractable
+{
+    InventoryItemView ItemData { get; }
 }
 
 public readonly struct InputFacade
@@ -40,6 +55,7 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] float _interactionRadius;
     [SerializeField] LayerMask _interactionMask;
     [SerializeField] HoldManager _holdManager;
+    [SerializeField] PickupManager _pickupManager;
     
     Coroutine _interactAnimation;
 
@@ -55,16 +71,24 @@ public class InteractionManager : MonoBehaviour
     {
         _input = new();
         
-        _input.Player.Interact.started += Interact;
-        _input.UI.Cancel.started += Dissmised;
+        _input.Player.Interact.started += InteractInput;
+        _input.UI.Cancel.started += (c)=> Dissmised();
     }
-    
+
     void Start()
     {
         _holdManager.Init(new InputFacade(_input));
     }
 
-    void Interact(InputAction.CallbackContext context)
+    void InteractInput(InputAction.CallbackContext context)
+    {
+        if (_currentInteractingItem == null)
+            Interact();
+        else
+            Dissmised();
+    }
+
+    void Interact()
     {
         if (_lastInteractable == null || _interactAnimation != null) return;
         _currentInteractingItem = _lastInteractable;
@@ -74,22 +98,33 @@ public class InteractionManager : MonoBehaviour
             case IHoldable holdable:
                 _interactAnimation = this.RunCoroutineWithCallback(_holdManager.OnInteract(holdable), () => _interactAnimation = null);
                 break;
+            case IPickupable pickupable:
+                _interactAnimation = this.RunCoroutineWithCallback(_pickupManager.OnInteract(pickupable), () => 
+                {
+                    _interactAnimation = null;
+
+                    if (_currentInteractingItem == null) return;
+
+                    _interactAnimation = this.RunCoroutineWithCallback(_pickupManager.OnDismiss(), () => _interactAnimation = null);
+
+                    _currentInteractingItem = null;
+                });
+                break;
             default:
                 break;
         }
     }
 
 
-    void Dissmised(InputAction.CallbackContext context)
+    void Dissmised()
     {
         if (_currentInteractingItem == null || _interactAnimation != null) return;
         
         _interactAnimation = this.RunCoroutineWithCallback(_holdManager.OnDismiss(), () => _interactAnimation = null);
 
         _currentInteractingItem = null;
-
     }
-
+    
     void FixedUpdate()
     {
         RaycastHit hit = new();
@@ -105,6 +140,7 @@ public class InteractionManager : MonoBehaviour
 
         if (!isInteractable)
         {
+
             if (_lastInteractable == null) return;
 
             _holdManager.OnItemHoverEnd(_lastInteractable as IHoldable);
@@ -114,7 +150,6 @@ public class InteractionManager : MonoBehaviour
             _lastInteractableGO = null;
             return;
         }
-
 
         if (hit.transform.gameObject == _lastInteractableGO)
         {

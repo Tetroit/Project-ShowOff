@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -29,7 +30,17 @@ namespace amogus
         List<ControllerTypeToControllerPair> controllerList = new();
         [SerializeField]
         PlayerCamera cameraScript;
+        CameraWalkingShake shake;
         public bool inAnimation = false;
+        public bool isMoving
+        {
+            get
+            {
+                if (currentControllerID == ControllerType.NONE) return false;
+                if (!ValidateController(currentControllerID)) return false;
+                return controllerDict[currentControllerID].isMoving;
+            }
+        }
         public Dictionary<ControllerType, PlayerController> controllerDict =>
             controllerList.ToDictionary(pair => pair.controllerType, pair => pair.playerController);
 
@@ -39,13 +50,26 @@ namespace amogus
         }
         private void OnEnable()
         {
+            shake = GetComponentInChildren<CameraWalkingShake>();
             foreach (var pair in controllerList)
             {
+                pair.playerController.OnCameraShakeChange += SetShake;
+                pair.playerController.OnFOVChange += cameraScript.ChangeFOV;
                 if (startControllerType == pair.controllerType) pair.playerController.EnableControl();
                 else pair.playerController.DisableControl();
             }
             currentControllerID = startControllerType;
             inAnimation = false;
+        }
+
+        private void OnDisable()
+        {
+            foreach (var pair in controllerList)
+            {
+                pair.playerController.DisableControl();
+                pair.playerController.OnCameraShakeChange -= SetShake;
+                pair.playerController.OnFOVChange -= cameraScript.ChangeFOV;
+            }
         }
 
         public bool ValidateController(ControllerType id)
@@ -75,21 +99,20 @@ namespace amogus
             controllerDict[currentControllerID].EnableControl();
             ExitAnimation();
         }
-        public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation)
+        public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation, bool enableCamera = false)
         {
             if (!ValidateController(id)) return;
-            animation.OnEnd += () => { 
+            animation.OnEnd.AddListener( () => { 
                 SwitchController(id); 
-                ExitAnimation(); 
-            };
+                ExitAnimation(enableCamera);
+            });
 
             if (currentControllerID != ControllerType.NONE)
             {
                 Debug.Log("Entered animation");
                 controllerDict[currentControllerID].DisableControl();
-                DisableCamera();
             }
-            EnterAnimation();
+            EnterAnimation(!enableCamera);
             animation.StartAnimation(this);
             currentControllerID = ControllerType.NONE;
         }
@@ -104,47 +127,63 @@ namespace amogus
                 controllerDict[currentControllerID].DisableControl();
 
             if (id != ControllerType.NONE)
+            {
                 controllerDict[id].EnableControl();
+            }
             currentControllerID = id;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            ControllerSwitch sw = other.GetComponent<ControllerSwitch>();
-            if (sw == null || !sw.enabled)
-            {
-                Debug.Log("No switch found");
-                return;
-            }
             if (inAnimation) return;
+            ControllerSwitch sw = other.GetComponent<ControllerSwitch>();
+            if (sw != null && sw.enabled)
+            {
+                ActivateSwitch(sw);
+            }
+            //CutsceneTrigger cutsceneTrigger = other.GetComponent<CutsceneTrigger>();
+            //if (cutsceneTrigger != null && cutsceneTrigger.enabled)
+            //{
+            //    DisableControls();
+            //    cutsceneTrigger.Cutscene.OnEnd += EnableControls;
+            //    cutsceneTrigger.StartCutscene(this);
+            //}
+        }
+
+
+        public void ActivateSwitch(ControllerSwitch sw)
+        {
             if (sw.FromType == currentControllerID)
             {
                 Debug.Log("Forward transition triggered");
                 if (sw.useForwardAnimation)
-                    SwitchController(sw.ToType, sw.ForwardTransitionBase);
+                    SwitchController(sw.ToType, sw.ForwardTransitionBase, sw.enableCamera);
                 else
                     SwitchController(sw.ToType);
+                sw.TransferData(controllerDict[sw.ToType]);
             }
             else if (sw.ToType == currentControllerID)
             {
 
-                Debug.Log("Forward transition triggered");
+                Debug.Log("Backward transition triggered");
                 if (sw.useBackwardAnimation)
-                    SwitchController(sw.FromType, sw.BackwardTransitionBase);
+                    SwitchController(sw.FromType, sw.BackwardTransitionBase, sw.enableCamera);
                 else
                     SwitchController(sw.ToType);
+                sw.TransferData(controllerDict[sw.ToType]);
             }
         }
-
-        public void EnterAnimation()
+        public void EnterAnimation(bool disableCamera = true)
         {
             inAnimation = true;
-            DisableCamera();
+            if (disableCamera)
+                DisableCamera();
         }
-        public void ExitAnimation()
+        public void ExitAnimation(bool enableCamera = true)
         {
             inAnimation = false;
-            EnableCamera();
+            if (enableCamera)
+                EnableCamera();
         }
         public void EnableCamera()
         {
@@ -160,6 +199,12 @@ namespace amogus
         {
             if (cameraScript == null) return;
             cameraScript.ReadRotation();
+        }
+
+        public void SetShake(CameraWalkingShake.State shakeID)
+        {
+            if (shake != null)
+                shake.ChangeState(shakeID);
         }
     }
 }

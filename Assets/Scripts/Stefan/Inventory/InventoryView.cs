@@ -1,100 +1,109 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Events;
+public enum SelectDirection
+{
+    Left = -1, Right = 1
+}
+public enum NavigationMode
+{
+    Clamp,
+    Cycle
+}
 
 public class InventoryView : MonoBehaviour
 {
-    enum SelectDirection
-    {
-        Left = -1, Right = 1
-    }
+    public GameObject User;
+    [SerializeField] protected int capacity;
+    [SerializeField] NavigationMode navigationMode; 
+    [SerializeField] List<InventoryItemView> items = new();
 
-    //public UnityEvent<InventoryItem> OnItemSelect;
-    //public UnityEvent<InventoryItem> OnItemDeselect;
-    [SerializeField] int _capacity;
-    [SerializeField] InventoryItemView _itemSlotPrefab;
-    [SerializeField] Transform _itemsContainer;
-    [SerializeField] Inventory _logic;
-    [SerializeField] GameObject _holder;
-
-    readonly List<InventoryItemView> _items = new();
+    [field: SerializeField] public UnityEvent<InventoryItemView> ItemSelected { get; private set; }
+    [field: SerializeField] public UnityEvent<InventoryItemView> ItemDeselected { get; private set; }
     int _curentItemIndex;
-
-    InputSystem_Actions _input;
+    
+    public int ItemCount => items.Count;
+    
     void Awake()
     {
-        if (_itemsContainer == null) _itemsContainer = transform;
-        _input = new();
-        _curentItemIndex = -1;
+        OnAwake();
+        
     }
-
     void Start()
     {
-        UpdateUI(_logic.Items);
-    }
-
-    public void UpdateUI(IEnumerable<InventoryItem> items)
-    {
-        _items.Clear();
-        int i = 0;
-        foreach (InventoryItem item in items)
-        {
-            if (i++ >= _capacity) break;
-
-            InventoryItemView instance = Instantiate(_itemSlotPrefab, _itemsContainer);
-            instance.SetItem(item);
-            _items.Add(instance);
-        }
-            
+        OnStart(); 
     }
 
     void OnEnable()
     {
-        _input.Enable();
-        _input.UI.ScrollWheel.performed += OnScroll;
-        _input.Player.Interact.started += OnInteract;
+        if(GetCurrentItem() != null)
+            GetCurrentItem().Select();
+
     }
 
     void OnDisable()
     {
-        _input.Disable();
-        _input.UI.ScrollWheel.performed -= OnScroll;
-        _input.Player.Interact.started -= OnInteract;
-
+        if(GetCurrentItem() != null)
+            GetCurrentItem().Deselect();
     }
 
-    void OnInteract(InputAction.CallbackContext context)
+    public void InteractCurrent()
     {
-        _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, _items.Count - 1);
+        
+        _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
 
-        _items[_curentItemIndex].Item.Interact(_holder);
+        items[_curentItemIndex].Interact(User);
     }
 
-    void OnScroll(InputAction.CallbackContext context)
-    {
-        Vector2 value = context.ReadValue<Vector2>();
-
-        if (value.y > 0) ChangeItemPosition(SelectDirection.Right);
-        else if(value.y < 0) ChangeItemPosition(SelectDirection.Left);
-    }
-    
-
-    void ChangeItemPosition(SelectDirection selectDirection)
+    public void ChangeItemPosition(SelectDirection selectDirection)
     {
         ChangeItemPosition(_curentItemIndex + (int)selectDirection);
     }
 
     void ChangeItemPosition(int index)
     {
-        index = Mathf.Clamp(index, 0, _items.Count - 1);
-        if (index == _curentItemIndex) return;
-        _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, _items.Count - 1);
+        if(navigationMode == NavigationMode.Clamp)
+            index = Mathf.Clamp(index, 0, items.Count - 1);
+        else if(navigationMode == NavigationMode.Cycle)
+        {
+            if (index < 0) index = items.Count - 1;
+            else if(index > items.Count - 1) index = 0;
+        }
 
-        _items[_curentItemIndex].Deselect();
+        if (index == _curentItemIndex) return;
+
+        bool canChange = !items[index].TryGetComponent<Window>(out var window) || WindowManager.Instance.CanSwitchToWindow(window);
+
+        if (!canChange) return;
+        _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
+        InventoryItemView current = GetCurrentItem();
+
+        current.Deselect();
+        ItemDeselected?.Invoke(current);
         _curentItemIndex = index;
-        _items[_curentItemIndex].Select();
+        current = GetCurrentItem();
+        current.Select();
+        ItemSelected?.Invoke(current);
     }
 
+    protected InventoryItemView GetCurrentItem()
+    {
+        if(items.Count == 0) return null;
+        return items[_curentItemIndex];
+    }
 
+    protected virtual void OnAwake() { }
+    protected virtual void OnStart() { }
+
+    public void AddItem(InventoryItemView item)
+    {
+        var instance = Instantiate(item);
+        items.Add(instance);
+        instance.AddInInventory(User);
+        ChangeItemPosition(SelectDirection.Right);
+    }
+    public void Clear()
+    {
+        items.Clear();
+    }
 }
