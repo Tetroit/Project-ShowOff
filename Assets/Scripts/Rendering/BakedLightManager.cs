@@ -7,6 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Rendering.HighDefinition;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
+
+[RequireComponent(typeof(Renderer))]
+public class UniquePersistentRendererID : MonoBehaviour
+{
+    GUID id;
+    public void Assign()
+    {
+        id = GUID.Generate();
+    }
+    public GUID ID => id;
+}
+
 
 [RequireComponent (typeof(Volume))]
 public class BakedLightManager : MonoBehaviour
@@ -27,7 +40,8 @@ public class BakedLightManager : MonoBehaviour
     [System.Serializable]
     private class RendererInfo
     {
-        public Renderer renderer;
+        public string path;
+        public string id;
         public int lightmapIndex;
         public Vector4 lightmapOffsetScale;
     }
@@ -36,9 +50,9 @@ public class BakedLightManager : MonoBehaviour
     private class LightingScenarioData
     {
         public RendererInfo[] rendererInfos;
-        public Texture2D[] lightmaps;
-        public Texture2D[] lightmapsDir;
-        public Texture2D[] lightmapsShadow;
+        public string[] lightmaps;
+        public string[] lightmapsDir;
+        public string[] lightmapsShadow;
         public LightmapsMode lightmapsMode;
         public SphericalHarmonics[] lightProbes;
     }
@@ -65,14 +79,38 @@ public class BakedLightManager : MonoBehaviour
     {
         Load();
     }
-    int n = 1;
+    string[] profiles =
+    {
+        "LightMapDataTestLight",
+        "LightMapDataTestDark",
+    };
+    int currentID;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Backslash))
         {
-            n = n % 2 + 1;
-            Load("LightMapDataTest" + n);
+            currentID = (currentID + 1) % 2;
+            Load(profiles[currentID]);
         }
+    }
+
+    public string GetRendererPath(Renderer renderer)
+    {
+        if (renderer == null)
+        {
+            Debug.LogWarning("renderer was null", this);
+            return "";
+        }
+        Transform transform = renderer.transform;
+        string res = "";
+        int stackOverflowLock = 0;
+        while (transform != null && stackOverflowLock < 100)
+        {
+            stackOverflowLock++;
+            res = "/" + transform.name + res;
+            transform = transform.parent;
+        }
+        return res;
     }
     public string GetResourcesFile(string fileName)
     {
@@ -81,7 +119,6 @@ public class BakedLightManager : MonoBehaviour
 
     public bool CheckResourcesDirectoryExists(string dir)
     {
-        CharacterController cc = gameObject.GetComponent<CharacterController>();
         return Directory.Exists(dir);
     }
 
@@ -107,14 +144,14 @@ public class BakedLightManager : MonoBehaviour
         for (int i = 0; i < newLightmaps.Length; i++)
         {
             newLightmaps[i] = new LightmapData();
-            newLightmaps[i].lightmapColor = Resources.Load<Texture2D>(m_resourceFolder + "/" + lightingScenariosData.lightmaps[i].name);
+            newLightmaps[i].lightmapColor = Resources.Load<Texture2D>(Path.Combine(m_resourceFolder, lightingScenariosData.lightmaps[i]));
 
             if (lightingScenariosData.lightmapsMode != LightmapsMode.NonDirectional)
             {
-                newLightmaps[i].lightmapDir = Resources.Load<Texture2D>(m_resourceFolder + "/" + lightingScenariosData.lightmapsDir[i].name);
+                newLightmaps[i].lightmapDir = Resources.Load<Texture2D>(Path.Combine(m_resourceFolder, lightingScenariosData.lightmapsDir[i]));
                 if (i<lightingScenariosData.lightmapsShadow.Length && lightingScenariosData.lightmapsShadow[i] != null)
                 { // If the textuer existed and was set in the data file.
-                    newLightmaps[i].shadowMask = Resources.Load<Texture2D>(m_resourceFolder + "/" + lightingScenariosData.lightmapsShadow[i].name);
+                    newLightmaps[i].shadowMask = Resources.Load<Texture2D>(Path.Combine(m_resourceFolder, lightingScenariosData.lightmapsShadow[i]));
                 }
             }
         }
@@ -156,26 +193,27 @@ public class BakedLightManager : MonoBehaviour
 
     private void ApplyRendererInfo(RendererInfo[] infos)
     {
-        try
+        var renderers = FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None);
+        foreach (var renderer in renderers)
         {
-            for (int i = 0; i < infos.Length; i++)
+            if (renderer == null)
             {
-                var info = infos[i];
-                info.renderer.lightmapIndex = infos[i].lightmapIndex;
-                if (!info.renderer.isPartOfStaticBatch)
-                {
-                    info.renderer.lightmapScaleOffset = infos[i].lightmapOffsetScale;
-                }
-                if (info.renderer.isPartOfStaticBatch && verbose == true)
-                {
-                    Debug.Log("Object " + info.renderer.gameObject.name + " is part of static batch, skipping lightmap offset and scale.");
-                }
+                Debug.LogWarning("renderer was null", this);
+                continue;
             }
-        }
-
-        catch (Exception e)
-        {
-            Debug.LogError("Error in ApplyRendererInfo:" + e.GetType().ToString());
+            var IDComponent = renderer.GetComponent<UniquePersistentRendererID>();
+            if (IDComponent == null) continue;
+            var info = Array.Find(infos, value => (value.id == IDComponent.ID.ToString()));
+            if (info == null) continue;
+            renderer.lightmapIndex = info.lightmapIndex;
+            if (!renderer.isPartOfStaticBatch)
+            {
+                renderer.lightmapScaleOffset = info.lightmapOffsetScale;
+            }
+            if (renderer.isPartOfStaticBatch && verbose == true)
+            {
+                Debug.Log("Object " + renderer.gameObject.name + " is part of static batch, skipping lightmap offset and scale.");
+            }
         }
     }
 
@@ -199,6 +237,16 @@ public class BakedLightManager : MonoBehaviour
         }
     }
 
+    public string GetRendererID (Renderer renderer)
+    {
+        var rendererID = renderer.GetComponent<UniquePersistentRendererID>();
+        if (rendererID == null)
+        {
+            rendererID = renderer.AddComponent<UniquePersistentRendererID>();
+            rendererID.Assign();
+        }
+        return rendererID.ID.ToString();
+    }
     public void GenerateLightmapInfoStore()
     {
         lightingScenariosData = new LightingScenarioData();
@@ -219,7 +267,8 @@ public class BakedLightManager : MonoBehaviour
             if (renderer.lightmapIndex != -1)
             {
                 RendererInfo info = new RendererInfo();
-                info.renderer = renderer;
+                info.path = GetRendererPath(renderer);
+                info.id = GetRendererID(renderer);
                 info.lightmapOffsetScale = renderer.lightmapScaleOffset;
                 info.lightmapIndex = renderer.lightmapIndex;
 
@@ -250,14 +299,32 @@ public class BakedLightManager : MonoBehaviour
         }
 
         lightingScenariosData.lightmapsMode = newLightmapsMode;
-        lightingScenariosData.lightmaps = newLightmapsTextures.Values.ToArray();
+
+        lightingScenariosData.lightmaps = new string[newLightmapsTextures.Count];
+        lightingScenariosData.lightmapsDir = new string[newLightmapsTexturesDir.Count];
+        lightingScenariosData.lightmapsShadow = new string[newLightmapsTexturesShadow.Count];
+
+
+        for (int i=0; i<newLightmapsTextures.Count; i++)
+        {
+            var lightmap = newLightmapsTextures.Values[i];
+            lightingScenariosData.lightmaps[i] = lightmap.name;
+        }
 
         if (newLightmapsMode != LightmapsMode.NonDirectional)
         {
-            lightingScenariosData.lightmapsDir = newLightmapsTexturesDir.Values.ToArray();
-            lightingScenariosData.lightmapsShadow = newLightmapsTexturesShadow.Values.ToArray();
+            for (int i = 0; i < newLightmapsTexturesDir.Count; i++)
+            {
+                var lightmap = newLightmapsTexturesDir.Values[i];
+                lightingScenariosData.lightmapsDir[i] = lightmap.name;
+            }
+            for (int i = 0; i < newLightmapsTexturesShadow.Count; i++)
+            {
+                var lightmap = newLightmapsTexturesShadow.Values[i];
+                if (lightmap == null) continue;
+                lightingScenariosData.lightmapsShadow[i] = lightmap.name;
+            }
         }
-
         lightingScenariosData.rendererInfos = newRendererInfos.ToArray();
 
         var scene_LightProbes = new SphericalHarmonicsL2[LightmapSettings.lightProbes.bakedProbes.Length];  
@@ -285,34 +352,36 @@ public class BakedLightManager : MonoBehaviour
         // write the files and map config data.
         CreateResourcesDirectory(m_resourceFolder);
 
-        CopyTextureToResources(resourceDir, lightingScenariosData.lightmaps);
-        CopyTextureToResources(resourceDir, lightingScenariosData.lightmapsDir);
-        CopyTextureToResources(resourceDir, lightingScenariosData.lightmapsShadow);
+        CopyTextureToResources(resourceDir, newLightmapsTextures.Values);
+        CopyTextureToResources(resourceDir, newLightmapsTexturesDir.Values);
+        CopyTextureToResources(resourceDir, newLightmapsTexturesShadow.Values);
 
         string json = JsonUtility.ToJson(lightingScenariosData, true);
         JsonUtils.WriteJsonFile(Path.Combine(resourceDir, jsonFileNameLightmaps), json);
     }
 
-    private void CopyTextureToResources(string toPath, Texture2D[] textures)
+    private void CopyTextureToResources(string toPath, IEnumerable<Texture2D> textures)
     {
-        for (int i = 0; i < textures.Length; i++)
+        for (int i = 0; i < textures.Count(); i++)
         {
-            Texture2D texture = textures[i];
+            Texture2D texture = textures.ElementAt(i);
+
+            textures.Count();
             if (texture != null) // Maybe the optional shadowmask didn't exist?
             {
                 FileUtil.ReplaceFile(
                     AssetDatabase.GetAssetPath(texture),
-                    Path.Combine(toPath, Path.GetFileName(AssetDatabase.GetAssetPath(texture)))
+                    Path.Combine("Assets", "Resources", m_resourceFolder, Path.GetFileName(AssetDatabase.GetAssetPath(texture)))
                 );
                 AssetDatabase.Refresh(); // Refresh so the newTexture file can be found and loaded.
-                Texture2D newTexture = Resources.Load<Texture2D>(Path.Combine(m_resourceFolder,texture.name)); // Load the new texture as an object.
+                Texture2D newTexture = Resources.Load<Texture2D>(Path.Combine(m_resourceFolder, texture.name)); // Load the new texture as an object.
 
-                CopyTextureImporterProperties(textures[i], newTexture); // Ensure new texture takes on same properties as origional texture.
+                CopyTextureImporterProperties(texture, newTexture); // Ensure new texture takes on same properties as origional texture.
 
                 AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(newTexture)); // Re-import texture file so it will be successfully compressed to desired format.
-                EditorUtility.CompressTexture(newTexture, textures[i].format, TextureCompressionQuality.Best); // Now compress the texture.
+                EditorUtility.CompressTexture(newTexture, texture.format, TextureCompressionQuality.Best); // Now compress the texture.
 
-                textures[i] = newTexture; // Set the new texture as the reference in the Json file.
+                texture = newTexture; // Set the new texture as the reference in the Json file.
             }
         }
     }
