@@ -8,8 +8,8 @@ public class WindowManager : MonoBehaviour
 
     [SerializeField] Window _currentActiveWindow;
     [SerializeField] int _historyCapacity = 10;
-
-    readonly List<Window> _history = new();
+    [Header("Enabled for easy debugging")]
+    [SerializeField] List<Window> _history = new();
 
     public static WindowManager Instance { get; private set; }
 
@@ -50,7 +50,7 @@ public class WindowManager : MonoBehaviour
             _currentActiveWindow.gameObject.SetActive(true);
 
             _history.Add(_currentActiveWindow);
-            if(_historyCapacity > _history.Count) _history.RemoveAt(0);
+            if(_historyCapacity < _history.Count) _history.RemoveAt(0);
         }
         return false;
     }
@@ -69,7 +69,16 @@ public class WindowManager : MonoBehaviour
 
     public void SwitchToPrevious()
     {
-        if (_history.Count < 2) return;
+        if(_history.Count  == 0) return;
+
+        if (_history.Count == 1)
+        {
+            _history.RemoveAt(0);
+            _currentActiveWindow.gameObject.SetActive(false);
+            _currentActiveWindow = null;
+            return;
+        }
+
         int lastI = _history.Count - 1;
         _history.RemoveAt(lastI--);
 

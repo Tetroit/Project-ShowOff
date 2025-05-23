@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class InventoryController : MonoBehaviour
 {
     [SerializeField] List<InventoryView> _inventories;
+
+    [field: SerializeField] public UnityEvent<InventoryView> OnInventoryChanged { get; private set; }
 
     int _currentInventoryIndex;
     InputSystem_Actions _input;
@@ -69,7 +72,9 @@ public class InventoryController : MonoBehaviour
         if (GetCurrentInventory().ItemCount == 0) _currentInventoryIndex++;
         WrapCurrentIndex();
 
-        GetCurrentInventory().gameObject.SetActive(true);
+        var current = GetCurrentInventory();
+        current.gameObject.SetActive(true);
+        OnInventoryChanged?.Invoke(current);
     }
 
     void WrapCurrentIndex()

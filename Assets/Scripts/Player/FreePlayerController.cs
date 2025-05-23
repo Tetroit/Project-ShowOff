@@ -42,6 +42,7 @@ namespace amogus
         float castRadius;
 
         [SerializeField] Transform cameraTransform;
+        [SerializeField] bool _debug; 
         Rigidbody rb;
         CapsuleCollider coll;
 
@@ -324,6 +325,7 @@ namespace amogus
             rb.isKinematic = false;
             rb.WakeUp();
 
+            if(_debug)
             Debug.Log("enabled free move controls");
         }
 
@@ -335,7 +337,7 @@ namespace amogus
             lockControls = true;
 
             _isMoving = false;
-
+            if(_debug)
             Debug.Log("disabled free move controls");
         }
     }

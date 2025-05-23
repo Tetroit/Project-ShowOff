@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class ChangeParameterTrigger : MonoBehaviour
 {
-    [SerializeField] private float newValue = 1f;
-    [SerializeField] private string parameterName;
+    [SerializeField] float newValue = 1f;
+    [SerializeField] string parameterName;
+    [SerializeField] bool _debug;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
-        {
-            AudioManager.instance.SetAmbienceByParameter(parameterName, newValue);
+        AudioManager.instance.SetAmbienceByParameter(parameterName, newValue);
+        
+        if(_debug )
             Debug.Log("changed" + parameterName);
 
-        }
     }
 }

@@ -140,6 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd7217fb9dda8f64684ec4fe1e99469e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI_Icons:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &4252457874729850611
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +194,7 @@ GameObject:
   - component: {fileID: 8621820410908911760}
   - component: {fileID: 7393475134784772106}
   - component: {fileID: 9018348251520450678}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player avatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 5016133296133080745}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.2630551, y: -0.03409195, z: 1.2671871}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -426,8 +429,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7383816030633284379}
-  - component: {fileID: 129297842865274668}
-  - component: {fileID: 6396053786861955712}
   - component: {fileID: 5908510189692319674}
   - component: {fileID: 4804203528875700632}
   - component: {fileID: 8607203841067845689}
@@ -446,66 +447,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6177681187084765463}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.4575808, y: -6.246937, z: 24.763498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8779041887700218328}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &129297842865274668
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6177681187084765463}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6396053786861955712
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6177681187084765463}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &5908510189692319674
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -539,7 +487,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.03
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1283,6 +1231,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7259371467142083145}
     m_Modifications:
+    - target: {fileID: 5974513550731773694, guid: c5c82d0fee3d1634e9f37f11ea6fd890, type: 3}
+      propertyPath: UI_Icons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7270267494331155697, guid: c5c82d0fee3d1634e9f37f11ea6fd890, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.20000002
