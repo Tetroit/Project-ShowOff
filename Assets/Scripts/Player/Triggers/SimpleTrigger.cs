@@ -6,6 +6,7 @@ using UnityEngine.Rendering.HighDefinition;
 using System.Collections.Generic;
 using static UnityEngine.GraphicsBuffer;
 using System;
+using UnityEditor.VersionControl;
 
 
 public enum TriggerType
@@ -17,7 +18,7 @@ public enum TriggerType
 
 [RequireComponent(typeof(Collider))]
 public abstract class SimpleTrigger<TargetType> : MonoBehaviour
-    where TargetType : MonoBehaviour
+    where TargetType : Component
 {
     [SerializeField] protected UnityEvent OnTrigger;
 
@@ -77,12 +78,24 @@ public abstract class SimpleTrigger<TargetType> : MonoBehaviour
             }
         }
     }
-    protected virtual void TryTrigger(TargetType other)
+
+    protected virtual bool NullHandling(TargetType target)
     {
-        if (other == null) return;
+        if (target == null)
+        {
+            Debug.LogError("Target object was null", this);
+            return false;
+        }
+        return true;
+    }
+    protected void TryTrigger(TargetType other)
+    {
+        if (!NullHandling(other)) return;
 
         if (Predicate(other) && enabled)
         {
+            Debug.Log("Triggered", this);
+            triggerObject = other;
             Trigger();
             OnTrigger?.Invoke();
 
