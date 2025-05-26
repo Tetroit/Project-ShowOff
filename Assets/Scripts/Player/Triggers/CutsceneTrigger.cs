@@ -11,33 +11,22 @@ namespace amogus
     /// <typeparam name="T">Trigger object type</typeparam>
     /// <typeparam name="U">Executor object type</typeparam>
     [RequireComponent(typeof(Collider))]
-    public abstract class CutsceneTrigger<Tr, Ex> : SimpleTrigger<Tr> 
-        where Tr : MonoBehaviour 
+    public abstract class CutsceneTrigger<Tr, Ex> : SimpleTrigger<Tr>
+        where Tr : MonoBehaviour
         where Ex : MonoBehaviour
     {
         public bool disableControls = true;
-        [SerializeField] protected Ex target;   
+        [SerializeField] protected Ex target;
         public abstract ScriptedAnimation<Ex> Cutscene { get; }
+
+        public override Predicate<Tr> Predicate => (Tr other) =>
+        {
+            if (Cutscene.isRunningOn(target)) return false; 
+            return true;
+        };
         public override void Trigger()
         {
             Cutscene.StartAnimation(target);
-        }
-        protected override void TryTrigger(Tr other)
-        {
-            Debug.Log("Tried activating " + this);
-            if (other == null) return;
-
-            if (enabled && !Cutscene.isRunningOn(target))
-            {
-                Debug.Log(Predicate(other));
-                if (Predicate(other))
-                {
-                    triggerObject = other;
-                    Trigger();
-                    OnTrigger?.Invoke();
-                    Debug.Log("Activated " + this);
-                }
-            }
         }
         //protected virtual void OnDrawGizmos()
         //{
@@ -48,16 +37,10 @@ namespace amogus
 
     public abstract class CutsceneTrigger<T> : CutsceneTrigger<T, T> where T : MonoBehaviour 
     {
-        protected override void TryTrigger(T other)
+        public override Predicate<T> Predicate => (T other) =>
         {
-            target = other.GetComponent<T>();
-            if (target == null) return;
-
-            if (Predicate(target) && enabled && !Cutscene.isRunningOn(target))
-            {
-                triggerObject = target;
-                Trigger();
-            }
-        }
+            if (Cutscene.isRunningOn(target)) return false;
+            return true;
+        };
     }
 }
