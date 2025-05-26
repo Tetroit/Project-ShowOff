@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 4983611139082107516}
   - component: {fileID: 1072841802419956423}
   - component: {fileID: 7707857676598599744}
+  - component: {fileID: 9218621915512563328}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -243,8 +244,12 @@ MonoBehaviour:
   triggerType: 2
   action: Interact
   targetsInQuestion: []
-  disableControls: 0
-  target: {fileID: 150861125051368009}
+  asset: {fileID: 11400000, guid: 1a2b3bac376e0c842bcf095045920234, type: 2}
+  director: {fileID: 9218621915512563328}
+  OnAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  closingCutscene: {fileID: 11400000, guid: 1a2b3bac376e0c842bcf095045920234, type: 2}
   cutscene:
     totalDuration: 1
     pause: 0
@@ -254,5 +259,26 @@ MonoBehaviour:
     users: []
     startRotation: {x: 0, y: 0, z: 0, w: 0}
     targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  door: {fileID: 150861125051368009}
   unlockCode: 
   isLocked: 0
+--- !u!320 &9218621915512563328
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081579085155451398}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 1a2b3bac376e0c842bcf095045920234, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -7363991973398695573, guid: 1a2b3bac376e0c842bcf095045920234, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References:
+    - 7c8955413a7735145902664046507beb: {fileID: 0}
