@@ -1,20 +1,39 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 namespace amogus
 {
-    public class DoorCutsceneTrigger : DoorTrigger
+    public class DoorCutsceneTrigger : TimelinePlayerTrigger
     {
-        [SerializeField] private DoorCutsceneAnimation cutscene;
+        [SerializeField] protected TimelineAsset closingCutscene;
+        [SerializeField] protected TimelineAsset openingCutscene => closingCutscene;
 
-        public override ScriptedAnimation<Door> Cutscene => cutscene;
+        [SerializeField] protected DoorCutsceneAnimation cutscene;
+        [SerializeField] protected Door door;
+        public string unlockCode;
+        public bool isLocked = false;
+
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
-            return !isLocked && !cutscene.isRunningOn(target);
+            if (isLocked || cutscene.isRunningOn(door)) return false;
+            return true;
         };
 
-        public override void Unlock()
+        public override void Trigger()
         {
-            isLocked = false;
+            if (!door.isOpen)
+                asset = openingCutscene;
+            else
+                asset = closingCutscene;
+
+            base.Trigger();
+
+            cutscene.totalDuration = (float)asset.duration;
+            cutscene.StartAnimation(door);
+        }
+        protected override void AnimationEnd()
+        {
+            base.AnimationEnd();
         }
     }
 }

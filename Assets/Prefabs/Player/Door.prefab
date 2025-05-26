@@ -244,10 +244,12 @@ MonoBehaviour:
   triggerType: 2
   action: Interact
   targetsInQuestion: []
-  disableControls: 1
-  target: {fileID: 150861125051368009}
-  unlockCode: 
-  isLocked: 0
+  asset: {fileID: 0}
+  director: {fileID: 9218621915512563328}
+  OnAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  closingCutscene: {fileID: 11400000, guid: 1a2b3bac376e0c842bcf095045920234, type: 2}
   cutscene:
     totalDuration: 1
     pause: 0
@@ -255,6 +257,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     users: []
+  door: {fileID: 150861125051368009}
+  unlockCode: 
+  isLocked: 0
 --- !u!320 &9218621915512563328
 PlayableDirector:
   m_ObjectHideFlags: 0

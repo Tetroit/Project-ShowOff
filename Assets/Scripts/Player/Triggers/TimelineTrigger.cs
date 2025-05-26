@@ -31,8 +31,7 @@ public class TimelineTrigger<TargetType> : SimpleTrigger<TargetType>
         }
         if (asset == null)
         {
-            Debug.LogError("Asset was null", this);
-            return false;
+            Debug.LogWarning("Asset was null", this);
         }
         return true;
     }
