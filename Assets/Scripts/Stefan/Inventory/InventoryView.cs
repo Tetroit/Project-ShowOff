@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 public enum SelectDirection
@@ -23,12 +24,14 @@ public class InventoryView : MonoBehaviour
     int _curentItemIndex;
     
     public int ItemCount => items.Count;
+    public int CurentItemIndex => _curentItemIndex;
     
     void Awake()
     {
         OnAwake();
         
     }
+
     void Start()
     {
         OnStart(); 
@@ -60,7 +63,18 @@ public class InventoryView : MonoBehaviour
         ChangeItemPosition(_curentItemIndex + (int)selectDirection);
     }
 
-    void ChangeItemPosition(int index)
+    public int GetItemIndex(string name)
+    {
+        int index = 0;
+        foreach (InventoryItemView item in items)
+            if (item.gameObject.name != name) index++;
+            else return index;
+
+        return -1;
+    }
+
+
+    public void ChangeItemPosition(int index)
     {
         if(navigationMode == NavigationMode.Clamp)
             index = Mathf.Clamp(index, 0, items.Count - 1);
@@ -93,6 +107,7 @@ public class InventoryView : MonoBehaviour
     }
 
     protected virtual void OnAwake() { }
+
     protected virtual void OnStart() { }
 
     public void AddItem(InventoryItemView item)
