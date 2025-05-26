@@ -1,5 +1,6 @@
 using amogus;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +8,8 @@ public enum GameState
 {
     UI,
     Play,
-    Pause
+    Pause,
+    Cutscene
 }
 
 public class GameStateManager : MonoBehaviour
@@ -16,6 +18,7 @@ public class GameStateManager : MonoBehaviour
     [field: SerializeField] public InventoryController InventoryController { get; private set; }
     [field: SerializeField] public InteractionManager InteractionManager { get; private set; }
     [field: SerializeField] public Window PauseWindow { get; private set; }
+    [field: SerializeField] public GameObject HUD { get; private set; }
 
 
     [SerializeField] GameState _gameState;
@@ -23,6 +26,8 @@ public class GameStateManager : MonoBehaviour
     GameState _currentStateKey;
     State _currentState;
     Dictionary<GameState, State> _states;
+
+    GameState _previousState;
 
     public GameState CurrentState => _currentStateKey;
 
@@ -51,6 +56,7 @@ public class GameStateManager : MonoBehaviour
             { GameState.UI, new S_UI() },
             { GameState.Play, new S_Play() },
             { GameState.Pause, new S_Pause() },
+            { GameState.Cutscene, new S_Cutscene() },
         };
 
         foreach (KeyValuePair<GameState, State> kv in _states)
@@ -67,13 +73,21 @@ public class GameStateManager : MonoBehaviour
 
     void Start()
     {
+        _previousState = _gameState;
         _currentStateKey = _gameState;
         _currentState = _states[_gameState];    
         _currentState.Enter();
     }
 
+    public void SwitchToPrevious()
+    {
+        SwitchState(_previousState);
+    }
+
     public void SwitchState(GameState state)
     {
+        _previousState = _gameState;
+
         _currentState.Exit();
         _gameState = state;
         _currentStateKey = state;
@@ -92,6 +106,11 @@ public class GameStateManager : MonoBehaviour
     }
 
     public void SwitchToPause()
+    {
+        SwitchState(GameState.Pause);
+    }
+
+    public void SwitchToCutscene()
     {
         SwitchState(GameState.Pause);
     }

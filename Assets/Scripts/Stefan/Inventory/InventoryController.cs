@@ -14,6 +14,17 @@ public class InventoryController : MonoBehaviour
     int _currentInventoryIndex;
     InputSystem_Actions _input;
 
+    public int CurrentInventoryIndex => _currentInventoryIndex;
+
+    public void SetInventory(int index)
+    {
+        GetCurrentInventory().gameObject.SetActive(false);
+        _currentInventoryIndex = index;
+        var current = GetCurrentInventory();
+        current.gameObject.SetActive(true);
+        OnInventoryChanged?.Invoke(current);
+    }
+
     void Awake()
     {
         _input = new();
@@ -98,7 +109,7 @@ public class InventoryController : MonoBehaviour
         else if (value.y < 0) inv.ChangeItemPosition(SelectDirection.Left);
     }
 
-    InventoryView GetCurrentInventory()
+    public InventoryView GetCurrentInventory()
     {
         return _inventories == null || _inventories.Count == 0 ? null : _inventories[_currentInventoryIndex];
     }
