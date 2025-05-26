@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace amogus
 {
-    public class FloorFallCutsceneTrigger : TimelineTrigger<PlayerFSM>
+    public class TimelinePlayerTrigger : TimelineTrigger<PlayerFSM>
     {
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
             return true;
