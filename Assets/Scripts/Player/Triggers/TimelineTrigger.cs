@@ -9,6 +9,7 @@ public class TimelineTrigger<TargetType> : SimpleTrigger<TargetType>
     public TimelineAsset asset;
     public PlayableDirector director;
     public UnityEvent OnAnimationEnd;
+
     public override void Trigger()
     {
         director.playableAsset = asset;
