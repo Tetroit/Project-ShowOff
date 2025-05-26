@@ -9,7 +9,7 @@ namespace amogus
 
         public override ScriptedAnimation<Door> Cutscene => cutscene;
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
-            return !isLocked;
+            return !isLocked && !cutscene.isRunningOn(target);
         };
 
         public override void Unlock()
