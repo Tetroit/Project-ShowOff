@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6924731542597166386}
   - component: {fileID: 7051424244116190689}
   m_Layer: 0
-  m_Name: LadderTrigger (1)
+  m_Name: EndTriggerLadder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,10 +70,20 @@ MonoBehaviour:
   useBackwardAnimation: 1
   toLadderAnimation:
     totalDuration: 0.5
+    pause: 0
+    OnEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    users: []
     ladder: {fileID: 0}
     whichEnd: 0
   fromLadderAnimation:
     totalDuration: 0.5
+    pause: 0
+    OnEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    users: []
     ladder: {fileID: 0}
     whichEnd: 0
   <ladder>k__BackingField: {fileID: 1840976313651760982}
@@ -130,7 +140,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4738093683156100312}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -185,7 +195,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -222,7 +232,7 @@ GameObject:
   - component: {fileID: 1203072170981487621}
   - component: {fileID: 6130862274654954582}
   m_Layer: 0
-  m_Name: LadderTrigger
+  m_Name: StartTriggerLadder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,10 +290,20 @@ MonoBehaviour:
   useBackwardAnimation: 1
   toLadderAnimation:
     totalDuration: 0.25
+    pause: 0
+    OnEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    users: []
     ladder: {fileID: 0}
     whichEnd: 0
   fromLadderAnimation:
     totalDuration: 0.5
+    pause: 0
+    OnEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    users: []
     ladder: {fileID: 0}
     whichEnd: 0
   <ladder>k__BackingField: {fileID: 1840976313651760982}
