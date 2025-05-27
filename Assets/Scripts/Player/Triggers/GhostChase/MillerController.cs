@@ -47,6 +47,7 @@ namespace amogus
 
         public void StopFollowing()
         {
+            if (_followBehavior == null) return;
             StopCoroutine(_followBehavior);
             _followBehavior = null;
             _anim.Play("Idle");
