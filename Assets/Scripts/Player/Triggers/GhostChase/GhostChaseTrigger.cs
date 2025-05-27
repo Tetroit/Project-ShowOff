@@ -7,6 +7,7 @@ namespace amogus
     public class GhostChaseTrigger : DoorTrigger
     {
         [SerializeField] GhostChaseAnimation cutscene;
+        public bool CanUnlcok;
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) =>
         {
             return cutscene.animation == 1 || !isLocked;
@@ -15,7 +16,7 @@ namespace amogus
         {
             cutscene.animation++;
 
-            if (cutscene.animation != 1) isLocked = false; 
+            if (cutscene.animation != 1 && CanUnlcok) isLocked = false; 
         }
     }
 }
