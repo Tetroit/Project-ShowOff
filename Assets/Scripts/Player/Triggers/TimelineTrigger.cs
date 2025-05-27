@@ -8,7 +8,8 @@ public class TimelineTrigger<TargetType> : SimpleTrigger<TargetType>
 {
     public TimelineAsset asset;
     public PlayableDirector director;
-    public UnityAction OnAnimationEnd;
+    public UnityEvent OnAnimationEnd;
+
     public override void Trigger()
     {
         director.playableAsset = asset;
@@ -30,15 +31,14 @@ public class TimelineTrigger<TargetType> : SimpleTrigger<TargetType>
         }
         if (asset == null)
         {
-            Debug.LogError("Asset was null", this);
-            return false;
+            Debug.LogWarning("Asset was null", this);
         }
         return true;
     }
     void OnEndInternal(PlayableDirector finishedDirector)
     {
-        OnAnimationEnd?.Invoke();
         AnimationEnd();
+        OnAnimationEnd?.Invoke();
         Debug.Log("Timeline animation ended", this);
     }
     protected virtual void AnimationEnd()

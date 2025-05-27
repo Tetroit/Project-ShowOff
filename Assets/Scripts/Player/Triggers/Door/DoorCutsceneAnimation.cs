@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 namespace amogus
 {
@@ -16,7 +17,6 @@ namespace amogus
         {
             startRotation = target.GetStartRotation();
             targetRotation = target.GetTargetRotation();
-
         }
         public override void End(Door target)
         {

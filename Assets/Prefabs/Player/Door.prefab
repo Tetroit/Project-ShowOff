@@ -243,8 +243,14 @@ MonoBehaviour:
   triggerType: 2
   action: Interact
   targetsInQuestion: []
-  disableControls: 0
-  target: {fileID: 150861125051368009}
+  asset: {fileID: 0}
+  director: {fileID: 0}
+  OnAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  unlockCode: 
+  isLocked: 0
+  closingCutscene: {fileID: 11400000, guid: 1a2b3bac376e0c842bcf095045920234, type: 2}
   cutscene:
     totalDuration: 1
     pause: 0
@@ -252,7 +258,4 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     users: []
-    startRotation: {x: 0, y: 0, z: 0, w: 0}
-    targetRotation: {x: 0, y: 0, z: 0, w: 0}
-  unlockCode: 
-  isLocked: 0
+  door: {fileID: 150861125051368009}
