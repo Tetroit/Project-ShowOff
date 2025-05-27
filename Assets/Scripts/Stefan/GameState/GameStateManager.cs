@@ -1,5 +1,6 @@
 using amogus;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,13 +28,13 @@ public class GameStateManager : MonoBehaviour
     State _currentState;
     Dictionary<GameState, State> _states;
 
-    GameState _previousState;
+    readonly Stack<GameState> _previousStates = new();
 
     public GameState CurrentState => _currentStateKey;
 
-
 #if UNITY_EDITOR
     bool _dependenciesMissing;
+    [SerializeField] List<GameState> _stest;
     void OnValidate()
     {
         if(_dependenciesMissing) return;
@@ -63,31 +64,36 @@ public class GameStateManager : MonoBehaviour
             kv.Value.Init(this);
     }
 
+#if UNITY_EDITOR
     void Update()
     {
-        if(_currentStateKey != _gameState)
+
+        if (_currentStateKey != _gameState)
         {
             SwitchState(_gameState);
         }
+
+        _stest = _previousStates.ToList();
     }
+#endif
 
     void Start()
     {
-        _previousState = _gameState;
         _currentStateKey = _gameState;
+        _previousStates.Push(_currentStateKey);
         _currentState = _states[_gameState];    
         _currentState.Enter();
     }
 
     public void SwitchToPrevious()
     {
-        SwitchState(_previousState);
+        _previousStates.Pop();
+        SwitchState(_previousStates.Pop());
     }
 
     public void SwitchState(GameState state)
     {
-        _previousState = _gameState;
-
+        _previousStates.Push(state);
         _currentState.Exit();
         _gameState = state;
         _currentStateKey = state;
