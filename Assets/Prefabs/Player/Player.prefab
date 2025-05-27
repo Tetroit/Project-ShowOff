@@ -152,6 +152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8779041887700218328}
+  - component: {fileID: 2389814610329395595}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -176,6 +177,19 @@ Transform:
   - {fileID: 7383816030633284379}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2389814610329395595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4252457874729850611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8814d5fa206158a47aa07c93885b7c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <armDirector>k__BackingField: {fileID: 6846783414577352847}
 --- !u!1 &5016133296133080745
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +405,7 @@ GameObject:
   - component: {fileID: 8572701672115832752}
   - component: {fileID: 6936653790287589934}
   - component: {fileID: 5724968235568677765}
+  - component: {fileID: 6846783414577352847}
   m_Layer: 8
   m_Name: AnimationArm
   m_TagString: Untagged
@@ -488,6 +503,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!320 &6846783414577352847
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6084352469510230677}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 1a2b3bac376e0c842bcf095045920234, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -7363991973398695573, guid: 1a2b3bac376e0c842bcf095045920234, type: 2}
+    value: {fileID: 5724968235568677765}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &6177681187084765463
 GameObject:
   m_ObjectHideFlags: 0
