@@ -8,10 +8,12 @@ namespace amogus
     {
         [SerializeField] GhostChaseAnimation cutscene;
         public bool CanUnlcok;
+
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) =>
         {
             return cutscene.animation == 1 || !isLocked;
         };
+
         public override void Unlock()
         {
             cutscene.animation++;
