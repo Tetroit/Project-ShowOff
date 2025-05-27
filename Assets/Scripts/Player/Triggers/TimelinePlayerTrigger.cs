@@ -5,6 +5,9 @@ namespace amogus
 {
     public class TimelinePlayerTrigger : TimelineTrigger<PlayerFSM>
     {
+        [SerializeField] protected GameStateManager _gameStateManager;
+
+        [SerializeField] protected bool noGamemodeSwitch = false;
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
             return true;
         };
@@ -43,6 +46,15 @@ namespace amogus
                 Debug.LogError("Target object was null", this);
                 return false;
             }
+            if (_gameStateManager == null)
+            {
+                _gameStateManager = FindAnyObjectByType<GameStateManager>();
+                if (_gameStateManager == null)
+                {
+                    Debug.LogError("GameStateManager was null", this);
+                    return false;
+                }
+            }
             if (director == null)
             {
                 if (!FindBinder()) return false;
@@ -68,7 +80,9 @@ namespace amogus
         public override void Trigger()
         {
             base.Trigger();
-            triggerObject.DisableControls();
+            //triggerObject.DisableControls();
+            if (!noGamemodeSwitch)
+                _gameStateManager.SwitchState(GameState.Cutscene);
         }
         [ExecuteAlways]
         private void OnDrawGizmos()
@@ -76,7 +90,10 @@ namespace amogus
         }
         protected override void AnimationEnd()
         {
-            triggerObject.EnableControls();
+            //triggerObject.EnableControls();
+
+            if (!noGamemodeSwitch)
+                _gameStateManager.SwitchToPrevious();
         }
     }
 }

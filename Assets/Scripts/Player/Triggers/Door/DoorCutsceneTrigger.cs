@@ -11,14 +11,13 @@ namespace amogus
         [SerializeField] protected TimelineAsset openingCutscene => closingCutscene;
 
         [SerializeField] protected DoorCutsceneAnimation cutscene;
-        [SerializeField] protected Door door;
 
+        [SerializeField] protected bool noArm = false;
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
             if (isLocked || cutscene.isRunningOn(door)) return false;
             return true;
         };
 
-        PlayerAnimationBinder binder;
         bool FindBinder()
         {
             if (binder != null) return true;
@@ -39,24 +38,36 @@ namespace amogus
                 Debug.LogError("Target object was null", this);
                 return false;
             }
-            if (director == null)
+            if (_gameStateManager == null)
             {
-                if (!FindBinder()) return false;
-                director = binder.GetDirector(PlayerDirectorName);
-                if (director == null)
+                _gameStateManager = FindAnyObjectByType<GameStateManager>();
+                if (_gameStateManager == null)
                 {
-                    Debug.LogError("Target director was null", this);
+                    Debug.LogError("GameStateManager was null", this);
                     return false;
                 }
             }
-            if (closingCutscene == null)
+            if (!noArm)
             {
-                if (!FindBinder()) return false;
-                closingCutscene = binder.GetTimeline(PlayerTimelineName);
-                if ( closingCutscene == null)
+                if (director == null)
                 {
-                    Debug.LogError("Asset was null", this);
-                    return false;
+                    if (!FindBinder()) return false;
+                    director = binder.GetDirector(PlayerDirectorName);
+                    if (director == null)
+                    {
+                        Debug.LogError("Target director was null", this);
+                        return false;
+                    }
+                }
+                if (closingCutscene == null)
+                {
+                    if (!FindBinder()) return false;
+                    closingCutscene = binder.GetTimeline(PlayerTimelineName);
+                    if (closingCutscene == null)
+                    {
+                        Debug.LogError("Asset was null", this);
+                        return false;
+                    }
                 }
             }
             return true;
@@ -68,9 +79,12 @@ namespace amogus
             else
                 asset = closingCutscene;
 
-            base.Trigger();
-
-            cutscene.totalDuration = (float)asset.duration;
+            if (!noArm)
+            {
+                base.Trigger();
+                cutscene.totalDuration = (float)asset.duration;
+            }
+            cutscene.totalDuration = 1;
             cutscene.StartAnimation(door);
         }
         protected override void AnimationEnd()

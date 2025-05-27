@@ -248,9 +248,12 @@ MonoBehaviour:
   OnAnimationEnd:
     m_PersistentCalls:
       m_Calls: []
+  _gameStateManager: {fileID: 0}
+  noGamemodeSwitch: 1
   binder: {fileID: 0}
   playerDirectorName: arm
   playerTimelineName: door
+  door: {fileID: 150861125051368009}
   unlockCode: 
   isLocked: 0
   closingCutscene: {fileID: 11400000, guid: 1a2b3bac376e0c842bcf095045920234, type: 2}
@@ -261,4 +264,4 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     users: []
-  door: {fileID: 150861125051368009}
+  noArm: 0

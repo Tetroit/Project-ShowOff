@@ -38,6 +38,7 @@ public class TimelineTrigger<TargetType> : SimpleTrigger<TargetType>
     void OnEndInternal(PlayableDirector finishedDirector)
     {
         AnimationEnd();
+        director.stopped -= OnEndInternal;
         OnAnimationEnd?.Invoke();
         Debug.Log("Timeline animation ended", this);
     }

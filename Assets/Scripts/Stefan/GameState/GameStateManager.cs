@@ -88,12 +88,17 @@ public class GameStateManager : MonoBehaviour
     public void SwitchToPrevious()
     {
         _previousStates.Pop();
-        SwitchState(_previousStates.Pop());
+        ApplyState(_previousStates.Peek());
     }
 
     public void SwitchState(GameState state)
     {
         _previousStates.Push(state);
+        ApplyState(state);
+    }
+
+    public void ApplyState(GameState state)
+    {
         _currentState.Exit();
         _gameState = state;
         _currentStateKey = state;
