@@ -42,17 +42,17 @@ namespace amogus
             if (director == null)
             {
                 if (!FindBinder()) return false;
-                director = binder.armDirector;
+                director = binder.GetDirector(PlayerDirectorName);
                 if (director == null)
                 {
                     Debug.LogError("Target director was null", this);
                     return false;
                 }
             }
-            if (openingCutscene == null)
+            if (closingCutscene == null)
             {
                 if (!FindBinder()) return false;
-                closingCutscene = binder.armDoorOpeningTimeline;
+                closingCutscene = binder.GetTimeline(PlayerTimelineName);
                 if ( closingCutscene == null)
                 {
                     Debug.LogError("Asset was null", this);

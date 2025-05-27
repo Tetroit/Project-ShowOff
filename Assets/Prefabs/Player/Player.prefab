@@ -189,10 +189,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8814d5fa206158a47aa07c93885b7c15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <armDirector>k__BackingField: {fileID: 6846783414577352847}
-  <player>k__BackingField: {fileID: 7143161083505511038}
-  <armDoorOpeningTimeline>k__BackingField: {fileID: 11400000, guid: 1a2b3bac376e0c842bcf095045920234, type: 2}
-  <fallingFloorAnimation>k__BackingField: {fileID: 11400000, guid: aca1da869e0f430428708b27ee959e3a, type: 2}
+  directors:
+  - key: main
+    director: {fileID: 7143161083505511038}
+  - key: arm
+    director: {fileID: 6846783414577352847}
+  timelines:
+  - key: door
+    asset: {fileID: 11400000, guid: 1a2b3bac376e0c842bcf095045920234, type: 2}
+  - key: falling
+    asset: {fileID: 11400000, guid: aca1da869e0f430428708b27ee959e3a, type: 2}
 --- !u!1 &5016133296133080745
 GameObject:
   m_ObjectHideFlags: 0
