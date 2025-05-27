@@ -16,11 +16,15 @@ public class MillerCutsceneTrigger : TimelinePlayerTrigger
     public void SwitchToCutsceneCam()
     {
         cutsceneCamera.enabled = true;
+        
+        objectToSpawn.SetActive(true);
     }
 
     public void SwitchFromCutsceneCame()
     {
         cutsceneCamera.enabled = false;
+        objectToSpawn.SetActive(false);
+
     }
-    
+
 }
