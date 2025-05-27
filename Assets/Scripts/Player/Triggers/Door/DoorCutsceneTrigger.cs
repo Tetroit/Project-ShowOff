@@ -48,7 +48,6 @@ namespace amogus
                     Debug.LogError("Target director was null", this);
                     return false;
                 }
-                return true;
             }
             if (openingCutscene == null)
             {
