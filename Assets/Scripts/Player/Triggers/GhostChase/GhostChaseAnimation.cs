@@ -7,7 +7,7 @@ namespace amogus
     [Serializable]
     public class GhostChaseAnimation : ScriptedAnimation<Door>
     {
-        [SerializeField] MillerController miller;
+        public MillerController miller;
         [SerializeField] GameStateManager gameStateManager;
         [SerializeField] PlayerFSM fsm;
 
