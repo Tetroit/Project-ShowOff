@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -8,7 +7,8 @@ using UnityEngine.InputSystem;
 public class InventoryController : MonoBehaviour
 {
     [SerializeField] List<InventoryView> _inventories;
-
+    [SerializeField] float _itemChangeCooldown = .2f;
+    float _lastScrollTime;
     [field: SerializeField] public UnityEvent<InventoryView> OnInventoryChanged { get; private set; }
 
     int _currentInventoryIndex;
@@ -101,6 +101,13 @@ public class InventoryController : MonoBehaviour
 
     void OnScroll(InputAction.CallbackContext context)
     {
+        float currentTime = Time.time;
+        if(currentTime - _lastScrollTime < _itemChangeCooldown)
+        {
+            return;
+        }
+        _lastScrollTime = currentTime;
+
         Vector2 value = context.ReadValue<Vector2>();
         InventoryView inv = GetCurrentInventory();
         if (inv == null) return;

@@ -84,9 +84,20 @@ namespace amogus
                 base.Trigger();
                 cutscene.totalDuration = (float)asset.duration;
             }
+            cutscene.OnEnd.AddListener(OnEndInternal);
             cutscene.totalDuration = 1;
             cutscene.StartAnimation(door);
         }
+
+        void OnEndInternal()
+        {
+            AnimationEnd();
+            OnAnimationEnd?.Invoke();
+            cutscene.OnEnd.RemoveListener(OnEndInternal);
+
+            Debug.Log("Timeline animation ended", this);
+        }
+
         protected override void AnimationEnd()
         {
             base.AnimationEnd();
