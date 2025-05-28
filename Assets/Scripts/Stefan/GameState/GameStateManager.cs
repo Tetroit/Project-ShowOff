@@ -1,5 +1,7 @@
 using amogus;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +9,8 @@ public enum GameState
 {
     UI,
     Play,
-    Pause
+    Pause,
+    Cutscene
 }
 
 public class GameStateManager : MonoBehaviour
@@ -16,6 +19,7 @@ public class GameStateManager : MonoBehaviour
     [field: SerializeField] public InventoryController InventoryController { get; private set; }
     [field: SerializeField] public InteractionManager InteractionManager { get; private set; }
     [field: SerializeField] public Window PauseWindow { get; private set; }
+    [field: SerializeField] public GameObject HUD { get; private set; }
 
 
     [SerializeField] GameState _gameState;
@@ -24,11 +28,13 @@ public class GameStateManager : MonoBehaviour
     State _currentState;
     Dictionary<GameState, State> _states;
 
-    public GameState CurrentState => _currentStateKey;
+    readonly Stack<GameState> _previousStates = new();
 
+    public GameState CurrentState => _currentStateKey;
 
 #if UNITY_EDITOR
     bool _dependenciesMissing;
+    [SerializeField] List<GameState> _stest;
     void OnValidate()
     {
         if(_dependenciesMissing) return;
@@ -51,28 +57,47 @@ public class GameStateManager : MonoBehaviour
             { GameState.UI, new S_UI() },
             { GameState.Play, new S_Play() },
             { GameState.Pause, new S_Pause() },
+            { GameState.Cutscene, new S_Cutscene() },
         };
 
         foreach (KeyValuePair<GameState, State> kv in _states)
             kv.Value.Init(this);
     }
 
+#if UNITY_EDITOR
     void Update()
     {
-        if(_currentStateKey != _gameState)
+
+        if (_currentStateKey != _gameState)
         {
             SwitchState(_gameState);
         }
+
+        _stest = _previousStates.ToList();
     }
+#endif
 
     void Start()
     {
         _currentStateKey = _gameState;
+        _previousStates.Push(_currentStateKey);
         _currentState = _states[_gameState];    
         _currentState.Enter();
     }
 
+    public void SwitchToPrevious()
+    {
+        _previousStates.Pop();
+        ApplyState(_previousStates.Peek());
+    }
+
     public void SwitchState(GameState state)
+    {
+        _previousStates.Push(state);
+        ApplyState(state);
+    }
+
+    public void ApplyState(GameState state)
     {
         _currentState.Exit();
         _gameState = state;
@@ -92,6 +117,11 @@ public class GameStateManager : MonoBehaviour
     }
 
     public void SwitchToPause()
+    {
+        SwitchState(GameState.Pause);
+    }
+
+    public void SwitchToCutscene()
     {
         SwitchState(GameState.Pause);
     }

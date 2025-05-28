@@ -33,6 +33,8 @@ public class LegManager : MonoBehaviour
     [SerializeField] BoxCollider firstLeg;
     [SerializeField] BoxCollider firstSecondLeg;
 
+    [SerializeField] bool _useGeneralHeightDetection;
+
     Leg[] _legs;
     public bool Step;
     float _lastBodyHeight;
@@ -105,7 +107,10 @@ public class LegManager : MonoBehaviour
 
         IsMoving = _move;
         UpdateLegs();
-        SetBodyHeight();
+        if (_useGeneralHeightDetection)
+            SetBodyHeightGeneral();
+        else
+            SetBodyHeight();
     }
 
     void UpdateLegs()
@@ -175,6 +180,28 @@ public class LegManager : MonoBehaviour
         float lerpedHeight = Lerp(_lastBodyHeight, groundPositionAverage, _heightChangeLerp * Time.deltaTime);
         transform.position = new Vector3(transform.position.x, lerpedHeight, transform.position.z);
         _lastBodyHeight = lerpedHeight;
+    }
+
+    void SetBodyHeightGeneral()
+    {
+        Vector3 groundPositionAverage = Vector3.zero;
+        Vector3 upDir = transform.up;
+
+        foreach (Leg leg in _legs)
+            groundPositionAverage += leg.CurrentGroundPosition;
+
+        groundPositionAverage = (groundPositionAverage / _legs.Length) + _groundOffset * upDir;
+        //adding wobble
+        groundPositionAverage += Time.deltaTime * WobbleAmplitude * Mathf.Sin(Time.time * WobbleSpeed) * upDir;
+
+        //get average position
+        //check distance,
+        //if distance is lower than needed, move body in the plane normal
+        //if can't figure out the plane normal, 
+
+        Vector3 lerpedHeight = Vector3.Lerp(transform.position, groundPositionAverage, _heightChangeLerp * Time.deltaTime);
+        transform.position = lerpedHeight;
+
     }
 
 
