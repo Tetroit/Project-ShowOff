@@ -17,11 +17,12 @@ MonoBehaviour:
   Name: graph_0
   IsRoot: 1
   FlagedForDelete: 0
-  GUID: 3ea3a466-9f68-4fea-8b24-3813179c04a1
+  GUID: a8fb6e41-8d7e-4746-9fd7-eb68e80cae0d
   Index: 0
   Input:
-  - rid: 3995503853998179014
-  - rid: 3995503853998179015
+  - rid: 3995503853998179016
+  - rid: 3995503853998179017
+  - rid: 3995503853998179018
   Output:
   - Index: 0
     VirtualOutputIndex: 7
@@ -139,7 +140,10 @@ MonoBehaviour:
   PhysicalSize: {x: 0, y: 0, z: 0}
   EnablePhysicalSize: 0
   Thumbnail: 
-  CurrentStatePreset: 
+  CurrentStatePreset: " <sbspreset pkgurl=\"pkg://CobbleWall\" label=\"\" >\n  <presetinput
+    identifier=\"$outputsize\" uid=\"4209021948\" type=\"8\" value=\"10,10\" />\n 
+    <presetinput identifier=\"Metalicness\" uid=\"2614144374\" type=\"0\" value=\"1\"
+    />\n </sbspreset>\n"
   IsRuntimeOnly: 0
   GenerateAllOutputs: 0
   GenerateAllMipmaps: 1
@@ -154,7 +158,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3995503853998179014
+    - rid: 3995503853998179016
       type: {class: SubstanceInputInt2, ns: Adobe.Substance.Input, asm: Adobe.Substance}
       data:
         Index: 0
@@ -173,7 +177,7 @@ MonoBehaviour:
           SliderClamp: 0
           EnumValueCount: 0
           EnumValues: []
-    - rid: 3995503853998179015
+    - rid: 3995503853998179017
       type: {class: SubstanceInputInt, ns: Adobe.Substance.Input, asm: Adobe.Substance}
       data:
         Index: 1
@@ -193,5 +197,26 @@ MonoBehaviour:
           SliderClamp: 0
           LabelFalse: 
           LabelTrue: 
+          EnumValueCount: 0
+          EnumValues: []
+    - rid: 3995503853998179018
+      type: {class: SubstanceInputFloat, ns: Adobe.Substance.Input, asm: Adobe.Substance}
+      data:
+        Index: 2
+        Description:
+          Identifier: Metalicness
+          Label: Metalicness
+          GuiGroup: 
+          GuiDescription: The <b>Color Output</b> parameter creates a uniform color
+            output image
+          Type: 0
+          WidgetType: 3
+        Data: 1
+        NumericalDescription:
+          DefaultValue: 0
+          MinValue: 0
+          MaxValue: 0
+          SliderStep: 0
+          SliderClamp: 0
           EnumValueCount: 0
           EnumValues: []
