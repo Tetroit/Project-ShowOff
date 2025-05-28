@@ -4,6 +4,9 @@
 		<property name="name">
 			<value>SFX</value>
 		</property>
+		<relationship name="automators">
+			<destination>{50b4deb8-a939-4969-ab1b-bf9424e91fda}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{f611b4f7-5002-477f-9a1c-e15cccedccae}</destination>
 		</relationship>
@@ -14,6 +17,14 @@
 			<destination>{da5c06b3-1ba9-41c3-8869-ea331d9935d7}</destination>
 		</relationship>
 	</object>
+	<object class="Automator" id="{50b4deb8-a939-4969-ab1b-bf9424e91fda}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>volume</value>
+		</property>
+		<relationship name="automationCurves">
+			<destination>{7650a16f-67d3-44cb-803c-9f029fb9a8bf}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusEffectChain" id="{f611b4f7-5002-477f-9a1c-e15cccedccae}">
 		<relationship name="effects">
 			<destination>{244ff2a4-9d38-4943-b4c7-0f262797e1a7}</destination>
@@ -21,6 +32,15 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e16cd366-ee37-4ec7-b756-b850cf409e0d}" />
+	<object class="AutomationCurve" id="{7650a16f-67d3-44cb-803c-9f029fb9a8bf}">
+		<relationship name="parameter">
+			<destination>{f866c734-d5c6-425f-bfd0-4303d0c33228}</destination>
+		</relationship>
+		<relationship name="automationPoints">
+			<destination>{4e4f50a4-53ad-4c68-ac0a-d0e3218512a4}</destination>
+			<destination>{b50bb3b2-a0c9-48b3-8c8b-65f231342410}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{244ff2a4-9d38-4943-b4c7-0f262797e1a7}" />
 	<object class="SFXReverbEffect" id="{2a96883c-ad36-4928-bb51-482af1d579ee}">
 		<property name="decayTime">
@@ -30,6 +50,22 @@
 			<destination>{19322ab5-c874-40c7-9afc-dc63f84eb8c4}</destination>
 			<destination>{9a864a03-cb28-41e4-999d-2b835bd8cc47}</destination>
 		</relationship>
+	</object>
+	<object class="AutomationPoint" id="{4e4f50a4-53ad-4c68-ac0a-d0e3218512a4}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="value">
+			<value>-80</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{b50bb3b2-a0c9-48b3-8c8b-65f231342410}">
+		<property name="position">
+			<value>0.99858757062146897</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
 	</object>
 	<object class="Automator" id="{19322ab5-c874-40c7-9afc-dc63f84eb8c4}">
 		<property name="nameOfPropertyBeingAutomated">
