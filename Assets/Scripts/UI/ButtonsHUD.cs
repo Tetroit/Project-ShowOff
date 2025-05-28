@@ -1,15 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class ButtonsHUD : MonoBehaviour
 {
-    // Canvases
-    [SerializeField] GameObject _menuCanvas;
-    [SerializeField] GameObject _gameCanvas;
 
     // Pages
-    [SerializeField] GameObject _unpausedView;
-    [SerializeField] GameObject _pausedView;
     [SerializeField] GameObject _pMainPage;
     [SerializeField] GameObject _pControlsPage;
     [SerializeField] GameObject _pAudioPage;
@@ -17,10 +13,9 @@ public class ButtonsHUD : MonoBehaviour
 
     public void QuitMenu()
     { // Return to menu stuff here
-        _menuCanvas.SetActive(true);
-        _pausedView.SetActive(false);
-        _gameCanvas.SetActive(false);
+        SceneManager.LoadScene(0);
     }
+
     public void ClickControls()
     {
         _pMainPage.SetActive(false);
@@ -42,13 +37,10 @@ public class ButtonsHUD : MonoBehaviour
         _pControlsPage.SetActive(false);
         _pAudioPage.SetActive(false);
         _pMainPage.SetActive(true);
-        _pausedView.SetActive(false);
-        _unpausedView.SetActive(true);
-    }
-    public void PauseGame()
-    {
-        _pausedView.SetActive(true);
-        _unpausedView.SetActive(false);
     }
 
+    void OnDisable()
+    {
+        UnpauseGame();
+    }
 }

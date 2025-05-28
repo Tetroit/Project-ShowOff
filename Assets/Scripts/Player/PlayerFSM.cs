@@ -7,7 +7,11 @@ using UnityEngine;
 
 namespace amogus
 {
-    public class PlayerFSM : MonoBehaviour
+    public interface IAnimationRoot
+    {
+        public Transform animationRoot { get; }
+    }
+    public class PlayerFSM : MonoBehaviour, IAnimationRoot
     {
         [SerializeField]
         public enum ControllerType
@@ -31,6 +35,7 @@ namespace amogus
         [SerializeField]
         PlayerCamera cameraScript;
         CameraWalkingShake shake;
+        [field: SerializeField] public Transform animationRoot { get; private set; }
         public bool inAnimation = false;
         public bool isMoving
         {

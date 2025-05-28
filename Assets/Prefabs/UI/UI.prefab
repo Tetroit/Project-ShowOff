@@ -2162,7 +2162,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 281693125656419317}
+      - m_Target: {fileID: 6464765765619452677}
         m_TargetAssemblyTypeName: ButtonsHUD, Assembly-CSharp
         m_MethodName: ClickAudio
         m_Mode: 1
@@ -2328,11 +2328,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1980, y: 1080}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -2581,7 +2581,7 @@ GameObject:
   - component: {fileID: 1247150845408438747}
   - component: {fileID: 2687626637272042820}
   m_Layer: 5
-  m_Name: Unpaused
+  m_Name: InventoryIcons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4766,7 +4766,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5286603648308977648}
   - component: {fileID: 7080230945005114663}
-  - component: {fileID: 281693125656419317}
   m_Layer: 5
   m_Name: HUD_Ingame
   m_TagString: Untagged
@@ -4810,25 +4809,6 @@ MonoBehaviour:
   _fontAsset: {fileID: 11400000, guid: ac137762f736f2e4692ed7b27f182670, type: 2}
   _execute: 0
   _prefabs: []
---- !u!114 &281693125656419317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5864753709744605088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0896c31caaffc654aad8e01fdb7c7470, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _menuCanvas: {fileID: 0}
-  _gameCanvas: {fileID: 5864753709744605088}
-  _unpausedView: {fileID: 3503744950477032801}
-  _pausedView: {fileID: 6791567619316925837}
-  _pMainPage: {fileID: 7169564282489157700}
-  _pControlsPage: {fileID: 2368497809414389646}
-  _pAudioPage: {fileID: 6787589155574183817}
 --- !u!1 &5915676080037111000
 GameObject:
   m_ObjectHideFlags: 0
@@ -5646,6 +5626,7 @@ GameObject:
   - component: {fileID: 6244999196829795547}
   - component: {fileID: 1007775037119167685}
   - component: {fileID: 1106349720577250073}
+  - component: {fileID: 6464765765619452677}
   m_Layer: 5
   m_Name: Paused
   m_TagString: Untagged
@@ -5726,6 +5707,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority: 99
+--- !u!114 &6464765765619452677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6791567619316925837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2587d48834dca245a32dd8c9e19e5bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pMainPage: {fileID: 7169564282489157700}
+  _pControlsPage: {fileID: 2368497809414389646}
+  _pAudioPage: {fileID: 6787589155574183817}
 --- !u!1 &6813052551885618175
 GameObject:
   m_ObjectHideFlags: 0
@@ -5847,7 +5843,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 281693125656419317}
+      - m_Target: {fileID: 6464765765619452677}
         m_TargetAssemblyTypeName: ButtonsHUD, Assembly-CSharp
         m_MethodName: ClickControls
         m_Mode: 1
@@ -6152,7 +6148,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 281693125656419317}
+      - m_Target: {fileID: 6464765765619452677}
         m_TargetAssemblyTypeName: ButtonsHUD, Assembly-CSharp
         m_MethodName: ClickMain
         m_Mode: 1
@@ -7672,7 +7668,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 281693125656419317}
+      - m_Target: {fileID: 6464765765619452677}
         m_TargetAssemblyTypeName: ButtonsHUD, Assembly-CSharp
         m_MethodName: ClickMain
         m_Mode: 1
@@ -8190,7 +8186,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 281693125656419317}
+      - m_Target: {fileID: 6464765765619452677}
         m_TargetAssemblyTypeName: ButtonsHUD, Assembly-CSharp
         m_MethodName: QuitMenu
         m_Mode: 1
@@ -8316,6 +8312,14 @@ PrefabInstance:
       propertyPath: 'items.Array.data[2]'
       value: 
       objectReference: {fileID: 646289165277521846}
+    - target: {fileID: 4807934891042254113, guid: 8d7705fa8f21fde4abe7cb50e3dad4c5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4910142143654553116, guid: 8d7705fa8f21fde4abe7cb50e3dad4c5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5055296566022676373, guid: 8d7705fa8f21fde4abe7cb50e3dad4c5, type: 3}
       propertyPath: m_Name
       value: Inventories

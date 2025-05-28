@@ -25,6 +25,7 @@ public class Leg
     Leg[] _adjacentLegs;
     public bool IsGrounded => _currLerpTime > data.StepSpeed;
     public Vector3 CurrentGroundPosition { get; private set; }
+    public Vector3 CurrentGroundNormal { get; private set; }
 
     public event Action<Leg> OnStep;
 
@@ -45,13 +46,14 @@ public class Leg
             members[i] = new Member(GameObject.Instantiate(legPrefab, data.transform));
         
         //initial positioning
-        if (!GetGroundTarget(out Vector3 groundPoint))
+        if (!GetGroundTarget(out Vector3 groundPoint, out Vector3 groundNormal))
         {
             Vector3 direction = GetYAngle() + data.ForwardReach * data.transform.forward + GetLegReach() * -data.transform.up / 2f;
             groundPoint = data.transform.position + direction;
         }
         CurrentGroundPosition = groundPoint;
-        
+        CurrentGroundNormal = groundNormal;
+
         _lastTarget = groundPoint;
         _nextTarget = groundPoint;
         PositionLeg();
@@ -65,12 +67,13 @@ public class Leg
 
     public virtual void Update()
     {
-        if (!GetGroundTarget(out Vector3 currentTarget))
+        if (!GetGroundTarget(out Vector3 currentTarget, out Vector3 groundNormal))
         {
             _debug = null;
             return;
         }
         CurrentGroundPosition = currentTarget;
+        CurrentGroundNormal = groundNormal;
 
         Vector3 target = InterpolateToTarget(currentTarget);
 
@@ -123,22 +126,37 @@ public class Leg
 
     bool GetGroundTarget(out Vector3 target)
     {
-        Vector3 direction = GetYAngle() * data.DistanceFromBody + data.transform.forward * (data.IsMoving ? ForwardReach : 0) ;
+        bool hasHit = GetGroundTarget(out RaycastHit hit);
+        target = hit.point;
+
+        return hasHit;
+    }
+
+    bool GetGroundTarget(out Vector3 target, out Vector3 normal)
+    {
+        bool hasHit = GetGroundTarget(out RaycastHit hit);
+        target = hit.point;
+        normal = hit.normal;
+        return hasHit;
+    }
+
+    bool GetGroundTarget(out RaycastHit hit)
+    {
+        Vector3 direction = GetYAngle() * data.DistanceFromBody + data.transform.forward * (data.IsMoving ? ForwardReach : 0);
         //in case the ground is higher than the body position, so the ray doesn't ignore the mesh 
         Vector3 abovePoint = data.transform.up * 3;
 
         bool hasHit = Physics.Raycast
         (
             data.transform.position + abovePoint + direction,
-            -data.transform.up, 
-            out RaycastHit hit, 
-            GetLegReach() + abovePoint.magnitude, 
+            -data.transform.up,
+            out hit,
+            GetLegReach() + abovePoint.magnitude,
             _groundMask
         );
-        target = hit.point;
         return hasHit;
     }
-    
+
     bool AdjacentLegsAreGrounded()
     {
         return _adjacentLegs.All(l => l.IsGrounded);

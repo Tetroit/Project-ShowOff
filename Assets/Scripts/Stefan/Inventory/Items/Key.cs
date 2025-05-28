@@ -11,13 +11,13 @@ public class Key : InventoryItemView
         base.Interact(user);
         Collider[] hits = Physics.OverlapSphere(user.transform.position, 1,int.MaxValue, QueryTriggerInteraction.Collide);
         if (hits.Length == 0) return;
-        DoorCutsceneTrigger door = null;
+        DoorTrigger door = null;
         foreach (Collider c in hits)
             if (c.transform.TryGetComponent(out door)) break;
 
         if(door == null || !door.isLocked || door.unlockCode != _doorCode) return;
 
-        door.isLocked = false;
+        door.Unlock(); 
     }
     //on instantiate
     public override void AddInInventory(GameObject user)
