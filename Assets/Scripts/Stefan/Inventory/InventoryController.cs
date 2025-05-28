@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -8,11 +7,23 @@ using UnityEngine.InputSystem;
 public class InventoryController : MonoBehaviour
 {
     [SerializeField] List<InventoryView> _inventories;
-
+    [SerializeField] float _itemChangeCooldown = .2f;
+    float _lastScrollTime;
     [field: SerializeField] public UnityEvent<InventoryView> OnInventoryChanged { get; private set; }
 
     int _currentInventoryIndex;
     InputSystem_Actions _input;
+
+    public int CurrentInventoryIndex => _currentInventoryIndex;
+
+    public void SetInventory(int index)
+    {
+        GetCurrentInventory().gameObject.SetActive(false);
+        _currentInventoryIndex = index;
+        var current = GetCurrentInventory();
+        current.gameObject.SetActive(true);
+        OnInventoryChanged?.Invoke(current);
+    }
 
     void Awake()
     {
@@ -90,6 +101,13 @@ public class InventoryController : MonoBehaviour
 
     void OnScroll(InputAction.CallbackContext context)
     {
+        float currentTime = Time.time;
+        if(currentTime - _lastScrollTime < _itemChangeCooldown)
+        {
+            return;
+        }
+        _lastScrollTime = currentTime;
+
         Vector2 value = context.ReadValue<Vector2>();
         InventoryView inv = GetCurrentInventory();
         if (inv == null) return;
@@ -98,7 +116,7 @@ public class InventoryController : MonoBehaviour
         else if (value.y < 0) inv.ChangeItemPosition(SelectDirection.Left);
     }
 
-    InventoryView GetCurrentInventory()
+    public InventoryView GetCurrentInventory()
     {
         return _inventories == null || _inventories.Count == 0 ? null : _inventories[_currentInventoryIndex];
     }

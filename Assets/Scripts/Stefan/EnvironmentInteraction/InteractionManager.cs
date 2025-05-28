@@ -174,5 +174,15 @@ public class InteractionManager : MonoBehaviour
     void OnDisable()
     {
         _input.Disable();
+        Dissmised();
+        if (_lastInteractable == null) return;
+
+        _holdManager.OnItemHoverEnd(_lastInteractable as IHoldable);
+        OnHoverEnd?.Invoke(_lastInteractableGO, _lastInteractable);
+
+        _lastInteractable = null;
+        _lastInteractableGO = null;
+
+
     }
 }

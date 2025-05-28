@@ -7,7 +7,6 @@ public class PauseController : MonoBehaviour
     [SerializeField] InputActionReference _pauseAction;
     [SerializeField] GameStateManager _gameStateManager;
 
-    GameState _previousState;
     bool _isPaused;
 
     void Awake()
@@ -30,7 +29,6 @@ public class PauseController : MonoBehaviour
         }
         else
         {
-            _previousState = _gameStateManager.CurrentState;
             _gameStateManager.SwitchState(GameState.Pause);
             _isPaused = true;
         }
@@ -38,7 +36,7 @@ public class PauseController : MonoBehaviour
 
     public void DisablePause()
     {
-        _gameStateManager.SwitchState(_previousState);
+        _gameStateManager.SwitchToPrevious();
         _isPaused = false;
 
     }
