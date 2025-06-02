@@ -41,10 +41,10 @@ namespace amogus
             target.transform.position += Time.deltaTime * speed * playerAction * (flipCamera? -1 : 1) * ladderContext.GetDir();
             //target.transform.position += Time.deltaTime * speed * playerAction * Vector3.up;
 
-            if (playerAction < 0 && ladderContext.GetHeight(target.position) <= 0)
+            if (playerAction * (flipCamera ? -1 : 1) < 0 && ladderContext.GetHeight(target.position) <= 0)
                 playerFSM.ActivateSwitch(ladderContext.startLadderSwitch);
 
-            if (playerAction > 0 && ladderContext.GetHeight(target.position) >= 1)
+            if (playerAction * (flipCamera ? -1 : 1) > 0 && ladderContext.GetHeight(target.position) >= 1)
                 playerFSM.ActivateSwitch(ladderContext.endLadderSwitch);
         }
 
