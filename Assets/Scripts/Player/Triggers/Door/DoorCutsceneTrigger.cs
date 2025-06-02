@@ -110,5 +110,10 @@ namespace amogus
         {
             isLocked = false;
         }
+
+        public void Lock()
+        {
+            isLocked = true;
+        }
     }
 }
