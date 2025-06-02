@@ -38,14 +38,7 @@ public class Lantern : InventoryItemView
         currentY -= _yLevel; 
         
         t = currentY / _blendDistance;
-            _light.intensity = math.lerp(_underGroundLumen, _surfaceLumen, t);
-        //if(t < 0)
-        //{
-        //    _light.intensity = math.lerp(_surfaceLumen, _underGroundLumen, -t);
-        //}
-        //else
-        //{
+        _light.intensity = math.lerp(_underGroundLumen, _surfaceLumen, t);
 
-        //}
     }
 }
