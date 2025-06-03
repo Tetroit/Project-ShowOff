@@ -1,4 +1,6 @@
-﻿using Dialogue;
+﻿using DG.Tweening;
+using Dialogue;
+using System.Collections;
 using UnityEngine;
 
 public class BookPage : InventoryItemView, ITextDisplayer
@@ -46,13 +48,24 @@ public class BookPage : InventoryItemView, ITextDisplayer
 
     public override void Select()
     {
-        //start rotation
-        //rotate left or right based on toggle
-
+        Debug.Log("Current selected "+ gameObject);
     }
 
     public override void Deselect()
     {
-        Deactivate();
+        Debug.Log("Current deselected " + gameObject);
+
+
+    }
+
+    public void TurnLeft()
+    {
+        transform.DOLocalRotateQuaternion(Quaternion.AngleAxis(-180, Vector3.up), .3f);
+    }
+
+    public void TurnRight()
+    {
+        transform.DOLocalRotateQuaternion(Quaternion.AngleAxis(0, Vector3.up), .3f);
+
     }
 }

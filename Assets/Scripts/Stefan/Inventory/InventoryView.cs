@@ -84,6 +84,8 @@ public class InventoryView : MonoBehaviour
 
     public void ChangeItemPosition(int index)
     {
+        if (items.Count == 0) return;
+
         if(navigationMode == NavigationMode.Clamp)
             index = Mathf.Clamp(index, 0, items.Count - 1);
         else if(navigationMode == NavigationMode.Cycle)
@@ -111,7 +113,7 @@ public class InventoryView : MonoBehaviour
         ItemSelected?.Invoke(current);
     }
 
-    protected InventoryItemView GetCurrentItem()
+    public InventoryItemView GetCurrentItem()
     {
         if(items.Count == 0) return null;
         return items[_curentItemIndex];

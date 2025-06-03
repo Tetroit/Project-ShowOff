@@ -1,4 +1,3 @@
-using DG.Tweening;
 using Dialogue;
 using System.Collections;
 using TMPro;
@@ -13,6 +12,8 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
     [SerializeField] float _returnTime;
     [SerializeField] TextRunner _runner;
     [SerializeField] InteractionSettings _interactionSettings;
+    [field: SerializeField] public BookPage PagePrefab { get; private set; }
+
     Vector3 _initialPosition;
     Quaternion _initialRotation;
 
