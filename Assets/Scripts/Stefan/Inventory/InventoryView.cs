@@ -77,6 +77,10 @@ public class InventoryView : MonoBehaviour
         return -1;
     }
 
+    public void SelectItem(string name)
+    {
+        ChangeItemPosition(GetItemIndex(name));
+    }
 
     public void ChangeItemPosition(int index)
     {
@@ -124,6 +128,12 @@ public class InventoryView : MonoBehaviour
         instance.AddInInventory(User);
         ChangeItemPosition(SelectDirection.Right);
     }
+
+    public InventoryItemView GetAddedItem()
+    {
+        return items[^1];
+    }
+
     public void Clear()
     {
         items.Clear();

@@ -10,7 +10,8 @@ public class Book : InventoryItemView
     [SerializeField] GameStateManager _gameStateManager;
     [SerializeField] GameObject[] UI_Icons;
     [SerializeField] InteractionManager _interactionManager;
-    [SerializeField] BookPage notePrefab;
+    [SerializeField] BookPage _notePrefab;
+    [SerializeField] BookPage _emptyPagePrefab;
     [SerializeField] Button _swipeRight;
     [SerializeField] Button _swipeLeft;
 
@@ -32,7 +33,9 @@ public class Book : InventoryItemView
     {
         if (_notesContainer.Any(x => x.name == noteObj.name)) return;
 
-        _notesContainer.AddItem(notePrefab);
+        _notesContainer.AddItem(_notePrefab);
+        var page = _notesContainer.GetAddedItem();
+
     }
 
     public override void Select()
@@ -47,6 +50,7 @@ public class Book : InventoryItemView
         _interactionManager.enabled = false;
 
         _swipeLeft.gameObject.SetActive(true);
+        _swipeRight.gameObject.SetActive(true);
     }
 
     public override void Deselect()
@@ -61,6 +65,7 @@ public class Book : InventoryItemView
             _interactionManager.enabled = true;
 
         _swipeLeft.gameObject.SetActive(false);
+        _swipeRight.gameObject.SetActive(false);
 
     }
 
