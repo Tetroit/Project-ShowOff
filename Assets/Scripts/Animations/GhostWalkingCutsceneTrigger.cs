@@ -27,6 +27,10 @@ public class MillerCutsceneTrigger : TimelinePlayerTrigger
         cutsceneCamera.enabled = false;
         objectToSpawn.SetActive(false);
         _loreRoomDoor.CanUnlcok = true;
+        
+        _loreRoomDoor.Unlock();
+        _loreRoomDoor.Trigger();
+
     }
 
 }

@@ -24,6 +24,7 @@ namespace amogus
 
             
         }
+
         public override void Unlock()
         {
             cutscene.animation++;
@@ -42,6 +43,7 @@ namespace amogus
             cutscene.miller.StopFollowing();
             cutscene.miller.gameObject.SetActive(false);
             endDoor.OnAnimationEnd.RemoveListener(StopGhostFirstTime);
+            endDoor.Lock();
             officeDoor.Unlock();
 
             officeDoor.SetNoArm(true);

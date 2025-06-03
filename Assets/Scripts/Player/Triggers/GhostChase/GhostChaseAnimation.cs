@@ -13,7 +13,8 @@ namespace amogus
 
         [SerializeField] DoorCutsceneAnimation defaultAnim;
 
-        [HideInInspector] public int animation;
+        [Header("For testing")]
+        public int animation;
 
         public override void Begin(Door target)
         {
