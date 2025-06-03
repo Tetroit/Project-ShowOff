@@ -107,7 +107,7 @@ public class InventoryView : MonoBehaviour
         ItemSelected?.Invoke(current);
     }
 
-    protected InventoryItemView GetCurrentItem()
+    public InventoryItemView GetCurrentItem()
     {
         if(items.Count == 0) return null;
         return items[_curentItemIndex];
