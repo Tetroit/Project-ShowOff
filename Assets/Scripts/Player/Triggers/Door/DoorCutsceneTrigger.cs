@@ -13,6 +13,9 @@ namespace amogus
         [SerializeField] protected DoorCutsceneAnimation cutscene;
 
         [SerializeField] protected bool noArm = false;
+
+        public void SetNoArm(bool val) => noArm = val;
+
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
             if (isLocked || cutscene.isRunningOn(door)) return false;
             return true;
@@ -106,6 +109,11 @@ namespace amogus
         public override void Unlock()
         {
             isLocked = false;
+        }
+
+        public void Lock()
+        {
+            isLocked = true;
         }
     }
 }

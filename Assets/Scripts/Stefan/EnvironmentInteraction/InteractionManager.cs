@@ -57,6 +57,8 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] HoldManager _holdManager;
     [SerializeField] PickupManager _pickupManager;
     
+    public HoldManager HoldManager => _holdManager;
+
     Coroutine _interactAnimation;
 
     InputSystem_Actions _input;
@@ -174,7 +176,6 @@ public class InteractionManager : MonoBehaviour
     void OnDisable()
     {
         _input.Disable();
-        Dissmised();
         if (_lastInteractable == null) return;
 
         _holdManager.OnItemHoverEnd(_lastInteractable as IHoldable);

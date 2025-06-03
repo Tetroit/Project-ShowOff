@@ -8,6 +8,7 @@ namespace amogus
     {
         [SerializeField] GhostChaseAnimation cutscene;
         [SerializeField] DoorCutsceneTrigger endDoor;
+        [SerializeField] DoorCutsceneTrigger officeDoor;
         public bool CanUnlcok;
 
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) =>
@@ -23,14 +24,15 @@ namespace amogus
 
             
         }
+
         public override void Unlock()
         {
             cutscene.animation++;
 
             if (cutscene.animation == 1)
             {
+                Debug.Log("DoorChase");
                 endDoor.OnAnimationEnd.AddListener(StopGhostFirstTime);
-                
             }
 
             if (cutscene.animation != 1 && CanUnlcok) isLocked = false; 
@@ -41,8 +43,22 @@ namespace amogus
             cutscene.miller.StopFollowing();
             cutscene.miller.gameObject.SetActive(false);
             endDoor.OnAnimationEnd.RemoveListener(StopGhostFirstTime);
+            endDoor.Lock();
+            officeDoor.Unlock();
+
+            officeDoor.SetNoArm(true);
+            officeDoor.Trigger();
+
+            officeDoor.OnAnimationEnd.AddListener(NoArmOpen);
 
             Debug.Log("Stopping ghost");
+        }
+
+        void NoArmOpen()
+        {
+            officeDoor.SetNoArm(false);
+            officeDoor.OnAnimationEnd.RemoveListener(NoArmOpen);
+
         }
     }
 }

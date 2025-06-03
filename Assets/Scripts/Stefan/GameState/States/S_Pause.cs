@@ -42,7 +42,7 @@ public class S_Pause : State
         else
             fsm.PlayerController.DisableControls();
         Time.timeScale = time;
-        fsm.InventoryController.gameObject.SetActive(inventoryControl);
+        fsm.InventoryController.enabled = inventoryControl;
         fsm.InteractionManager.enabled = interactionsEnabled;
     }
 }
