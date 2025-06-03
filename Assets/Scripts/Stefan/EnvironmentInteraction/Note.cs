@@ -11,6 +11,8 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
     Vector3 _initialPosition;
     Quaternion _initialRotation;
 
+    public string Text => _text;
+
     public Transform Self => transform;
 
     static LineView _textDisplay;
