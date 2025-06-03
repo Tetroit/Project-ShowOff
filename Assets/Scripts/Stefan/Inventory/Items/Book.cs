@@ -14,14 +14,13 @@ public class Book : InventoryItemView
 
     InventoryView _notesContainer;
 
-    void Awake()
-    {
-        _notesContainer = GetComponent<InventoryView>();
-    }
+   
 
     void Start()
     {
-        _interactionManager.HoldManager.Interacted.AddListener(AddNote);
+        if (_notesContainer == null) _notesContainer = GetComponent<InventoryView>();
+
+        //_interactionManager.HoldManager.Interacted.AddListener(AddNote);
         _swipeRight.onClick.AddListener(() =>
         {
             if (_notesContainer.ItemCount <= 1) return;
@@ -43,21 +42,26 @@ public class Book : InventoryItemView
             if (prev == next) return;
             next.TurnRight();
         });
+
     }
 
-    void AddNote(GameObject noteObj, IHoldable component)
+    public void AddNote(GameObject noteObj, IHoldable component)
     {
+        if(_notesContainer == null) _notesContainer = GetComponent<InventoryView>();
         if (_notesContainer.Any(x => x.name == noteObj.name)) return;
         Note note = component as Note; 
 
         _notesContainer.AddItem(note.PagePrefab);
-        var page = _notesContainer.GetAddedItem();
+        var page = _notesContainer.GetAddedItem() as BookPage;
         page.transform.parent = _pagesContainer;
         page.transform.SetLocalPositionAndRotation(
             Vector3.zero,
             Quaternion.identity
         );
+        page.name = noteObj.name;
         page.transform.localScale = Vector3.one;
+        page.Text = note.Text;
+        page.Title = note.Title;
     }
 
     public override void Select()
@@ -74,7 +78,7 @@ public class Book : InventoryItemView
         _swipeLeft.gameObject.SetActive(true);
         _swipeRight.gameObject.SetActive(true);
 
-        _notesContainer.ChangeItemPosition(0);
+        //_notesContainer.ChangeItemPosition(0);
     }
 
     public override void Deselect()

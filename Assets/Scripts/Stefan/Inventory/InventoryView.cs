@@ -128,7 +128,8 @@ public class InventoryView : MonoBehaviour
         var instance = Instantiate(item);
         items.Add(instance);
         instance.AddInInventory(User);
-        ChangeItemPosition(SelectDirection.Right);
+        //should not add this?
+        //ChangeItemPosition(SelectDirection.Right);
     }
 
     public InventoryItemView GetAddedItem()
