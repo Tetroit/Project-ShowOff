@@ -329,8 +329,13 @@ MonoBehaviour:
   VirtualChannelSettings: []
   RealChannelSettings: []
   Plugins: []
-  MasterBanks: []
-  Banks: []
+  MasterBanks:
+  - Build/Desktop/Master
+  Banks:
+  - Build/Desktop/Ambience
+  - Build/Desktop/Dialogue
+  - Build/Desktop/SFX
+  - Build/Desktop/Temporary
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
@@ -343,21 +348,21 @@ MonoBehaviour:
   SharedLibraryUpdateStage: 0
   SharedLibraryTimeSinceStart: 0
   CurrentVersion: 131847
-  HideSetupWizard: 0
+  HideSetupWizard: 1
   LastEventReferenceScanVersion: 131847
   Platforms:
-  - {fileID: -5318791687305516366}
-  - {fileID: -2259322064037297867}
-  - {fileID: 4449866285185638179}
-  - {fileID: 6349947275977482013}
-  - {fileID: -8220359151050298822}
-  - {fileID: 6129734247279155733}
-  - {fileID: 5418713204237141153}
-  - {fileID: -42199969017668968}
-  - {fileID: 3502466417583209951}
-  - {fileID: 2293043884736730721}
-  - {fileID: 3861083087169166307}
   - {fileID: 8276699634745994884}
+  - {fileID: 3861083087169166307}
+  - {fileID: 2293043884736730721}
+  - {fileID: 3502466417583209951}
+  - {fileID: -42199969017668968}
+  - {fileID: 5418713204237141153}
+  - {fileID: 6129734247279155733}
+  - {fileID: -8220359151050298822}
+  - {fileID: 6349947275977482013}
+  - {fileID: 4449866285185638179}
+  - {fileID: -2259322064037297867}
+  - {fileID: -5318791687305516366}
   MigratedPlatforms: 09000000080000000b0000000a00000012000000060000000c0000000500000000000000150000000200000001000000
 --- !u!114 &2293043884736730721
 MonoBehaviour:
@@ -575,16 +580,16 @@ MonoBehaviour:
     HasValue: 0
   displaySortOrder: 0
   childIdentifiers:
-  - 52eb9df5db46521439908db3a29a1bbb
-  - 2c5177b11d81d824dbb064f9ac8527da
-  - 0f8eb3f400726694eb47beb1a9f94ce8
-  - b7716510a1f36934c87976f3a81dbf3d
-  - e7a046c753c3c3d4aacc91f6597f310d
-  - c88d16e5272a4e241b0ef0ac2e53b73d
-  - 2fea114e74ecf3c4f920e1d5cc1c4c40
-  - fd7c55dab0fce234b8c25f6ffca523c1
-  - de700ef3f37a49b58a57ae3addf01ad9
   - 46fbfdf3fc43db0458918377fd40293e
+  - de700ef3f37a49b58a57ae3addf01ad9
+  - fd7c55dab0fce234b8c25f6ffca523c1
+  - 2fea114e74ecf3c4f920e1d5cc1c4c40
+  - c88d16e5272a4e241b0ef0ac2e53b73d
+  - e7a046c753c3c3d4aacc91f6597f310d
+  - b7716510a1f36934c87976f3a81dbf3d
+  - 0f8eb3f400726694eb47beb1a9f94ce8
+  - 2c5177b11d81d824dbb064f9ac8527da
+  - 52eb9df5db46521439908db3a29a1bbb
   codecChannels:
     Value: []
     HasValue: 0
