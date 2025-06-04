@@ -131,6 +131,23 @@ public class InventoryView : MonoBehaviour
         //should not add this?
         //ChangeItemPosition(SelectDirection.Right);
     }
+    public void RemoveItem(InventoryItemView item) 
+    {
+        
+    }
+
+    public void ForEach(Action<InventoryItemView> call)
+    {
+        for (int i = items.Count-1; i >= 0; i--)
+        {
+            call(items[i]);
+        }
+    }
+
+    public InventoryItemView GetItemAt(int index)
+    {
+        return items[index];
+    }
 
     public InventoryItemView GetAddedItem()
     {

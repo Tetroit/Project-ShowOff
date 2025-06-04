@@ -22,6 +22,7 @@ public class BookPage : InventoryItemView, ITextDisplayer
     private void Start()
     {
         Init();
+
     }
     void Init()
     {
@@ -91,17 +92,6 @@ public class BookPage : InventoryItemView, ITextDisplayer
         _textDisplayWindow.gameObject.SetActive(false);
 
         Deactivate();
-    }
-
-    public void TurnLeft()
-    {
-        transform.DOLocalRotateQuaternion(Quaternion.AngleAxis(-180, Vector3.up), .3f);
-    }
-
-    public void TurnRight()
-    {
-        transform.DOLocalRotateQuaternion(Quaternion.AngleAxis(0, Vector3.up), .3f);
-
     }
 
     public void SetActiveStateFromSettings()

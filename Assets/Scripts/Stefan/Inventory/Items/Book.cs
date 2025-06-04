@@ -1,5 +1,8 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
+using static UnityEditor.U2D.ScriptablePacker;
 
 [RequireComponent(typeof(InventoryView))]
 public class Book : InventoryItemView
@@ -11,10 +14,12 @@ public class Book : InventoryItemView
     [SerializeField] Button _swipeRight;
     [SerializeField] Button _swipeLeft;
     [SerializeField] Transform _pagesContainer;
+    [SerializeField] Quaternion _rightAngle;
+    [SerializeField] Quaternion _leftAngle;
 
     InventoryView _notesContainer;
 
-   
+    Tween _turningTween;
 
     void Start()
     {
@@ -24,12 +29,33 @@ public class Book : InventoryItemView
         _swipeRight.onClick.AddListener(() =>
         {
             if (_notesContainer.ItemCount <= 1) return;
-            var prev = _notesContainer.GetCurrentItem() as BookPage;
+            BookPage prev = _notesContainer.GetCurrentItem() as BookPage;
+            int prevIndex = _notesContainer.CurentItemIndex;
             _notesContainer.ChangeItemPosition(SelectDirection.Right);
             var next = _notesContainer.GetCurrentItem();
             //couldn't turn page
             if (prev == next) return;
-            prev.TurnLeft();
+
+            if (prevIndex - 1 >= 0)
+            {
+                var overlapingItem = _notesContainer.GetItemAt(prevIndex - 1);
+
+                _turningTween?.Complete();
+
+                _turningTween = TurnLeft(prev, _leftAngle);
+                _turningTween.onComplete = () =>
+                {
+                    overlapingItem.gameObject.SetActive(false);
+                    _turningTween = null;
+                };
+
+                next.gameObject.SetActive(true);
+            }
+            else
+            {
+                next.gameObject.SetActive(true);
+                TurnLeft(prev, _leftAngle);
+            }
         });
         _swipeLeft.onClick.AddListener(() =>
         {
@@ -38,10 +64,36 @@ public class Book : InventoryItemView
             var prev = _notesContainer.GetCurrentItem();
             _notesContainer.ChangeItemPosition(SelectDirection.Left);
             var next = _notesContainer.GetCurrentItem() as BookPage;
+            int nextIndex = _notesContainer.CurentItemIndex;
+
             //couldn't turn page
             if (prev == next) return;
-            next.TurnRight();
+
+            _turningTween?.Complete();
+
+            _turningTween = TurnRight(next, _rightAngle);
+
+            _turningTween.onComplete = () =>
+            {
+                prev.gameObject.SetActive(false);
+                _turningTween = null;
+            };
+            if(nextIndex - 1 >= 0)  
+                _notesContainer.GetItemAt(nextIndex - 1).gameObject.SetActive(true);
+
         });
+
+        _notesContainer.ForEach(item => item.transform.localRotation = _rightAngle);
+    }
+
+    public Tween TurnLeft(BookPage page, Quaternion leftAngle)
+    {
+        return page.transform.DOLocalRotateQuaternion(leftAngle, .3f);
+    }
+
+    public Tween TurnRight(BookPage page, Quaternion rightAngle)
+    {
+        return page.transform.DOLocalRotateQuaternion(rightAngle, .3f);
 
     }
 
@@ -56,7 +108,7 @@ public class Book : InventoryItemView
         page.transform.parent = _pagesContainer;
         page.transform.SetLocalPositionAndRotation(
             Vector3.zero,
-            Quaternion.identity
+            _rightAngle
         );
         page.name = noteObj.name;
         page.transform.localScale = Vector3.one;
