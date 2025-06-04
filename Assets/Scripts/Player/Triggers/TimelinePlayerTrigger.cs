@@ -51,8 +51,8 @@ namespace amogus
                 _gameStateManager = FindAnyObjectByType<GameStateManager>();
                 if (_gameStateManager == null)
                 {
-                    Debug.LogError("GameStateManager was null", this);
-                    return false;
+                    Debug.LogWarning("GameStateManager was null", this);
+                    //return false;
                 }
             }
             if (director == null)
@@ -80,9 +80,15 @@ namespace amogus
         public override void Trigger()
         {
             base.Trigger();
-            //triggerObject.DisableControls();
             if (!noGamemodeSwitch)
-                _gameStateManager.SwitchState(GameState.Cutscene);
+            {
+                if (_gameStateManager == null)
+                {
+                    triggerObject.DisableControls();
+                }
+                else
+                    _gameStateManager.SwitchState(GameState.Cutscene);
+            }
         }
         [ExecuteAlways]
         private void OnDrawGizmos()
@@ -90,10 +96,15 @@ namespace amogus
         }
         protected override void AnimationEnd()
         {
-            //triggerObject.EnableControls();
-
             if (!noGamemodeSwitch)
-                _gameStateManager.SwitchToPrevious();
+            {
+                if (_gameStateManager == null)
+                {
+                    triggerObject.EnableControls();
+                }
+                else
+                    _gameStateManager.SwitchToPrevious();
+            }
         }
     }
 }

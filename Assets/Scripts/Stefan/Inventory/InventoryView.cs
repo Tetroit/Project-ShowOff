@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -25,6 +26,10 @@ public class InventoryView : MonoBehaviour
     
     public int ItemCount => items.Count;
     public int CurentItemIndex => _curentItemIndex;
+    public bool Any(Func<InventoryItemView, bool> call)
+    {
+        return items.Any(call);
+    }
     
     void Awake()
     {
@@ -52,7 +57,6 @@ public class InventoryView : MonoBehaviour
 
     public void InteractCurrent()
     {
-        
         _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
 
         items[_curentItemIndex].Interact(User);
@@ -89,6 +93,9 @@ public class InventoryView : MonoBehaviour
         bool canChange = !items[index].TryGetComponent<Window>(out var window) || WindowManager.Instance.CanSwitchToWindow(window);
 
         if (!canChange) return;
+
+        //if (window != null) WindowManager.Instance.CanSwitchToWindow(window);
+
         _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
         InventoryItemView current = GetCurrentItem();
 

@@ -71,7 +71,9 @@ public class InventoryController : MonoBehaviour
     void OnInventoryChange(InputAction.CallbackContext context)
     {
         var nextInventoryIndex = WrapIndexOnOverflow(_currentInventoryIndex + 1, _inventories.Count);
-        bool canChange = WindowManager.Instance.CanSwitchToWindow(_inventories[nextInventoryIndex].GetComponent<Window>());
+
+        var window = _inventories[nextInventoryIndex].GetComponent<Window>();
+        bool canChange = WindowManager.Instance.CanSwitchToWindow(window);
         
         if (!canChange) return;
 
