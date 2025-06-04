@@ -11,6 +11,7 @@ namespace amogus
         [SerializeField] protected Door door;
         [Header("Events")]
         public UnityEvent<bool> OnTryUnlock;
+        public UnityEvent OnUnlock;
 
         protected override void TryTrigger(PlayerFSM other)
         {
@@ -37,8 +38,9 @@ namespace amogus
                 {
                     Debug.Log("Unlocked", this);
                     isLocked = false;
-                    OnTryUnlock?.Invoke(true);
                     Unlock();
+                    OnTryUnlock?.Invoke(true);
+                    OnUnlock?.Invoke();
                 }
                 else
                 {

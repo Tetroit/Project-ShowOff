@@ -23,7 +23,7 @@ public abstract class SimpleTrigger<TargetType> : MonoBehaviour
     public string action = "Interact";
 
     [Header("Events")]
-    [SerializeField] protected UnityEvent OnTrigger;
+    [SerializeField] public UnityEvent OnTrigger;
 
 
     protected List<TargetType> targetsInQuestion = new();

@@ -12,6 +12,7 @@ namespace amogus
         [SerializeField] GameStateManager gameStateManager;
         [SerializeField] PlayerFSM fsm;
         [SerializeField] PlayableDirector director;
+
         public void Trigger()
         {
             gameStateManager.SwitchState(GameState.Cutscene);
@@ -22,6 +23,8 @@ namespace amogus
                 director.stopped += DirectorAnimationEnd;
                 director.Play();
             }
+            else
+                Invoke(nameof(AnimationEnd), 1f);
 
             var door = GetComponent<DoorCutsceneTrigger>();
             door.Lock();
@@ -38,6 +41,7 @@ namespace amogus
         {
             gameStateManager.SwitchToPrevious();
             miller.StartFollowing(fsm.transform);
+            enabled = false;
         }
     }
 }
