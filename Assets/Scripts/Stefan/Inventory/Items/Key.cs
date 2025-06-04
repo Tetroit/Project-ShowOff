@@ -4,6 +4,7 @@ using UnityEngine;
 public class Key : InventoryItemView
 {
     [SerializeField] string _doorCode;
+    public string doorCode => _doorCode;
     static Transform _canvasCache;
 
     public override void Interact(GameObject user)
@@ -17,7 +18,7 @@ public class Key : InventoryItemView
 
         if(door == null || !door.isLocked || door.unlockCode != _doorCode) return;
 
-        door.Unlock(); 
+        //door.Unlock(); 
     }
     //on instantiate
     public override void AddInInventory(GameObject user)
