@@ -958,16 +958,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: eef8d824ea7b63742966aaa0e94ac383, type: 3}
   m_Name: FMODStudioSettings
-  m_EditorClassIdentifier: FMODUnity:FMODUnity:Settings
+  m_EditorClassIdentifier: 
   switchSettingsMigration: 1
-  HasSourceProject: 0
-  HasPlatforms: 0
-  sourceProjectPath: 
-  sourceBankPath: TheMiller
+  HasSourceProject: 1
+  HasPlatforms: 1
+  sourceProjectPath: TheMiller/TheMiller.fspro
+  sourceBankPath: TheMiller/Build
   sourceBankPathUnformatted: 
-  BankRefreshCooldown: 5
+  BankRefreshCooldown: 1
   ShowBankRefreshWindow: 1
   AutomaticEventLoading: 1
   BankLoadType: 0
@@ -987,13 +987,13 @@ MonoBehaviour:
   RealChannelSettings: []
   Plugins: []
   MasterBanks:
-  - Build/Desktop/Master
+  - Master
   Banks:
-  - Build/Desktop/Ambience
-  - Build/Desktop/Dialogue
-  - Build/Desktop/Music
-  - Build/Desktop/SFX
-  - Build/Desktop/Temporary
+  - Ambience
+  - Dialogue
+  - Music
+  - SFX
+  - Temporary
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
@@ -1009,19 +1009,19 @@ MonoBehaviour:
   HideSetupWizard: 1
   LastEventReferenceScanVersion: 131847
   Platforms:
-  - {fileID: -2136994929162085682}
-  - {fileID: 5168044225213339822}
-  - {fileID: -1091862001997457125}
-  - {fileID: -1073845984758205864}
-  - {fileID: 641664700755592671}
-  - {fileID: 3824702993204214835}
-  - {fileID: -5819523096834427433}
-  - {fileID: -2359075030808769443}
-  - {fileID: -7712544640919716306}
-  - {fileID: -6737395994932285192}
-  - {fileID: 3006480816848839666}
-  - {fileID: -7030603858190426428}
-  MigratedPlatforms: 080000000900000015000000000000000b0000000a00000012000000060000000c000000050000000200000001000000
+  - {fileID: -7955959204069555369}
+  - {fileID: -5336656070407041642}
+  - {fileID: -3206740415984368902}
+  - {fileID: -2592733435128891154}
+  - {fileID: -2318173968851664635}
+  - {fileID: 1121411477441126745}
+  - {fileID: 2508614716072459834}
+  - {fileID: 2619417550046429759}
+  - {fileID: 5618952505973427328}
+  - {fileID: 7694024038620718431}
+  - {fileID: 7820233312893554144}
+  - {fileID: 8480509446633281121}
+  MigratedPlatforms: 09000000080000000b0000000a00000012000000060000000c0000000500000000000000150000000200000001000000
 --- !u!114 &641664700755592671
 MonoBehaviour:
   m_ObjectHideFlags: 0
