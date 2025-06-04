@@ -41,6 +41,7 @@ public class Key : InventoryItemView
         rectTransform.pivot = new Vector2(1,0);
 
         rectTransform.anchoredPosition = new Vector2(0,0);
+        rectTransform.localScale = new Vector3(1, 1, 1);
 
     }
 }
