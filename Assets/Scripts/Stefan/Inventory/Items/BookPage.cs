@@ -64,7 +64,6 @@ public class BookPage : InventoryItemView, ITextDisplayer
     public override void Select()
     {
         Init();
-        Debug.Log("Select");
 
         _textDisplayWindow.gameObject.SetActive(true);
         _showTextButton.gameObject.SetActive(_haveDisplay);
@@ -84,7 +83,6 @@ public class BookPage : InventoryItemView, ITextDisplayer
     public override void Deselect()
     {
         Init();
-        Debug.Log("DeSelect");
         _showTextButton.gameObject.SetActive(!_haveDisplay);
 
         _showTextButton.onClick.RemoveListener(_interactionSettings.ToggleNoteShowText);

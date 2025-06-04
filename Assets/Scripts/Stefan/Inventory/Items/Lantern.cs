@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Lantern : InventoryItemView
 {
@@ -12,9 +13,12 @@ public class Lantern : InventoryItemView
     [SerializeField] float _underGroundLumen = 1;
     [SerializeField] float _surfaceLumen = 1;
 
+    [SerializeField] float _flickeringScale;
+    [SerializeField] float _flickeringSpeed;
+
     [Header("For debug")]
     [SerializeField] float t = 1;
-
+    
     public override void Select()
     {
         base.Select();
@@ -40,5 +44,8 @@ public class Lantern : InventoryItemView
         t = currentY / _blendDistance;
         _light.intensity = math.lerp(_underGroundLumen, _surfaceLumen, t);
 
+
+        float height = _flickeringScale * Mathf.PerlinNoise(Time.time * _flickeringSpeed, 0.0f);
+        _light.intensity += height;
     }
 }
