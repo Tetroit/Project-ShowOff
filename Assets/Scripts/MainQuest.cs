@@ -60,4 +60,10 @@ public class MainQuest : MonoBehaviour
                 break;
         }
     }
+
+
+    public bool Validate()
+    {
+        return true;
+    }
 }
