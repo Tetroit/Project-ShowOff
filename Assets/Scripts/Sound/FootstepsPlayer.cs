@@ -33,7 +33,7 @@ public class FootstepsPlayer : MonoBehaviour
         }
         FMOD.Studio.EventInstance e = FMODUnity.RuntimeManager.CreateInstance(FMODEvents.instance.footSteps);
         e.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform.position));
-        e.setParameterByName("Terrain", terrain);
+        e.setParameterByName("Terrain", terrain, true);
         e.start();
         e.release();
     }

@@ -36,7 +36,7 @@ public class CameraWalkingShake : MonoBehaviour
     float _amplitude = 0;
     //int _currentClipID = 0;
 
-    [SerializeField] private FootstepsPlayer _player;
+    [SerializeField] private FootstepsPlayer _footstepsPlayer;
     
 
     void Start()
@@ -65,8 +65,8 @@ public class CameraWalkingShake : MonoBehaviour
                 _rightSide = !_rightSide;
                 if(FMODEvents.instance != null)
                 {
-                    AudioManager.instance.PlayOneShot(FMODEvents.instance.footSteps, transform.position);
-                    _player.PlayFootstepSound();
+                    //AudioManager.instance.PlayOneShot(FMODEvents.instance.footSteps, transform.position);
+                    _footstepsPlayer.PlayFootstepSound();
                 }
 
                 //if (stepSource != null && stepSounds.Length != 0)
