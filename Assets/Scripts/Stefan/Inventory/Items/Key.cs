@@ -19,6 +19,7 @@ public class Key : InventoryItemView
 
         door.Unlock(); 
     }
+
     //on instantiate
     public override void AddInInventory(GameObject user)
     {

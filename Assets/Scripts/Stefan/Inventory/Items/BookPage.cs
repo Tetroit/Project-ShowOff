@@ -1,37 +1,54 @@
-﻿using Dialogue;
+﻿using DG.Tweening;
+using Dialogue;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BookPage : InventoryItemView, ITextDisplayer
 {
     public string Text;
+    public string Title;
 
     [SerializeField] TextRunner _runner;
+    [SerializeField] InteractionSettings _interactionSettings;
+    [SerializeField] bool _haveDisplay = true;
+
     static LineView _textDisplay;
+    static Window _textDisplayWindow;
+    static Button _showTextButton;
+    static Button _interuptButton;
+    static TextMeshProUGUI _header;
 
-    void Awake()
+    private void Start()
     {
-        try
+        Init();
+    }
+    void Init()
+    {
+        if (_runner == null) GetComponent<TextRunner>();
+        if (_textDisplay == null)
         {
-            if (_textDisplay == null)
-            {
-                _textDisplay = FindFirstObjectByType<Canvas>().transform.FindDeepChild("NoteContentTextArea").GetComponent<LineView>();
-            }
-
-            if (_runner == null) GetComponent<TextRunner>();
-            _runner.LineView = _textDisplay;
-
+            _textDisplayWindow = FindFirstObjectByType<Canvas>().transform.FindDeepChild("NoteUI").GetComponent<Window>();
+            _textDisplay = _textDisplayWindow.GetComponentInChildren<LineView>(true);
+            _showTextButton = _textDisplayWindow.transform.FindDeepChild("Btn_ShowText").GetComponent<Button>();
+            _interuptButton = _textDisplayWindow.transform.FindDeepChild("Btn_Interupt").GetComponent<Button>();
+            _header = _textDisplayWindow.transform.FindDeepChild("Header").GetComponentInChildren<TextMeshProUGUI>(true);
         }
-        catch { }
+        _runner.LineView = _textDisplay;
 
     }
 
     public void Activate()
     {
+        _interuptButton.gameObject.SetActive(true);
+
         _runner.EnableTextArea();
     }
 
     public void Deactivate()
     {
+        _interuptButton.gameObject.SetActive(false);
+
         _runner.InteruptDialogue();
         _runner.DisableTextArea();
     }
@@ -46,13 +63,56 @@ public class BookPage : InventoryItemView, ITextDisplayer
 
     public override void Select()
     {
-        //start rotation
-        //rotate left or right based on toggle
+        Init();
+        Debug.Log("Select");
 
+        _textDisplayWindow.gameObject.SetActive(true);
+        _showTextButton.gameObject.SetActive(_haveDisplay);
+        if (!_haveDisplay) return;
+
+        _showTextButton.onClick.AddListener(_interactionSettings.ToggleNoteShowText);
+        _showTextButton.onClick.AddListener(SetActiveStateFromSettings);
+        _interuptButton.onClick.AddListener(_runner.InteruptDialogue);
+
+        if (!_interactionSettings.NoteShowText) return;
+
+        Activate();
+        _header.text = Title;
+        SetActiveStateFromSettings();
     }
 
     public override void Deselect()
     {
+        Init();
+        Debug.Log("DeSelect");
+        _showTextButton.gameObject.SetActive(!_haveDisplay);
+
+        _showTextButton.onClick.RemoveListener(_interactionSettings.ToggleNoteShowText);
+        _showTextButton.onClick.RemoveListener(SetActiveStateFromSettings);
+        _interuptButton.onClick.RemoveListener(_runner.InteruptDialogue);
+        _textDisplayWindow.gameObject.SetActive(false);
+
         Deactivate();
+    }
+
+    public void TurnLeft()
+    {
+        transform.DOLocalRotateQuaternion(Quaternion.AngleAxis(-180, Vector3.up), .3f);
+    }
+
+    public void TurnRight()
+    {
+        transform.DOLocalRotateQuaternion(Quaternion.AngleAxis(0, Vector3.up), .3f);
+
+    }
+
+    public void SetActiveStateFromSettings()
+    {
+        if (_interactionSettings.NoteShowText)
+        {
+            Activate();
+            _runner.DisplayText(Text);
+        }
+        else Deactivate();
     }
 }

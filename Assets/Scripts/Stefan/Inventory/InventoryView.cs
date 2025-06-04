@@ -77,9 +77,15 @@ public class InventoryView : MonoBehaviour
         return -1;
     }
 
+    public void SelectItem(string name)
+    {
+        ChangeItemPosition(GetItemIndex(name));
+    }
 
     public void ChangeItemPosition(int index)
     {
+        if (items.Count == 0) return;
+
         if(navigationMode == NavigationMode.Clamp)
             index = Mathf.Clamp(index, 0, items.Count - 1);
         else if(navigationMode == NavigationMode.Cycle)
@@ -107,7 +113,7 @@ public class InventoryView : MonoBehaviour
         ItemSelected?.Invoke(current);
     }
 
-    protected InventoryItemView GetCurrentItem()
+    public InventoryItemView GetCurrentItem()
     {
         if(items.Count == 0) return null;
         return items[_curentItemIndex];
@@ -122,8 +128,15 @@ public class InventoryView : MonoBehaviour
         var instance = Instantiate(item);
         items.Add(instance);
         instance.AddInInventory(User);
-        ChangeItemPosition(SelectDirection.Right);
+        //should not add this?
+        //ChangeItemPosition(SelectDirection.Right);
     }
+
+    public InventoryItemView GetAddedItem()
+    {
+        return items[^1];
+    }
+
     public void Clear()
     {
         items.Clear();

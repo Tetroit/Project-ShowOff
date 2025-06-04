@@ -1,4 +1,3 @@
-using DG.Tweening;
 using Dialogue;
 using System.Collections;
 using TMPro;
@@ -13,6 +12,8 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
     [SerializeField] float _returnTime;
     [SerializeField] TextRunner _runner;
     [SerializeField] InteractionSettings _interactionSettings;
+    [field: SerializeField] public BookPage PagePrefab { get; private set; }
+
     Vector3 _initialPosition;
     Quaternion _initialRotation;
 
@@ -36,9 +37,9 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
             if (_textDisplay == null)
             {
                 _textDisplayWindow = FindFirstObjectByType<Canvas>().transform.FindDeepChild("NoteUI").GetComponent<Window>();
-                _textDisplay = _textDisplayWindow.GetComponentInChildren<LineView>();
-                _showTextButton = _textDisplayWindow.GetComponentInChildren<Button>();
-                _header = _textDisplayWindow.transform.FindDeepChild("Header").GetComponentInChildren<TextMeshProUGUI>();
+                _textDisplay = _textDisplayWindow.GetComponentInChildren<LineView>(true);
+                _showTextButton = _textDisplayWindow.transform.FindDeepChild("Btn_ShowText").GetComponent<Button>();
+                _header = _textDisplayWindow.transform.FindDeepChild("Header").GetComponentInChildren<TextMeshProUGUI>(true);
 
             }
             if (_runner == null) GetComponent<TextRunner>();
@@ -107,7 +108,7 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
             Activate();
     }
 
-    public void SetActiveStateFromSettings()
+    void SetActiveStateFromSettings()
     {
         if(_interactionSettings.NoteShowText) Activate();
         else Deactivate();
