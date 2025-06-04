@@ -6,8 +6,11 @@ using UnityEngine.Timeline;
 public class TimelineTrigger<TargetType> : SimpleTrigger<TargetType>
     where TargetType : Component
 {
+    [Header("Animations")]
     public TimelineAsset asset;
     public PlayableDirector director;
+
+    [Header("Events")]
     public UnityEvent OnAnimationEnd;
 
     public override void Trigger()

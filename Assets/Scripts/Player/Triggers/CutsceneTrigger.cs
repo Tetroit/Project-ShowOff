@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn;
 using static UnityEngine.GraphicsBuffer;
 
 namespace amogus
@@ -17,6 +18,8 @@ namespace amogus
     {
         public bool disableControls = true;
         [SerializeField] protected Ex target;
+
+        [Header("Animations")]
         public abstract ScriptedAnimation<Ex> Cutscene { get; }
 
         public override Predicate<Tr> Predicate => (Tr other) =>
