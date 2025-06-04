@@ -2,15 +2,10 @@ using UnityEngine;
 
 public class VolumeSliders : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private string Parameter;
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeVolume(float volume)
     {
-        
+       
     }
 }
