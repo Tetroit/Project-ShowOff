@@ -94,8 +94,6 @@ public class BookPage : InventoryItemView, ITextDisplayer
         Deactivate();
     }
 
-    
-
     public void SetActiveStateFromSettings()
     {
         if (_interactionSettings.NoteShowText)
