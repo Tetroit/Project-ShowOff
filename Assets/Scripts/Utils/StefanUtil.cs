@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 
 public static class StefanUtil
@@ -16,4 +18,14 @@ public static class StefanUtil
         }
         return null;
     }
+
+    public static int IndexMatch<T>(this IEnumerable<T> container, Predicate<T> predicate)
+    {
+        int i = 0;
+        foreach (T item in container)
+            if (predicate(item)) return i;
+            else i++;
+        return -1;
+    }
+        
 }
