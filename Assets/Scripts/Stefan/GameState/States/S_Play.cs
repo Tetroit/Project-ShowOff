@@ -2,7 +2,6 @@
 
 public class S_Play : State
 {
-    //cursor is inactive, controller is active, game is normal speed
     bool _visibility;
     CursorLockMode _lockMode;
     bool _movement;
@@ -13,7 +12,7 @@ public class S_Play : State
         _lockMode = Cursor.lockState;
         _movement = fsm.PlayerController.inAnimation;
 
-        SetStates(false || _movement, CursorLockMode.Locked, true);
+        SetStates(false, CursorLockMode.Locked, true);
     }
 
     public override void Exit()

@@ -1,49 +1,6 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-
-public interface IInteractable
-{
-//    bool CanInteract();
-
-    IEnumerator Interact();
-    IEnumerator Deselect();
-}
-
-public interface IHoldable : IInteractable
-{
-    Transform Self { get; }
-    Vector3 GetInitialPosition();
-    Quaternion GetInitialRotation();
-}
-
-public interface ITextDisplayer
-{
-    public void Activate();
-    public void Deactivate();
-    public void Toggle();
-}
-
-public interface IPickupable : IInteractable
-{
-    InventoryItemView ItemData { get; }
-}
-
-public readonly struct InputFacade
-{
-    readonly InputSystem_Actions _input;
-
-    public InputFacade(InputSystem_Actions input)
-    {
-        _input = input;
-    }
-
-    public InputSystem_Actions.UIActions UI => _input.UI;
-    public InputSystem_Actions.PlayerActions Player => _input.Player;
-    
-}
 
 public class InteractionManager : MonoBehaviour
 {
@@ -54,11 +11,10 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] float _interactionRange;
     [SerializeField] float _interactionRadius;
     [SerializeField] LayerMask _interactionMask;
+    //instead of having 
     [SerializeField] HoldManager _holdManager;
     [SerializeField] PickupManager _pickupManager;
     
-    public HoldManager HoldManager => _holdManager;
-
     Coroutine _interactAnimation;
 
     InputSystem_Actions _input;
@@ -66,6 +22,7 @@ public class InteractionManager : MonoBehaviour
     //Used to save performance by not getting component every frame
     IInteractable _lastInteractable;
     GameObject _lastInteractableGO;
+    RaycastHit _lastRaycastHit;
 
     IInteractable _currentInteractingItem;
 
@@ -117,7 +74,6 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-
     void Dissmised()
     {
         if (_currentInteractingItem == null || _interactAnimation != null) return;
@@ -126,46 +82,56 @@ public class InteractionManager : MonoBehaviour
 
         _currentInteractingItem = null;
     }
-    
+
+    void HoverStart()
+    {
+        _lastInteractable = _lastRaycastHit.transform.GetComponentInChildren<IInteractable>();
+        _lastInteractableGO = _lastRaycastHit.transform.gameObject;
+        _holdManager.OnItemHoverStart(_lastInteractable as IHoldable, new HoverData(_lastRaycastHit));
+        OnHoverStart?.Invoke(_lastInteractableGO, _lastInteractable);
+    }
+
+    void HoverEnd()
+    {
+        _holdManager.OnItemHoverEnd(_lastInteractable as IHoldable);
+        OnHoverEnd?.Invoke(_lastInteractableGO, _lastInteractable);
+        _lastInteractable = null;
+        _lastInteractableGO = null;
+    }
+
+    void HoverStay()
+    {
+        _holdManager.OnItemHover(_lastInteractable as IHoldable, new HoverData(_lastRaycastHit));
+        OnHover?.Invoke(_lastInteractableGO, _lastInteractable);
+    }
+
     void FixedUpdate()
     {
-        RaycastHit hit = new();
         bool isInteractable = _currentInteractingItem == null && _interactAnimation == null && Physics.SphereCast
         (
             transform.position, 
             _interactionRadius,
             transform.forward,
-            out hit,
+            out _lastRaycastHit,
             _interactionRange,
             _interactionMask
         );
 
         if (!isInteractable)
         {
-
             if (_lastInteractable == null) return;
-
-            _holdManager.OnItemHoverEnd(_lastInteractable as IHoldable);
-            OnHoverEnd?.Invoke(_lastInteractableGO, _lastInteractable);
-
-            _lastInteractable = null;
-            _lastInteractableGO = null;
+            HoverEnd();
             return;
         }
 
-        if (hit.transform.gameObject == _lastInteractableGO)
+        if (_lastRaycastHit.transform.gameObject == _lastInteractableGO)
         {
-            _holdManager.OnItemHover(_lastInteractable as IHoldable, new HoverData(hit));
-            OnHover?.Invoke(_lastInteractableGO, _lastInteractable);
+            HoverStay();
             return;
         }
-        
 
-        _lastInteractable = hit.transform.GetComponentInChildren<IInteractable>();
-        _lastInteractableGO = hit.transform.gameObject;
+        HoverStart();
 
-        _holdManager.OnItemHoverStart(_lastInteractable as IHoldable, new HoverData(hit));
-        OnHoverStart?.Invoke(_lastInteractableGO, _lastInteractable);
     }
 
     void OnEnable()
@@ -183,7 +149,5 @@ public class InteractionManager : MonoBehaviour
 
         _lastInteractable = null;
         _lastInteractableGO = null;
-
-
     }
 }

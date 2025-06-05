@@ -92,7 +92,7 @@ namespace amogus
                     triggerObject.DisableControls();
                 }
                 else
-                    _gameStateManager.SwitchState(GameState.Cutscene);
+                    _gameStateManager.SwitchState<S_Cutscene>();
             }
         }
         [ExecuteAlways]

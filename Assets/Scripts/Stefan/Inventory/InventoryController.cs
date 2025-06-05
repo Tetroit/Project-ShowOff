@@ -25,6 +25,16 @@ public class InventoryController : MonoBehaviour
         OnInventoryChanged?.Invoke(current);
     }
 
+    public int GetInventoryIndex(string inventoryName)
+    {
+        return _inventories.IndexMatch(i => i.gameObject.name == inventoryName);
+    }
+
+    public void SwitchToInventory(string inventoryName)
+    {
+        SetInventory(GetInventoryIndex(inventoryName));
+    }
+
     void Awake()
     {
         _input = new();
@@ -61,12 +71,6 @@ public class InventoryController : MonoBehaviour
         GetCurrentInventory().InteractCurrent();
     }
 
-    //UI
-    //book in arm inventory -> can pause, can interact with items but it will close book by switching to noArm
-    //pause -> goes on top of every UI element, prevents any interaction
-    //hold item screen -> can pause, cannot change inventory
-
-    //make the armInventoryView a window, remove the No arm item view and add another empty inventory
 
     void OnInventoryChange(InputAction.CallbackContext context)
     {

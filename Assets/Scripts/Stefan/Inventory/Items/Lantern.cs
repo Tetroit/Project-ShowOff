@@ -1,6 +1,4 @@
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Lantern : InventoryItemView
 {
@@ -18,6 +16,4 @@ public class Lantern : InventoryItemView
         foreach (var icon in UI_Icons) icon.SetActive(false);
 
     }
-
-    
 }

@@ -1,8 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
-using static UnityEditor.U2D.ScriptablePacker;
 
 [RequireComponent(typeof(InventoryView))]
 public class Book : InventoryItemView
@@ -25,75 +23,75 @@ public class Book : InventoryItemView
     {
         if (_notesContainer == null) _notesContainer = GetComponent<InventoryView>();
 
-        //_interactionManager.HoldManager.Interacted.AddListener(AddNote);
-        _swipeRight.onClick.AddListener(() =>
-        {
-            if (_notesContainer.ItemCount <= 1) return;
-            BookPage prev = _notesContainer.GetCurrentItem() as BookPage;
-            int prevIndex = _notesContainer.CurentItemIndex;
-            _notesContainer.ChangeItemPosition(SelectDirection.Right);
-            var next = _notesContainer.GetCurrentItem();
-            //couldn't turn page
-            if (prev == next) return;
-
-            if (prevIndex - 1 >= 0)
-            {
-                var overlapingItem = _notesContainer.GetItemAt(prevIndex - 1);
-
-                _turningTween?.Complete();
-
-                _turningTween = TurnLeft(prev, _leftAngle);
-                _turningTween.onComplete = () =>
-                {
-                    overlapingItem.gameObject.SetActive(false);
-                    _turningTween = null;
-                };
-
-                next.gameObject.SetActive(true);
-            }
-            else
-            {
-                next.gameObject.SetActive(true);
-                TurnLeft(prev, _leftAngle);
-            }
-        });
-        _swipeLeft.onClick.AddListener(() =>
-        {
-            if (_notesContainer.ItemCount <= 1) return;
-
-            var prev = _notesContainer.GetCurrentItem();
-            _notesContainer.ChangeItemPosition(SelectDirection.Left);
-            var next = _notesContainer.GetCurrentItem() as BookPage;
-            int nextIndex = _notesContainer.CurentItemIndex;
-
-            //couldn't turn page
-            if (prev == next) return;
-
-            _turningTween?.Complete();
-
-            _turningTween = TurnRight(next, _rightAngle);
-
-            _turningTween.onComplete = () =>
-            {
-                prev.gameObject.SetActive(false);
-                _turningTween = null;
-            };
-            if(nextIndex - 1 >= 0)  
-                _notesContainer.GetItemAt(nextIndex - 1).gameObject.SetActive(true);
-
-        });
+        _swipeRight.onClick.AddListener(GoToRightPage);
+        _swipeLeft.onClick.AddListener(GoToLeftPage);
 
         _notesContainer.ForEach(item => item.transform.localRotation = _rightAngle);
     }
 
-    public Tween TurnLeft(BookPage page, Quaternion leftAngle)
+    void GoToLeftPage()
     {
-        return page.transform.DOLocalRotateQuaternion(leftAngle, .3f);
+        if (_notesContainer.ItemCount <= 1) return;
+
+        InventoryItemView deselectedPage = _notesContainer.GetCurrentItem();
+        _notesContainer.ChangeItemPosition(SelectDirection.Left);
+        BookPage selectedPage = _notesContainer.GetCurrentItem() as BookPage;
+        int selectedPageIndex = _notesContainer.CurentItemIndex;
+
+        //couldn't turn page
+        if (deselectedPage == selectedPage) return;
+
+        //turning on the page 
+        _turningTween?.Complete();
+        _turningTween = TurnRight(selectedPage);
+        _turningTween.onComplete = () =>
+        {
+            deselectedPage.gameObject.SetActive(false);
+            _turningTween = null;
+        };
+        if (selectedPageIndex - 1 >= 0)
+            _notesContainer.GetItemAt(selectedPageIndex - 1).gameObject.SetActive(true);
     }
 
-    public Tween TurnRight(BookPage page, Quaternion rightAngle)
+    void GoToRightPage()
     {
-        return page.transform.DOLocalRotateQuaternion(rightAngle, .3f);
+        if (_notesContainer.ItemCount <= 1) return;
+
+        BookPage deselectedPage = _notesContainer.GetCurrentItem() as BookPage;
+        int deselectedPageIndex = _notesContainer.CurentItemIndex;
+        _notesContainer.ChangeItemPosition(SelectDirection.Right);
+        InventoryItemView selectedPage = _notesContainer.GetCurrentItem();
+
+        //couldn't turn page
+        if (deselectedPage == selectedPage) return;
+
+        if (deselectedPageIndex - 1 >= 0)
+        {
+            InventoryItemView overlapingItem = _notesContainer.GetItemAt(deselectedPageIndex - 1);
+
+            _turningTween?.Complete();
+            _turningTween = TurnLeft(deselectedPage);
+            _turningTween.onComplete = () =>
+            {
+                overlapingItem.gameObject.SetActive(false);
+                _turningTween = null;
+            };
+
+            selectedPage.gameObject.SetActive(true);
+            return;
+        }
+        selectedPage.gameObject.SetActive(true);
+        TurnLeft(deselectedPage);
+    }
+
+    public Tween TurnLeft(BookPage page)
+    {
+        return page.transform.DOLocalRotateQuaternion(_leftAngle, .3f);
+    }
+
+    public Tween TurnRight(BookPage page)
+    {
+        return page.transform.DOLocalRotateQuaternion(_rightAngle, .3f);
 
     }
 
@@ -105,6 +103,8 @@ public class Book : InventoryItemView
 
         _notesContainer.AddItem(note.PagePrefab);
         var page = _notesContainer.GetAddedItem() as BookPage;
+
+        //initializing page
         page.transform.parent = _pagesContainer;
         page.transform.SetLocalPositionAndRotation(
             Vector3.zero,
@@ -120,7 +120,7 @@ public class Book : InventoryItemView
     {
         base.Select();
         if( _gameStateManager != null)
-        _gameStateManager.SwitchState(GameState.UI);
+        _gameStateManager.SwitchState<S_UI>();
 
         foreach (var icon in UI_Icons) icon.SetActive(true);
 
@@ -129,15 +129,13 @@ public class Book : InventoryItemView
 
         _swipeLeft.gameObject.SetActive(true);
         _swipeRight.gameObject.SetActive(true);
-
-        //_notesContainer.ChangeItemPosition(0);
     }
 
     public override void Deselect()
     {
         base.Deselect();
         if( _gameStateManager != null)
-        _gameStateManager.SwitchState(GameState.Play);
+        _gameStateManager.SwitchState<S_Play>();
 
         foreach (var icon in UI_Icons) icon.SetActive(false);
 
