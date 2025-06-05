@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
-using Yarn;
-using static UnityEngine.GraphicsBuffer;
 
 namespace amogus
 {

@@ -34,13 +34,15 @@ public class InventoryView : MonoBehaviour
     void Awake()
     {
         OnAwake();
-        
     }
 
     void Start()
     {
         OnStart(); 
     }
+    protected virtual void OnAwake() { }
+
+    protected virtual void OnStart() { }
 
     void OnEnable()
     {
@@ -87,7 +89,9 @@ public class InventoryView : MonoBehaviour
         if (items.Count == 0) return;
 
         if(navigationMode == NavigationMode.Clamp)
+        {
             index = Mathf.Clamp(index, 0, items.Count - 1);
+        }
         else if(navigationMode == NavigationMode.Cycle)
         {
             if (index < 0) index = items.Count - 1;
@@ -99,8 +103,6 @@ public class InventoryView : MonoBehaviour
         bool canChange = !items[index].TryGetComponent<Window>(out var window) || WindowManager.Instance.CanSwitchToWindow(window);
 
         if (!canChange) return;
-
-        //if (window != null) WindowManager.Instance.CanSwitchToWindow(window);
 
         _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
         InventoryItemView current = GetCurrentItem();
@@ -119,21 +121,18 @@ public class InventoryView : MonoBehaviour
         return items[_curentItemIndex];
     }
 
-    protected virtual void OnAwake() { }
-
-    protected virtual void OnStart() { }
-
     public void AddItem(InventoryItemView item)
     {
         var instance = Instantiate(item);
         items.Add(instance);
         instance.AddInInventory(User);
-        //should not add this?
-        //ChangeItemPosition(SelectDirection.Right);
     }
+    //switch to item up or down
+
     public void RemoveItem(InventoryItemView item) 
     {
-        
+        if(items.Count == 0) return;
+
     }
 
     public void ForEach(Action<InventoryItemView> call)

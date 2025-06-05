@@ -15,7 +15,7 @@ namespace amogus
 
         public void Trigger()
         {
-            gameStateManager.SwitchState(GameState.Cutscene);
+            gameStateManager.SwitchState<S_Cutscene>();
             miller.gameObject.SetActive(true);
 
             if (director != null)
