@@ -1,17 +1,10 @@
 using amogus;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro.EditorUtilities;
+using System.Reflection;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public enum GameState
-{
-    UI,
-    Play,
-    Pause,
-    Cutscene
-}
 
 public class GameStateManager : MonoBehaviour
 {
@@ -22,19 +15,17 @@ public class GameStateManager : MonoBehaviour
     [field: SerializeField] public GameObject HUD { get; private set; }
 
 
-    [SerializeField] GameState _gameState;
-
-    GameState _currentStateKey;
+    Type _currentStateKey;
     State _currentState;
-    Dictionary<GameState, State> _states;
+    Dictionary<Type, State> _states;
 
-    readonly Stack<GameState> _previousStates = new();
+    readonly Stack<Type> _previousStates = new();
 
-    public GameState CurrentState => _currentStateKey;
+    public Type CurrentState => _currentStateKey;
 
 #if UNITY_EDITOR
     bool _dependenciesMissing;
-    [SerializeField] List<GameState> _stest;
+    [SerializeField] List<string> _stest;
     void OnValidate()
     {
         if(_dependenciesMissing) return;
@@ -52,36 +43,30 @@ public class GameStateManager : MonoBehaviour
 #endif
     void Awake()
     {
-        _states = new()
-        {
-            { GameState.UI, new S_UI() },
-            { GameState.Play, new S_Play() },
-            { GameState.Pause, new S_Pause() },
-            { GameState.Cutscene, new S_Cutscene() },
-        };
+        _states = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => t.IsClass && !t.IsAbstract && typeof(State).IsAssignableFrom(t))
+            .ToDictionary(
+                t => t,
+                t => (State)Activator.CreateInstance(t)
+            );
 
-        foreach (KeyValuePair<GameState, State> kv in _states)
+        foreach (KeyValuePair<Type, State> kv in _states)
             kv.Value.Init(this);
     }
 
 #if UNITY_EDITOR
     void Update()
     {
-
-        if (_currentStateKey != _gameState)
-        {
-            SwitchState(_gameState);
-        }
-
-        _stest = _previousStates.ToList();
+        _stest = _previousStates.Select(s=>s.Name).ToList();
     }
 #endif
 
     void Start()
     {
-        _currentStateKey = _gameState;
+        _currentStateKey = typeof(S_Play);
         _previousStates.Push(_currentStateKey);
-        _currentState = _states[_gameState];    
+        _currentState = _states[_currentStateKey];    
         _currentState.Enter();
     }
 
@@ -90,39 +75,62 @@ public class GameStateManager : MonoBehaviour
         _previousStates.Pop();
         ApplyState(_previousStates.Peek());
     }
-
-    public void SwitchState(GameState state)
+    
+    public void SwitchState(Type t)
     {
-        _previousStates.Push(state);
-        ApplyState(state);
+        _previousStates.Push(t);
+        ApplyState(t);
     }
 
-    public void ApplyState(GameState state)
+    public void SwitchState<T>() where T : State
+    {
+        Type t = typeof(T);
+        SwitchState(t);
+    }
+    
+    public void SwitchState(string state)
+    {
+        Type t = Type.GetType(state);
+        SwitchState(t);
+    }
+
+    public void ApplyState<T>() where T : State
+    {
+        ApplyState(typeof(T));
+    }
+
+    public void ApplyState(Type state)
     {
         _currentState.Exit();
-        _gameState = state;
         _currentStateKey = state;
-        _currentState = _states[state];
+        _currentState = _states[_currentStateKey];
         _currentState.Enter();
     }
+
+    public void ApplyState(string state)
+    {
+        Type t = Type.GetType(state);
+        ApplyState(t);
+    }
+
     //for unityevents
     public void SwitchToUI()
     {
-        SwitchState(GameState.UI);
+        SwitchState<S_UI>();
     }
 
     public void SwitchToPlay()
     {
-        SwitchState(GameState.Play);
+        SwitchState<S_Play>();
     }
 
     public void SwitchToPause()
     {
-        SwitchState(GameState.Pause);
+        SwitchState<S_Pause>();
     }
 
     public void SwitchToCutscene()
     {
-        SwitchState(GameState.Pause);
+        SwitchState<S_Cutscene>();
     }
 }

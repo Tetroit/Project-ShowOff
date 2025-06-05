@@ -23,7 +23,7 @@ public class S_Cutscene : State
         _hudActive = fsm.HUD.activeSelf;
 
         SetStates(
-            cursoreVisibility: true, 
+            cursoreVisibility: false, 
             lockMode: CursorLockMode.None,
             movement: false,
             inventoryControl: false,

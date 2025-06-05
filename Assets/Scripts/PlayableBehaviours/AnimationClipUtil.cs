@@ -87,18 +87,28 @@ public class AnimationClipContext : MonoBehaviour
     /// </summary>
     /// <param name="clip"></param>
     /// <param name="time"></param>
-    public void AddClip(AnimationClip clip, float time = 0.0f, Vector3? position = null, Vector3? eulerAngles = null, bool deleteAfterPlay = true)
+    public void AddClip(AnimationClip clip, float time = 0.0f, Vector3? position = null, Vector3? eulerAngles = null, float fadeInTime = 0, float fadeOutTime = 0, float duration = -1, bool deleteAfterPlay = true)
     {
         bool shouldSetOffsets = position.HasValue || eulerAngles.HasValue;
         var newClip = animationTrackContext.CreateClip(clip);
         newClip.start = time;
         newClip.displayName = clip.name;
+
+        newClip.blendInDuration = fadeInTime;
+        newClip.blendOutDuration = fadeOutTime;
+        if (duration > 0)
+            newClip.duration = duration;
+
+        AnimationPlayableAsset animationPlayableAsset = (AnimationPlayableAsset)newClip.asset;
         if (shouldSetOffsets)
         {
-            AnimationPlayableAsset animationPlayableAsset = (AnimationPlayableAsset)newClip.asset;
-            animationPlayableAsset.position = position.Value;
-            animationPlayableAsset.rotation = Quaternion.Euler(eulerAngles.Value);
+            if (position.HasValue)
+                animationPlayableAsset.position = position.Value;
+            if (eulerAngles.HasValue)
+                animationPlayableAsset.rotation = Quaternion.Euler(eulerAngles.Value);
         }
+
+        animationPlayableAsset.removeStartOffset = false;
         Bind(GetComponent<PlayableDirector>());
         double directorTime = playableDirectorContext.time;
         playableDirectorContext.RebuildGraph();
@@ -117,9 +127,9 @@ public class AnimationClipContext : MonoBehaviour
     /// </summary>
     public void DeleteClip()
     {
-        if (animationTrackContext == null || timelineClipContext == null)
+        if (timelineAssetContext == null || timelineClipContext == null)
             return;
-        animationTrackContext.DeleteClip(timelineClipContext);
+        timelineAssetContext.DeleteClip(timelineClipContext);
 
     }
     public void DeleteClip(TimelineClip clipToRemove)

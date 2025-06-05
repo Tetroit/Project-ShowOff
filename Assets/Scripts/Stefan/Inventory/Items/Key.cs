@@ -24,7 +24,6 @@ public class Key : InventoryItemView
     //on instantiate
     public override void AddInInventory(GameObject user)
     {
-        Debug.Log("Spawn in inventory");
         AudioManager.instance.PlayOneShot(FMODEvents.instance.keyPickup, transform.position);
 
         //get canvas
