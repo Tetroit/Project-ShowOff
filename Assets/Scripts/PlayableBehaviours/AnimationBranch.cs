@@ -10,6 +10,11 @@ public class AnimationBranch : MonoBehaviour
         public float insertTime;
         public string trackName;
         public AnimationClip clip;
+        public Vector3 positionOffset;
+        public Vector3 rotationOffset;
+        public float fadeInTime;
+        public float fadeOutTime;
+        public float duration;
     }
 
     [Header("Success Clips")]
@@ -18,7 +23,6 @@ public class AnimationBranch : MonoBehaviour
     [Header("Fail Clips")]
     public List<AnimationTrackInsertionInfo> failAnimationClips;
     
-    [SerializeField] float branchTime;
     public AnimationClipContext animationClipContext;
 
     [SerializeField]
@@ -52,7 +56,7 @@ public class AnimationBranch : MonoBehaviour
         foreach (var track in successAnimationClips)
         {
             animationClipContext.GetAnimationTrack(track.trackName);
-            animationClipContext.AddClip(track.clip, track.insertTime);
+            animationClipContext.AddClip(track.clip, track.insertTime, track.positionOffset, track.rotationOffset, track.fadeInTime, track.fadeOutTime, track.duration <= 0 ? -1 : track.duration);
         }
     }
 
@@ -62,7 +66,7 @@ public class AnimationBranch : MonoBehaviour
         foreach (var track in failAnimationClips)
         {
             animationClipContext.GetAnimationTrack(track.trackName);
-            animationClipContext.AddClip(track.clip, track.insertTime);
+            animationClipContext.AddClip(track.clip, track.insertTime, track.positionOffset, track.rotationOffset, track.fadeInTime, track.fadeOutTime, track.duration <= 0 ? -1 : track.duration);
         }
     }
 }
