@@ -975,6 +975,7 @@ GameObject:
   - component: {fileID: 8954754450425880211}
   - component: {fileID: 5794955200590595110}
   - component: {fileID: 8685794089382742371}
+  - component: {fileID: 1180977555783404689}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1344,6 +1345,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f0b3d5f71436b0b428f33e34a1622ded, type: 2}
   - {fileID: 11400000, guid: a3a217d35a1981b439c8bd985818e2c9, type: 2}
   - {fileID: 11400000, guid: 5301029c3ae42d741a834351c6877cac, type: 2}
+  _footstepsPlayer: {fileID: 1180977555783404689}
 --- !u!114 &8685794089382742371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1362,7 +1364,21 @@ MonoBehaviour:
   <Dismissed>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
+  Controller: {fileID: 0}
   KeyInventory: {fileID: 0}
+  _selectAfterPickup: 0
+--- !u!114 &1180977555783404689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9047221866948527922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28795cba2dc594840b3b39b0d2b2ef7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2721594018766357974
 PrefabInstance:
   m_ObjectHideFlags: 0
