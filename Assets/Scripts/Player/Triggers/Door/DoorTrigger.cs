@@ -40,6 +40,8 @@ namespace amogus
                     Unlock();
                     OnTryUnlock?.Invoke(true);
                     OnUnlock?.Invoke();
+
+                    Open(other);
                 }
                 else
                 {
