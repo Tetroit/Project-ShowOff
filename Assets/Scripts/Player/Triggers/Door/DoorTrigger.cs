@@ -9,7 +9,7 @@ namespace amogus
         public bool isLocked = false;
         [SerializeField] protected Door door;
         [Header("Events")]
-        public UnityEvent<bool> OnTryUnlock;
+        public UnityEvent OnFailUnlock;
         public UnityEvent OnUnlock;
 
         protected override void TryTrigger(PlayerFSM other)
@@ -28,7 +28,7 @@ namespace amogus
             if (correctKey == null)
             {
                 Debug.Log("No item to unlock with", this);
-                OnTryUnlock?.Invoke(false);
+                OnFailUnlock?.Invoke();
                 return;
             }
             if (correctKey)
@@ -38,7 +38,6 @@ namespace amogus
                     Debug.Log("Unlocked", this);
                     isLocked = false;
                     Unlock();
-                    OnTryUnlock?.Invoke(true);
                     OnUnlock?.Invoke();
 
                     Open(other);
@@ -46,7 +45,7 @@ namespace amogus
                 else
                 {
                     Debug.Log("Failed to unlock", this);
-                    OnTryUnlock?.Invoke(false);
+                    OnFailUnlock?.Invoke();
                 }
             }
         }
