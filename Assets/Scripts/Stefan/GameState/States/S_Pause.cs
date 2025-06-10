@@ -37,12 +37,15 @@ public class S_Pause : State
     {
         Cursor.visible = cursoreVisibility;
         Cursor.lockState = lockMode;
+        if(fsm.PlayerController != null) 
         if (movement)
             fsm.PlayerController.EnableControls();
         else
             fsm.PlayerController.DisableControls();
         Time.timeScale = time;
+        if(fsm.InventoryController != null) 
         fsm.InventoryController.enabled = inventoryControl;
+        if(fsm.InteractionManager != null) 
         fsm.InteractionManager.enabled = interactionsEnabled;
     }
 }

@@ -114,6 +114,7 @@ public class Book : InventoryItemView
         page.transform.localScale = Vector3.one;
         page.Text = note.Text;
         page.Title = note.Title;
+        page.gameObject.SetActive(false);
     }
 
     public override void Select()

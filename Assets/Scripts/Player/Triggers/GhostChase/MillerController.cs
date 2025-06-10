@@ -10,12 +10,12 @@ namespace amogus
     {
         [SerializeField] float _destinationUpdateSpeed;
         [SerializeField] Animator _anim;
+        [SerializeField] GameStateManager _gameStateManager;
 
         [Header("For testing")]
         [SerializeField] Transform _testTarget;
         [SerializeField] bool _test;
         [SerializeField] bool _stopTest;
-
         NavMeshAgent _agent;
         Coroutine _followBehavior;
 
@@ -62,6 +62,14 @@ namespace amogus
                 yield return wait;
 
             }
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+
+            WindowManager.Instance.TrySwitchWindow("GameOverUI");
+            _gameStateManager.SwitchState<S_Pause>();
         }
     }
 }
