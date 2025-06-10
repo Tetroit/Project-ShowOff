@@ -1,22 +1,22 @@
 using FMODUnity;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayAudioOnDistanceTraveled : MonoBehaviour
 {
-    [SerializeField] private float DistanceUntilStep = 1f;
-    private Vector3 lastLocation;
-    [SerializeField] private EventReference sound;
+    public float DistanceUntilStep = 1f;
+    [SerializeField] EventReference _sound;
+    Vector3 _lastLocation;
 
-    // Update is called once per frame
+    [field: SerializeField] public UnityEvent OnStep { get; private set; }
+
     void Update()
     {
-
-        if (Vector3.Distance(lastLocation, transform.position) > DistanceUntilStep)
+        if (Vector3.Distance(_lastLocation, transform.position) > DistanceUntilStep)
         {
-            lastLocation = transform.position;
-            AudioManager.instance.PlayOneShot(sound, transform.position);
+            _lastLocation = transform.position;
+            AudioManager.instance.PlayOneShot(_sound, transform.position);
+            OnStep?.Invoke();
         }
     }
 }

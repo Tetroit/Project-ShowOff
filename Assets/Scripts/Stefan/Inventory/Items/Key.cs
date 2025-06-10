@@ -4,6 +4,7 @@ using UnityEngine;
 public class Key : InventoryItemView
 {
     [SerializeField] string _doorCode;
+    public string doorCode => _doorCode;
     static Transform _canvasCache;
 
     public override void Interact(GameObject user)
@@ -17,12 +18,12 @@ public class Key : InventoryItemView
 
         if(door == null || !door.isLocked || door.unlockCode != _doorCode) return;
 
-        door.Unlock(); 
+        //door.Unlock(); 
     }
+
     //on instantiate
     public override void AddInInventory(GameObject user)
     {
-        Debug.Log("Spawn in inventory");
         AudioManager.instance.PlayOneShot(FMODEvents.instance.keyPickup, transform.position);
 
         //get canvas
@@ -39,6 +40,7 @@ public class Key : InventoryItemView
         rectTransform.pivot = new Vector2(1,0);
 
         rectTransform.anchoredPosition = new Vector2(0,0);
+        rectTransform.localScale = new Vector3(1, 1, 1);
 
     }
 }

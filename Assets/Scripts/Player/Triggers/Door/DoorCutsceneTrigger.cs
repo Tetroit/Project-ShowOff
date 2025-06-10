@@ -7,12 +7,14 @@ namespace amogus
 {
     public class DoorCutsceneTrigger : DoorTrigger
     {
+
+        [SerializeField] protected bool noArm = false;
+
+        [Header("Animations")]
         [SerializeField] protected TimelineAsset closingCutscene;
         [SerializeField] protected TimelineAsset openingCutscene => closingCutscene;
 
         [SerializeField] protected DoorCutsceneAnimation cutscene;
-
-        [SerializeField] protected bool noArm = false;
 
         public void SetNoArm(bool val) => noArm = val;
 

@@ -1,12 +1,9 @@
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.HighDefinition;
 using System.Collections.Generic;
-using static UnityEngine.GraphicsBuffer;
 using System;
-using UnityEditor.VersionControl;
 
 
 public enum TriggerType
@@ -20,13 +17,16 @@ public enum TriggerType
 public abstract class SimpleTrigger<TargetType> : MonoBehaviour
     where TargetType : Component
 {
-    [SerializeField] protected UnityEvent OnTrigger;
+    public virtual Predicate<TargetType> Predicate => (TargetType target) => true;
 
     [SerializeField] TriggerType triggerType;
     public string action = "Interact";
-    public virtual Predicate<TargetType> Predicate => (TargetType target) => true;
 
-    [SerializeField] protected List<TargetType> targetsInQuestion = new();
+    [Header("Events")]
+    [SerializeField] public UnityEvent OnTrigger;
+
+
+    protected List<TargetType> targetsInQuestion = new();
     public TargetType triggerObject { get; protected set; }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -88,7 +88,7 @@ public abstract class SimpleTrigger<TargetType> : MonoBehaviour
         }
         return true;
     }
-    protected void TryTrigger(TargetType other)
+    protected virtual void TryTrigger(TargetType other)
     {
         if (!NullHandling(other)) return;
 

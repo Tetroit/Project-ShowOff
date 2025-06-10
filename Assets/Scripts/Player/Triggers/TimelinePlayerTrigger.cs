@@ -9,6 +9,11 @@ namespace amogus
 
         [SerializeField] protected bool noGamemodeSwitch = false;
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
+            if (director.state == UnityEngine.Playables.PlayState.Playing)
+            {
+                Debug.LogWarning("Timeline is already playing", this);
+                return false;
+            }
             return true;
         };
 
@@ -87,7 +92,7 @@ namespace amogus
                     triggerObject.DisableControls();
                 }
                 else
-                    _gameStateManager.SwitchState(GameState.Cutscene);
+                    _gameStateManager.SwitchState<S_Cutscene>();
             }
         }
         [ExecuteAlways]

@@ -10,7 +10,7 @@ namespace amogus
         [SerializeField] Transform cameraTransform;
         [SerializeField] float speed;
 
-        [SerializeField] Ladder ladderContext;
+        Ladder ladderContext;
         Vector3 facing => cameraTransform.rotation * Vector3.forward;
         public override void DisableControl()
         {

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,7 +16,7 @@ public class PauseController : MonoBehaviour
 
     void Start()
     {
-        _isPaused = _gameStateManager.CurrentState == GameState.Pause;
+        _isPaused = _gameStateManager.CurrentState == typeof(S_Pause);
     }
 
     public void TogglePause(InputAction.CallbackContext context)
@@ -29,7 +28,7 @@ public class PauseController : MonoBehaviour
         }
         else
         {
-            _gameStateManager.SwitchState(GameState.Pause);
+            _gameStateManager.SwitchState<S_Pause>();
             _isPaused = true;
         }
     }

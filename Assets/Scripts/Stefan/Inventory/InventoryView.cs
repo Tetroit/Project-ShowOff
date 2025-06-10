@@ -34,13 +34,15 @@ public class InventoryView : MonoBehaviour
     void Awake()
     {
         OnAwake();
-        
     }
 
     void Start()
     {
         OnStart(); 
     }
+    protected virtual void OnAwake() { }
+
+    protected virtual void OnStart() { }
 
     void OnEnable()
     {
@@ -77,11 +79,19 @@ public class InventoryView : MonoBehaviour
         return -1;
     }
 
+    public void SelectItem(string name)
+    {
+        ChangeItemPosition(GetItemIndex(name));
+    }
 
     public void ChangeItemPosition(int index)
     {
+        if (items.Count == 0) return;
+
         if(navigationMode == NavigationMode.Clamp)
+        {
             index = Mathf.Clamp(index, 0, items.Count - 1);
+        }
         else if(navigationMode == NavigationMode.Cycle)
         {
             if (index < 0) index = items.Count - 1;
@@ -94,8 +104,6 @@ public class InventoryView : MonoBehaviour
 
         if (!canChange) return;
 
-        //if (window != null) WindowManager.Instance.CanSwitchToWindow(window);
-
         _curentItemIndex = Mathf.Clamp(_curentItemIndex, 0, items.Count - 1);
         InventoryItemView current = GetCurrentItem();
 
@@ -107,23 +115,44 @@ public class InventoryView : MonoBehaviour
         ItemSelected?.Invoke(current);
     }
 
-    protected InventoryItemView GetCurrentItem()
+    public InventoryItemView GetCurrentItem()
     {
         if(items.Count == 0) return null;
         return items[_curentItemIndex];
     }
-
-    protected virtual void OnAwake() { }
-
-    protected virtual void OnStart() { }
 
     public void AddItem(InventoryItemView item)
     {
         var instance = Instantiate(item);
         items.Add(instance);
         instance.AddInInventory(User);
-        ChangeItemPosition(SelectDirection.Right);
     }
+    //switch to item up or down
+
+    public void RemoveItem(InventoryItemView item) 
+    {
+        if(items.Count == 0) return;
+
+    }
+
+    public void ForEach(Action<InventoryItemView> call)
+    {
+        for (int i = items.Count-1; i >= 0; i--)
+        {
+            call(items[i]);
+        }
+    }
+
+    public InventoryItemView GetItemAt(int index)
+    {
+        return items[index];
+    }
+
+    public InventoryItemView GetAddedItem()
+    {
+        return items[^1];
+    }
+
     public void Clear()
     {
         items.Clear();
