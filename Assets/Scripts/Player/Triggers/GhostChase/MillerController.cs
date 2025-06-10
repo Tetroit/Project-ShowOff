@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using FMOD.Studio;
+using FMODUnity;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -16,6 +18,10 @@ namespace amogus
         [SerializeField] Transform _testTarget;
         [SerializeField] bool _test;
         [SerializeField] bool _stopTest;
+
+        [SerializeField] EventReference followMusic;
+        EventInstance followMusicEvent;
+
         NavMeshAgent _agent;
         Coroutine _followBehavior;
 
@@ -43,6 +49,9 @@ namespace amogus
         {
             _followBehavior = StartCoroutine(Follow(target));
             _anim.Play("Walk");
+            followMusicEvent = RuntimeManager.CreateInstance(FMODEvents.instance.followMusic);
+            followMusicEvent.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+            followMusicEvent.start();
         }
 
         public void StopFollowing()
@@ -51,6 +60,7 @@ namespace amogus
             StopCoroutine(_followBehavior);
             _followBehavior = null;
             _anim.Play("Idle");
+            followMusicEvent.setParameterByName("FadeOut", 1);
         }
 
         IEnumerator Follow(Transform target)
@@ -62,6 +72,11 @@ namespace amogus
                 yield return wait;
 
             }
+        }
+
+        private void OnDisable()
+        {
+            followMusicEvent.setParameterByName("FadeOut", 1);
         }
 
         void OnTriggerEnter(Collider other)

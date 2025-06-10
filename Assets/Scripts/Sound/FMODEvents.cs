@@ -17,6 +17,9 @@ public class FMODEvents : MonoBehaviour
     [field: Header("Dialogue")]
     [field: SerializeField] public EventReference voicemail;
 
+    [field: Header("Music")]
+    [field: SerializeField] public EventReference followMusic;
+
 
     private void Awake()
     {
