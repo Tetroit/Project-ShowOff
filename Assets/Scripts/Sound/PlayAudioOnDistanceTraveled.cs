@@ -7,6 +7,7 @@ public class PlayAudioOnDistanceTraveled : MonoBehaviour
 {
     [SerializeField] private float DistanceUntilStep = 1f;
     private Vector3 lastLocation;
+    [SerializeField] private EventReference sound;
 
     // Update is called once per frame
     void Update()
@@ -15,7 +16,7 @@ public class PlayAudioOnDistanceTraveled : MonoBehaviour
         if (Vector3.Distance(lastLocation, transform.position) > DistanceUntilStep)
         {
             lastLocation = transform.position;
-            AudioManager.instance.PlayOneShot(FMODEvents.instance.footSteps, transform.position);
+            AudioManager.instance.PlayOneShot(sound, transform.position);
         }
     }
 }
