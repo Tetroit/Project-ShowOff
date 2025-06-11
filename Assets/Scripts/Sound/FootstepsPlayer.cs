@@ -37,4 +37,9 @@ public class FootstepsPlayer : MonoBehaviour
         e.start();
         e.release();
     }
+
+    public void PlayLadderSound()
+    {
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.ladder, transform.position);
+    }
 }
