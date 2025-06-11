@@ -28,6 +28,8 @@ public class QuickTimeEvent : MonoBehaviour
     public UnityEvent OnFail;
     public UnityEvent OnActionPress;
 
+    public QuickTimeEventIndicator indicator;
+
     public bool Check()
     {
         if (pressCountCurrent >= pressCount)
@@ -47,6 +49,8 @@ public class QuickTimeEvent : MonoBehaviour
         InputSystem.actions.FindActionMap("Player").FindAction(actionName).started += OnPress;
         isReading = true;
         pressCountCurrent = 0;
+        indicator.gameObject.SetActive(true);
+        indicator.pressCount = pressCount;
     }
 
     public void Update()
@@ -70,6 +74,8 @@ public class QuickTimeEvent : MonoBehaviour
             OnSuccess?.Invoke();
         else
             OnFail?.Invoke();
+
+        indicator.gameObject.SetActive(false);
     }
     public void OnPress(InputAction.CallbackContext callback)
     {
