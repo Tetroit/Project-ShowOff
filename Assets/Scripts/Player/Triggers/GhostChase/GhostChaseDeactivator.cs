@@ -1,9 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Playables;
-using UnityEngine.ProBuilder.Shapes;
-
 
 namespace amogus
 {
@@ -20,8 +17,7 @@ namespace amogus
         }
         public void Hook()
         {
-            var door = GetComponent<DoorCutsceneTrigger>();
-            if (door == null)
+            if (!TryGetComponent<DoorCutsceneTrigger>(out var door))
             {
                 Debug.LogError("DoorCutsceneTrigger component is missing on the GameObject.");
                 return;
@@ -30,8 +26,7 @@ namespace amogus
         }
         public void Unhook()
         {
-            var door = GetComponent<DoorCutsceneTrigger>();
-            if (door == null)
+            if (!TryGetComponent<DoorCutsceneTrigger>(out var door))
             {
                 Debug.LogError("DoorCutsceneTrigger component is missing on the GameObject.");
                 return;
