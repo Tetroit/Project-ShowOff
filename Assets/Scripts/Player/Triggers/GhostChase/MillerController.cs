@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using FMOD.Studio;
+using FMODUnity;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -10,11 +12,16 @@ namespace amogus
     {
         [SerializeField] float _destinationUpdateSpeed;
         [SerializeField] Animator _anim;
-
+        [SerializeField] GameStateManager _gameStateManager;
+        [SerializeField] float _followWait;
+ 
         [Header("For testing")]
         [SerializeField] Transform _testTarget;
         [SerializeField] bool _test;
         [SerializeField] bool _stopTest;
+
+        [SerializeField] EventReference followMusic;
+        EventInstance followMusicEvent;
 
         NavMeshAgent _agent;
         Coroutine _followBehavior;
@@ -42,7 +49,7 @@ namespace amogus
         public void StartFollowing(Transform target)
         {
             _followBehavior = StartCoroutine(Follow(target));
-            _anim.Play("Walk");
+            
         }
 
         public void StopFollowing()
@@ -51,10 +58,16 @@ namespace amogus
             StopCoroutine(_followBehavior);
             _followBehavior = null;
             _anim.Play("Idle");
+            followMusicEvent.setParameterByName("FadeOut", 1);
         }
 
         IEnumerator Follow(Transform target)
         {
+            followMusicEvent = RuntimeManager.CreateInstance(FMODEvents.instance.followMusic);
+            followMusicEvent.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+            followMusicEvent.start();
+            yield return new WaitForSeconds(_followWait);
+            _anim.Play("Walk");
             WaitForSeconds wait = new(_destinationUpdateSpeed);
             while(true)
             {
@@ -62,6 +75,19 @@ namespace amogus
                 yield return wait;
 
             }
+        }
+
+        private void OnDisable()
+        {
+            followMusicEvent.setParameterByName("FadeOut", 1);
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+
+            WindowManager.Instance.TrySwitchWindow("GameOverUI");
+            _gameStateManager.SwitchState<S_Pause>();
         }
     }
 }

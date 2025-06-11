@@ -33,6 +33,12 @@ public class WindowManager : MonoBehaviour
         }
     }
 
+    public void TrySwitchWindow(string name)
+    {
+        Window w = _windows[_windows.IndexMatch(w => w.gameObject.name == name)];
+        TrySwitchWindow(w);
+    }
+
     public bool TrySwitchWindow(Window w)
     {
         if(_currentActiveWindow == null)
