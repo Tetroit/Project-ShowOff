@@ -10,6 +10,7 @@ public class FMODEvents : MonoBehaviour
 
     [field: Header("Player SFX")]
     [field: SerializeField] public EventReference footSteps;
+    [field: SerializeField] public EventReference ladder;
     [field: SerializeField] public EventReference paperHandling;
     [field: SerializeField] public EventReference keyPickup;
     [field: SerializeField] public EventReference woodBreak;
