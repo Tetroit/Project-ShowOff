@@ -48,7 +48,14 @@ public class CameraWalkingShake : MonoBehaviour
                 _rightSide = !_rightSide;
                 if(FMODEvents.instance != null)
                 {
-                    _footstepsPlayer.PlayFootstepSound();
+                    if(currentShakeStateID == State.LADDER)
+                    {
+                        _footstepsPlayer.PlayLadderSound();
+                    }
+                    else
+                    {
+                        _footstepsPlayer.PlayFootstepSound();
+                    }
                 }
             }
         }
