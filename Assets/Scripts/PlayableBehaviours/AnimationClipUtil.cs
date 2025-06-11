@@ -14,6 +14,7 @@ public class AnimationClipContext : MonoBehaviour
     public TimelineAsset timelineAssetContext;
     public AnimationTrack animationTrackContext;
     public TimelineClip timelineClipContext;
+    public AnimationPlayableAsset animationPlayableAsset;
     public AnimationClip animationClipContext;
 
     public List<TimelineClip> removeAfterOneNextPlay;
@@ -65,8 +66,7 @@ public class AnimationClipContext : MonoBehaviour
         {
             if (clip.animationClip.name == name)
             {
-                animationClipContext = clip.animationClip;
-                return clip.animationClip;
+                GetAnimationClip(clip);
             }
         }
         return null;
@@ -82,15 +82,21 @@ public class AnimationClipContext : MonoBehaviour
         animationTrackContext = track;
         return GetAnimationClip(track.name);
     }
+    public AnimationClip GetAnimationClip(TimelineClip clip)
+    {
+        animationClipContext = clip.animationClip;
+        return clip.animationClip;
+    }
     /// <summary>
     /// Sets <paramref name="clip"/> to the <seealso cref="animationTrackContext"/> at <paramref name="time"/>.
     /// </summary>
     /// <param name="clip"></param>
     /// <param name="time"></param>
-    public void AddClip(AnimationClip clip, float time = 0.0f, Vector3? position = null, Vector3? eulerAngles = null, float fadeInTime = 0, float fadeOutTime = 0, float duration = -1, bool deleteAfterPlay = true)
+    public void AddClip(AnimationClip clip, float time = 0.0f, Vector3? position = null, Vector3? eulerAngles = null,
+        float fadeInTime = 0, float fadeOutTime = 0, float duration = -1, bool startOffset = false, bool deleteAfterPlay = true)
     {
         bool shouldSetOffsets = position.HasValue || eulerAngles.HasValue;
-        var newClip = animationTrackContext.CreateClip(clip);
+        TimelineClip newClip = animationTrackContext.CreateClip(clip);
         newClip.start = time;
         newClip.displayName = clip.name;
 
@@ -99,7 +105,7 @@ public class AnimationClipContext : MonoBehaviour
         if (duration > 0)
             newClip.duration = duration;
 
-        AnimationPlayableAsset animationPlayableAsset = (AnimationPlayableAsset)newClip.asset;
+        animationPlayableAsset = (AnimationPlayableAsset)newClip.asset;
         if (shouldSetOffsets)
         {
             if (position.HasValue)
@@ -108,7 +114,7 @@ public class AnimationClipContext : MonoBehaviour
                 animationPlayableAsset.rotation = Quaternion.Euler(eulerAngles.Value);
         }
 
-        animationPlayableAsset.removeStartOffset = false;
+        animationPlayableAsset.removeStartOffset = !startOffset;
         Bind(GetComponent<PlayableDirector>());
         double directorTime = playableDirectorContext.time;
         playableDirectorContext.RebuildGraph();
@@ -170,11 +176,58 @@ public class AnimationClipContext : MonoBehaviour
         }
         return null;
     }
+    public void GetTimelineClipFromAnimationTrack()
+    {
+        GetTimelineClipFromAnimationTrack(inputField);
+    }
+    public void GetTimelineClipFromAnimationTrack(string name)
+    {
+        var clips = animationTrackContext.GetClips();
+        foreach (var clip in clips)
+        {
+            if (clip.animationClip.name == inputField)
+            {
+                timelineClipContext = clip;
+                return;
+            }
+        }
+    }
+    public void GetAnimationPlayableAsset()
+    {
+        animationPlayableAsset = (AnimationPlayableAsset)timelineClipContext.asset;
+    }
+    public AnimationTrackInsertionInfo GetAnimationTrackInsertInfo()
+    {
+        return GetAnimationTrackInsertInfo(inputField);
+    }
+    public AnimationTrackInsertionInfo GetAnimationTrackInsertInfo(string name)
+    {
+        GetTimelineClipFromAnimationTrack(name);
+        GetAnimationPlayableAsset();
+        GetAnimationClip(timelineClipContext);
+        AnimationTrackInsertionInfo atii = new AnimationTrackInsertionInfo
+        {
+            trackName = animationTrackContext.name,
+            clip = animationClipContext,
+            insertTime = (float)timelineClipContext.start,
+            positionOffset = animationPlayableAsset.position,
+            rotationOffset = animationPlayableAsset.rotation.eulerAngles,
+            fadeInTime = (float)timelineClipContext.blendInDuration,
+            fadeOutTime = (float)timelineClipContext.blendOutDuration,
+            duration = (float)timelineClipContext.duration,
+            startOffset = !animationPlayableAsset.removeStartOffset
+        };
+        generatedATII = atii;
+        return atii;
+    }
 
 #if UNITY_EDITOR
 
+    [Space(20)]
+    [Header("Editing")]
     public string inputField;
     public List<string> list;
+    public AnimationTrackInsertionInfo generatedATII;
 
     [ContextMenu("Get Animation Tracks")]
     public void GetAnimationTracks()
