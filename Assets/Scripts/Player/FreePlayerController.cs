@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Rendering;
 
 namespace amogus
@@ -12,12 +13,20 @@ namespace amogus
         Keyboard,
         Joystick
     }
+
+    public enum MovementState
+    {
+        Walk = 0,
+        Crouch = 1,
+        Sprint = 2,
+    }
+
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     public class FreePlayerController : PlayerController
     {
         [SerializeField] List<PhysicsControllerState> states = new List<PhysicsControllerState>();
-        [SerializeField] int currentState = 0;
-        public PhysicsControllerState state => states[currentState];
+        [SerializeField] MovementState currentState = 0;
+        public PhysicsControllerState state => states[(int)currentState];
 
         public float height
         {
@@ -26,6 +35,9 @@ namespace amogus
         }
         public override bool isMoving => _isMoving;
         public bool _isMoving { get; private set; }
+        bool _startedSprinting;
+        bool _stopedSprinting;
+
         public bool isGrounded { get; private set; }
 
         public bool isSprinting { get; private set; }
@@ -178,23 +190,23 @@ namespace amogus
                     if (needsCrouchHandling)
                     {
                         if (!Physics.Raycast(transform.position, transform.up, _roofDetectionRange))
-                            SwitchState(0);
+                            SwitchState(MovementState.Walk);
                         needsCrouchHandling = false;
                     }
                     else if (PlayerInputHandler.Instance.SprintPressed)
-                        SwitchState(2);
+                        SwitchState(MovementState.Sprint);
                 }
                 else
                 {
                     if (needsCrouchHandling)
                     {
-                        SwitchState(1);
+                        SwitchState(MovementState.Crouch);
                         needsCrouchHandling = false;
                     }
                     else if (PlayerInputHandler.Instance.SprintPressed)
-                        SwitchState(2);
+                        SwitchState(MovementState.Sprint);
                     else
-                        SwitchState(0);
+                        SwitchState(MovementState.Walk);
                 }
             }
             //-------------STATE RESOLUTION-------------
@@ -208,6 +220,29 @@ namespace amogus
                 _isMoving = false;
             }
 
+            if(_isMoving && currentState == MovementState.Sprint)
+            {
+                if(!_startedSprinting)
+                {
+                    OnFOVChange?.Invoke(80);
+                }
+                _startedSprinting = true;
+                _stopedSprinting = false;
+            }
+            else
+            {
+                if(!_stopedSprinting)
+                {
+                    OnFOVChange?.Invoke(60);
+
+                }
+                _startedSprinting = false;
+                _stopedSprinting = true;
+
+            }
+
+
+
             moveDirection = moveDirection.normalized * state.movementSpeed;
             Vector3 rbCopy;
             if (isGrounded)
@@ -220,6 +255,8 @@ namespace amogus
                 rbCopy = rb.linearVelocity + new Vector3(moveDirection.x * state.airSpeed, 0, moveDirection.z * state.airSpeed);
                 rb.useGravity = true;
             }
+
+
 
             //-------------COLLISION RESOLUTION-------------
 
@@ -266,20 +303,15 @@ namespace amogus
         }
 
 
-        public void SwitchState (int newState)
+        public void SwitchState (MovementState newState)
         {
             if (currentState == newState) return;
-            rb.position += new Vector3(0, (states[newState].height - state.height) / 2f, 0);
+            rb.position += new Vector3(0, (states[(int)newState].height - state.height) / 2f, 0);
             currentState = newState;
-            isCrouching = newState == 1;
-            isSprinting = newState == 2;
+            isCrouching = newState == MovementState.Crouch;
+            isSprinting = newState == MovementState.Sprint;
 
             OnCameraShakeChange?.Invoke((CameraWalkingShake.State)newState);
-
-            if (newState == 2)
-                OnFOVChange?.Invoke(80);
-            else
-                OnFOVChange?.Invoke(60);
         }
         public override void EnableControl()
         {

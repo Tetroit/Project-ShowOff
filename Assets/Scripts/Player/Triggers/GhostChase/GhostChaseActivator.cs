@@ -31,8 +31,6 @@ namespace amogus
 
             var door = GetComponent<DoorCutsceneTrigger>();
             door.Lock();
-            //play miller jump scare
-            //play camera turn animation
         }
 
         public void DirectorAnimationEnd(PlayableDirector director)

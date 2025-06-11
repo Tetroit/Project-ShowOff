@@ -63,6 +63,7 @@ public class WindowManager : MonoBehaviour
 
     public void CloseCurrentWindow()
     {
+        if(_currentActiveWindow != null)
         _currentActiveWindow.gameObject.SetActive(false);
         _currentActiveWindow = null;
         _history.RemoveAt(_history.Count - 1);
