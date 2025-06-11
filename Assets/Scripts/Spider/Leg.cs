@@ -57,7 +57,7 @@ public class Leg
         _lastTarget = groundPoint;
         _nextTarget = groundPoint;
         PositionLeg();
-        InverseKinematics(_lastTarget);
+        //InverseKinematics(_lastTarget);
     }
 
     public void ClearEvents()
@@ -81,13 +81,13 @@ public class Leg
 
         PositionLeg();
 
-        Member foot = members[0];
-        int tries = 0;
-        while (Vector3.Distance(foot.GetEndPosition(), target) > data.AcceptableDistance && tries < data.CalibrationAttempts)
-        {
-            InverseKinematics(target);
-            tries++;
-        }
+        //Member foot = members[0];
+        //int tries = 0;
+        //while (Vector3.Distance(foot.GetEndPosition(), target) > data.AcceptableDistance && tries < data.CalibrationAttempts)
+        //{
+        //    InverseKinematics(target);
+        //    tries++;
+        //}
 
     }
 
@@ -184,7 +184,7 @@ public class Leg
         Gizmos.DrawSphere(_debug.last, .1f);
         Gizmos.color = Color.blue;
 
-        //Gizmos.DrawLine(_debug.live, _debug.last);
+       Gizmos.DrawLine(_debug.live, _debug.last);
     }
 
     float GetLegReach()

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7283791342096981599}
   - component: {fileID: 3354676142242248591}
   - component: {fileID: 8222021572505364131}
+  - component: {fileID: 2907149313674984719}
   m_Layer: 0
   m_Name: Miller
   m_TagString: Untagged
@@ -96,6 +97,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2907149313674984719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680747943365342966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ee4942cdc39ef4481c5e49dd92f55a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1001 &6748145487503946240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -203,13 +223,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 076a1f6d807abfb4e83bb7ffc88df527, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 621055300048595880}
   m_SourcePrefab: {fileID: 100100000, guid: 076a1f6d807abfb4e83bb7ffc88df527, type: 3}
 --- !u!95 &922304681585364881 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 076a1f6d807abfb4e83bb7ffc88df527, type: 3}
   m_PrefabInstance: {fileID: 6748145487503946240}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5865748577092816721 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 076a1f6d807abfb4e83bb7ffc88df527, type: 3}
+  m_PrefabInstance: {fileID: 6748145487503946240}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &621055300048595880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865748577092816721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ee4942cdc39ef4481c5e49dd92f55a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    Guid:
+      Data1: 145527981
+      Data2: 1101072481
+      Data3: -289442373
+      Data4: 473781813
+    Path: event:/SFX/FootstepsOnWood
 --- !u!4 &6497713412794914283 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 076a1f6d807abfb4e83bb7ffc88df527, type: 3}

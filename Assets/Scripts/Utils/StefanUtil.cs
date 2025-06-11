@@ -40,4 +40,9 @@ public static class StefanUtil
         }
     }
 
+    public static void Test(this SelectDirection direction)
+    {
+        Debug.Log(direction.ToString());
+    }
+
 }

@@ -42,9 +42,13 @@ namespace amogus
         float castRadius;
 
         [SerializeField] Transform cameraTransform;
-        [SerializeField] bool _debug; 
+        [SerializeField] bool _debug;
+        [SerializeField] float _roofDetectionRange;
+
         Rigidbody rb;
         CapsuleCollider coll;
+
+        
 
         private void Awake()
         {
@@ -99,7 +103,12 @@ namespace amogus
 
         private void OnDrawGizmos()
         {
+            if (!_debug) return;
+
+
             Gizmos.color = Color.yellow;
+            Gizmos.DrawRay(transform.position, transform.up * _roofDetectionRange);
+            
             Gizmos.DrawSphere(transform.position + castOffset, castRadius);
 
             foreach (var contact in contacts)
@@ -143,15 +152,6 @@ namespace amogus
 
                 //Debug.Log(flatness + " <----> " + state.criticalAngle);
             }
-            //if (!isGrounded)
-            //{
-            //    RaycastHit hit;
-            //    if (Physics.SphereCast(rb.position + castOffset, castRadius, Vector3.down, out hit))
-            //    {
-            //        if (hit.distance < castRadius ) isGrounded = true;
-            //        Debug.Log(hit.collider.name);
-            //    }
-            //}
 
             //----------------INPUT READ--------------------------
 
@@ -167,32 +167,6 @@ namespace amogus
                 }
                 Vector3 right = Vector3.Cross(forward, Vector3.down);
 
-                //if (inputDevice == InputDevice.Joystick)
-                //{
-                //    moveDirection += Input.GetAxisRaw("Vertical") * forward;
-                //    moveDirection += Input.GetAxisRaw("Horizontal") * right;
-                //}
-                //if (inputDevice == InputDevice.Keyboard)
-                //{
-                //    //movement
-                //    if (Input.GetKey(KeyCode.W)) moveDirection += forward;
-                //    if (Input.GetKey(KeyCode.S)) moveDirection -= forward;
-                //    if (Input.GetKey(KeyCode.D)) moveDirection += right;
-                //    if (Input.GetKey(KeyCode.A)) moveDirection -= right;
-
-                //    GizmoManager.Instance.StageLine(Vector3.zero, moveDirection * 10, Color.cyan, transform);
-                //    //jump
-                //    if (Input.GetKey(KeyCode.Space) && isGrounded) shouldJump = true;
-
-                //    //states
-                //    if (Input.GetKey(KeyCode.LeftShift))
-                //        SwitchState(1);
-                //    else if (Input.GetKey(KeyCode.LeftControl))
-                //        SwitchState(2);
-                //    else 
-                //        SwitchState(0);
-                //};
-
                 moveDirection += PlayerInputHandler.Instance.Move.y * forward;
                 moveDirection += PlayerInputHandler.Instance.Move.x * right;
 
@@ -203,7 +177,8 @@ namespace amogus
                 {
                     if (needsCrouchHandling)
                     {
-                        SwitchState(0);
+                        if (!Physics.Raycast(transform.position, transform.up, _roofDetectionRange))
+                            SwitchState(0);
                         needsCrouchHandling = false;
                     }
                     else if (PlayerInputHandler.Instance.SprintPressed)
@@ -248,13 +223,6 @@ namespace amogus
 
             //-------------COLLISION RESOLUTION-------------
 
-
-
-            //if (!isMoving)
-            //{
-            //    rbCopy -= moveDirection.normalized * state.acceleration * Time.deltaTime;
-            //}
-
             if (rbCopy.magnitude > state.speedLimit)
                 rbCopy = rbCopy.normalized * state.speedLimit;
 
@@ -276,8 +244,6 @@ namespace amogus
             GizmoManager.Instance.StageLine(Vector3.zero, rb.linearVelocity, Color.blue, transform);
 
             rb.rotation = Quaternion.Euler(0f, GetCameraRotation().eulerAngles.x, 0f);
-            //rb.velocity = constraints[constraints.Count - 1];
-
 
             // -----------------JUMP-----------------
 

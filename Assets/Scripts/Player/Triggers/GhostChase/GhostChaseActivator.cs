@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 
 namespace amogus
@@ -12,6 +13,7 @@ namespace amogus
         [SerializeField] GameStateManager gameStateManager;
         [SerializeField] PlayerFSM fsm;
         [SerializeField] PlayableDirector director;
+        [SerializeField] TimelineAsset _cutscene;
 
         public void Trigger()
         {
@@ -20,6 +22,7 @@ namespace amogus
 
             if (director != null)
             {
+                director.playableAsset = _cutscene;
                 director.stopped += DirectorAnimationEnd;
                 director.Play();
             }
