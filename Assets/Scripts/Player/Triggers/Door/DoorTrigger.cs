@@ -9,7 +9,7 @@ namespace amogus
         public bool isLocked = false;
         [SerializeField] protected Door door;
         [Header("Events")]
-        public UnityEvent<bool> OnTryUnlock;
+        public UnityEvent OnFailUnlock;
         public UnityEvent OnUnlock;
 
         protected override void TryTrigger(PlayerFSM other)
@@ -23,28 +23,29 @@ namespace amogus
         }
         protected virtual void TryUnlocking(PlayerFSM other)
         {
-            var item = FindAnyObjectByType<InventoryController>()?.GetCurrentInventory()?.GetCurrentItem();
-            if (item == null || item is not Key)
+            var inventory = FindAnyObjectByType<InventoryController>().transform.FindDeepChild("KeyInventory").gameObject.GetComponent<InventoryView>();
+            Key correctKey = inventory.First(k => (k as Key)?.doorCode == unlockCode) as Key;
+            if (correctKey == null)
             {
                 Debug.Log("No item to unlock with", this);
-                OnTryUnlock?.Invoke(false);
+                OnFailUnlock?.Invoke();
                 return;
             }
-            if (item is Key)
+            if (correctKey)
             {
-                var key = item as Key;
-                if (key.doorCode == unlockCode && enabled)
+                if (enabled)
                 {
                     Debug.Log("Unlocked", this);
                     isLocked = false;
                     Unlock();
-                    OnTryUnlock?.Invoke(true);
                     OnUnlock?.Invoke();
+
+                    Open(other);
                 }
                 else
                 {
                     Debug.Log("Failed to unlock", this);
-                    OnTryUnlock?.Invoke(false);
+                    OnFailUnlock?.Invoke();
                 }
             }
         }

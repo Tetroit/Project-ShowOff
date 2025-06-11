@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Rendering;
 
 namespace amogus
@@ -12,12 +13,20 @@ namespace amogus
         Keyboard,
         Joystick
     }
+
+    public enum MovementState
+    {
+        Walk = 0,
+        Crouch = 1,
+        Sprint = 2,
+    }
+
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     public class FreePlayerController : PlayerController
     {
         [SerializeField] List<PhysicsControllerState> states = new List<PhysicsControllerState>();
-        [SerializeField] int currentState = 0;
-        public PhysicsControllerState state => states[currentState];
+        [SerializeField] MovementState currentState = 0;
+        public PhysicsControllerState state => states[(int)currentState];
 
         public float height
         {
@@ -26,6 +35,9 @@ namespace amogus
         }
         public override bool isMoving => _isMoving;
         public bool _isMoving { get; private set; }
+        bool _startedSprinting;
+        bool _stopedSprinting;
+
         public bool isGrounded { get; private set; }
 
         public bool isSprinting { get; private set; }
@@ -42,9 +54,13 @@ namespace amogus
         float castRadius;
 
         [SerializeField] Transform cameraTransform;
-        [SerializeField] bool _debug; 
+        [SerializeField] bool _debug;
+        [SerializeField] float _roofDetectionRange;
+
         Rigidbody rb;
         CapsuleCollider coll;
+
+        
 
         private void Awake()
         {
@@ -99,7 +115,12 @@ namespace amogus
 
         private void OnDrawGizmos()
         {
+            if (!_debug) return;
+
+
             Gizmos.color = Color.yellow;
+            Gizmos.DrawRay(transform.position, transform.up * _roofDetectionRange);
+            
             Gizmos.DrawSphere(transform.position + castOffset, castRadius);
 
             foreach (var contact in contacts)
@@ -143,15 +164,6 @@ namespace amogus
 
                 //Debug.Log(flatness + " <----> " + state.criticalAngle);
             }
-            //if (!isGrounded)
-            //{
-            //    RaycastHit hit;
-            //    if (Physics.SphereCast(rb.position + castOffset, castRadius, Vector3.down, out hit))
-            //    {
-            //        if (hit.distance < castRadius ) isGrounded = true;
-            //        Debug.Log(hit.collider.name);
-            //    }
-            //}
 
             //----------------INPUT READ--------------------------
 
@@ -167,32 +179,6 @@ namespace amogus
                 }
                 Vector3 right = Vector3.Cross(forward, Vector3.down);
 
-                //if (inputDevice == InputDevice.Joystick)
-                //{
-                //    moveDirection += Input.GetAxisRaw("Vertical") * forward;
-                //    moveDirection += Input.GetAxisRaw("Horizontal") * right;
-                //}
-                //if (inputDevice == InputDevice.Keyboard)
-                //{
-                //    //movement
-                //    if (Input.GetKey(KeyCode.W)) moveDirection += forward;
-                //    if (Input.GetKey(KeyCode.S)) moveDirection -= forward;
-                //    if (Input.GetKey(KeyCode.D)) moveDirection += right;
-                //    if (Input.GetKey(KeyCode.A)) moveDirection -= right;
-
-                //    GizmoManager.Instance.StageLine(Vector3.zero, moveDirection * 10, Color.cyan, transform);
-                //    //jump
-                //    if (Input.GetKey(KeyCode.Space) && isGrounded) shouldJump = true;
-
-                //    //states
-                //    if (Input.GetKey(KeyCode.LeftShift))
-                //        SwitchState(1);
-                //    else if (Input.GetKey(KeyCode.LeftControl))
-                //        SwitchState(2);
-                //    else 
-                //        SwitchState(0);
-                //};
-
                 moveDirection += PlayerInputHandler.Instance.Move.y * forward;
                 moveDirection += PlayerInputHandler.Instance.Move.x * right;
 
@@ -203,23 +189,24 @@ namespace amogus
                 {
                     if (needsCrouchHandling)
                     {
-                        SwitchState(0);
+                        if (!Physics.Raycast(transform.position, transform.up, _roofDetectionRange))
+                            SwitchState(MovementState.Walk);
                         needsCrouchHandling = false;
                     }
                     else if (PlayerInputHandler.Instance.SprintPressed)
-                        SwitchState(2);
+                        SwitchState(MovementState.Sprint);
                 }
                 else
                 {
                     if (needsCrouchHandling)
                     {
-                        SwitchState(1);
+                        SwitchState(MovementState.Crouch);
                         needsCrouchHandling = false;
                     }
                     else if (PlayerInputHandler.Instance.SprintPressed)
-                        SwitchState(2);
+                        SwitchState(MovementState.Sprint);
                     else
-                        SwitchState(0);
+                        SwitchState(MovementState.Walk);
                 }
             }
             //-------------STATE RESOLUTION-------------
@@ -232,6 +219,29 @@ namespace amogus
             {
                 _isMoving = false;
             }
+
+            if(_isMoving && currentState == MovementState.Sprint)
+            {
+                if(!_startedSprinting)
+                {
+                    OnFOVChange?.Invoke(80);
+                }
+                _startedSprinting = true;
+                _stopedSprinting = false;
+            }
+            else
+            {
+                if(!_stopedSprinting)
+                {
+                    OnFOVChange?.Invoke(60);
+
+                }
+                _startedSprinting = false;
+                _stopedSprinting = true;
+
+            }
+
+
 
             moveDirection = moveDirection.normalized * state.movementSpeed;
             Vector3 rbCopy;
@@ -246,14 +256,9 @@ namespace amogus
                 rb.useGravity = true;
             }
 
+
+
             //-------------COLLISION RESOLUTION-------------
-
-
-
-            //if (!isMoving)
-            //{
-            //    rbCopy -= moveDirection.normalized * state.acceleration * Time.deltaTime;
-            //}
 
             if (rbCopy.magnitude > state.speedLimit)
                 rbCopy = rbCopy.normalized * state.speedLimit;
@@ -276,8 +281,6 @@ namespace amogus
             GizmoManager.Instance.StageLine(Vector3.zero, rb.linearVelocity, Color.blue, transform);
 
             rb.rotation = Quaternion.Euler(0f, GetCameraRotation().eulerAngles.x, 0f);
-            //rb.velocity = constraints[constraints.Count - 1];
-
 
             // -----------------JUMP-----------------
 
@@ -300,20 +303,15 @@ namespace amogus
         }
 
 
-        public void SwitchState (int newState)
+        public void SwitchState (MovementState newState)
         {
             if (currentState == newState) return;
-            rb.position += new Vector3(0, (states[newState].height - state.height) / 2f, 0);
+            rb.position += new Vector3(0, (states[(int)newState].height - state.height) / 2f, 0);
             currentState = newState;
-            isCrouching = newState == 1;
-            isSprinting = newState == 2;
+            isCrouching = newState == MovementState.Crouch;
+            isSprinting = newState == MovementState.Sprint;
 
             OnCameraShakeChange?.Invoke((CameraWalkingShake.State)newState);
-
-            if (newState == 2)
-                OnFOVChange?.Invoke(80);
-            else
-                OnFOVChange?.Invoke(60);
         }
         public override void EnableControl()
         {

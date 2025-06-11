@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,7 +20,7 @@ public class InventoryView : MonoBehaviour
     [SerializeField] protected int capacity;
     [SerializeField] NavigationMode navigationMode; 
     [SerializeField] List<InventoryItemView> items = new();
-
+    public ReadOnlyCollection<InventoryView> Items => new ((IList<InventoryView>)items);
     [field: SerializeField] public UnityEvent<InventoryItemView> ItemSelected { get; private set; }
     [field: SerializeField] public UnityEvent<InventoryItemView> ItemDeselected { get; private set; }
     int _curentItemIndex;
@@ -31,6 +32,11 @@ public class InventoryView : MonoBehaviour
         return items.Any(call);
     }
     
+    public InventoryItemView First(Func<InventoryItemView, bool> call)
+    {
+        return items.FirstOrDefault(call);
+    }
+
     void Awake()
     {
         OnAwake();

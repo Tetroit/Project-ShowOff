@@ -1,39 +1,49 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 [SelectionBase]
 public class LegManager : MonoBehaviour
 {
     public bool IsMoving { get; private set; }
+    [SerializeField] bool _move;
+    [field: SerializeField] public bool Gizmos { get; private set; } = false;
 
     [SerializeField] Curve _path;
     [SerializeField] LayerMask _groundMask;
     [SerializeField] float _pathLerpTime = 10;
-    [SerializeField] BoxCollider _legPrefab;
-    [SerializeField, Range(1, 20)] int _jointCount = 1;
-
+    [SerializeField, Range(1, 20)] int _jointCount = 3;
+    [Tooltip("How close can leg joints")]
     [field: SerializeField] public float AcceptableDistance { get; private set; } = .05f;
+    [Tooltip("How many attempts to connect legs to ground before giving up")]
+    [field: SerializeField] public int CalibrationAttempts { get; private set; } = 5;
+    [Header("Leg positioning")]
     [field: SerializeField] public float AngleX { get; private set; } = .31f;
     [field: SerializeField] public float AngleY { get; private set; } = .2f;
-    [field: SerializeField] public int CalibrationAttempts { get; private set; } = 5;
-    [field: SerializeField] public float MoveSpeed { get; private set; } = 5;
-    [field: SerializeField] public bool Gizmos { get; private set; } = false;
+    [field: SerializeField] public float DistanceFromBody { get; private set; } = .5f;
+    
+
     [field: SerializeField] public float WobbleSpeed { get; private set; } = 1.69f;
     [field: SerializeField] public float WobbleAmplitude { get; private set; } = .15f;
     [field: SerializeField] public float ForwardReach { get; private set; } = .8f;
     [field: SerializeField] public float StepSpeed { get; private set; } = .5f;
     [field: SerializeField] public float StepDistance { get; private set; } = 1f;
     [field: SerializeField] public float RestStepDistance { get; private set; } = .1f;
-    [field: SerializeField] public float DistanceFromBody { get; private set; } = .5f;
-    [SerializeField] bool _move;
+    [Header("Move Variance")]
+    [field: SerializeField] public float MoveVarianceSpeed { get; private set; } = 5;
+    [field: SerializeField] public float MoveSpeed { get; private set; } = 5;
+    [SerializeField] AnimationCurve _varianceRange;
 
-    [SerializeField] float _groundOffset = 1f;
+    [Header("Bodyheight related")]
+    [Tooltip("Smoothing of changing body height")]
     [SerializeField] float _heightChangeLerp;
+    [SerializeField] float _groundOffset = 1f;
+    [SerializeField] bool _useGeneralHeightDetection;
 
+    [Header("Leg models")]
+    [SerializeField] BoxCollider _legPrefab;
     [SerializeField] BoxCollider firstLeg;
     [SerializeField] BoxCollider firstSecondLeg;
-
-    [SerializeField] bool _useGeneralHeightDetection;
 
     Leg[] _legs;
     public bool Step;
@@ -41,6 +51,7 @@ public class LegManager : MonoBehaviour
     bool _startedMoving;
     bool _waitForFirstLegs;
     int _currentPathNode;
+    float _currMoveVal;
 
     void Start()
     {
@@ -134,40 +145,41 @@ public class LegManager : MonoBehaviour
             if (_currentPathNode == _path.points.Count)
             {
                 _move = false;
+                _currentPathNode = 0;
                 return;
             }
         }
         //move towards next node
         currentTarget = _path.points[_currentPathNode];
         forward = Vector3.Lerp(forward, (currentTarget - transform.position).normalized, _pathLerpTime * Time.deltaTime);
-
+        _currMoveVal += MoveVarianceSpeed;
         transform.forward = forward;
-        transform.position += MoveSpeed * Time.deltaTime * forward;
+        transform.position += MoveSpeed * _varianceRange.Evaluate(Mathf.PerlinNoise1D(_currMoveVal)) * Time.deltaTime * forward;
+        
     }
-
+    
     void SetUpFirstStep()
     {
-        if (!_startedMoving)
+        if (_startedMoving) return;
+        _startedMoving = true;
+
+        // after the first stem, make step distance lower
+        void legStepSizeReset(Leg l)
         {
-            _startedMoving = true;
-
-            // after the first stem, make step distance lower
-            void legStepSizeReset(Leg l)
-            {
-                l.StepSize = StepDistance;
-                _waitForFirstLegs = true;
-                l.OnStep -= legStepSizeReset;
-            }
-            _legs[0].StepSize = RestStepDistance;
-            _legs[_legs.Length/2].StepSize = RestStepDistance;
-            _legs[0].OnStep += legStepSizeReset;
-            _legs[_legs.Length / 2].OnStep += legStepSizeReset;
-
+            l.StepSize = StepDistance;
+            _waitForFirstLegs = true;
+            l.OnStep -= legStepSizeReset;
         }
+        _legs[0].StepSize = RestStepDistance;
+        _legs[_legs.Length/2].StepSize = RestStepDistance;
+        _legs[0].OnStep += legStepSizeReset;
+        _legs[_legs.Length / 2].OnStep += legStepSizeReset;
+
     }
 
     void SetBodyHeight()
     {
+        return;
         float groundPositionAverage = 0;
 
         foreach (Leg leg in _legs)

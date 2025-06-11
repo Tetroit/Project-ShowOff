@@ -62,11 +62,11 @@ public class GameStateManager : MonoBehaviour
     }
 #endif
 
-    void Start()
+    private void OnEnable()
     {
         _currentStateKey = typeof(S_Play);
         _previousStates.Push(_currentStateKey);
-        _currentState = _states[_currentStateKey];    
+        _currentState = _states[_currentStateKey];
         _currentState.Enter();
     }
 
@@ -132,5 +132,11 @@ public class GameStateManager : MonoBehaviour
     public void SwitchToCutscene()
     {
         SwitchState<S_Cutscene>();
+    }
+
+    private void OnDisable()
+    {
+        _currentState.Exit();
+        _previousStates.Clear();
     }
 }
