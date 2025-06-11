@@ -1,10 +1,14 @@
 using FMOD.Studio;
 using FMODUnity;
+using System.Diagnostics.Tracing;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class VolumeSliders : MonoBehaviour
+public class VolumeSliders : MonoBehaviour , IPointerUpHandler
 {
     [SerializeField] private string Usedbus;
+    [SerializeField] private EventReference testSound;
     private Bus bus;
 
     private void Start()
@@ -16,6 +20,12 @@ public class VolumeSliders : MonoBehaviour
     public void ChangeVolume(float volume)
     {
          bus.setVolume(volume);
-        Debug.Log(volume);
+         
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+            AudioManager.instance.PlayOneShot(testSound, transform.position);
     }
 }
+
