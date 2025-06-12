@@ -10,13 +10,18 @@ public class PlayAudioOnDistanceTraveled : MonoBehaviour
 
     [field: SerializeField] public UnityEvent OnStep { get; private set; }
 
+    public void DoStep()
+    {
+        _lastLocation = transform.position;
+        AudioManager.instance.PlayOneShot(_sound, transform.position);
+        OnStep?.Invoke();
+    }
+
     void Update()
     {
         if (Vector3.Distance(_lastLocation, transform.position) > DistanceUntilStep)
         {
-            _lastLocation = transform.position;
-            AudioManager.instance.PlayOneShot(_sound, transform.position);
-            OnStep?.Invoke();
+            DoStep();
         }
     }
 }

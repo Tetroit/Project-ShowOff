@@ -19,8 +19,9 @@ namespace amogus
         Coroutine movement;
         public void StartFollowing()
         {
-            movement = StartCoroutine(nameof(Step));
             _footSteps.OnStep.AddListener(OnStepSound);
+            movement = StartCoroutine(nameof(Step));
+
         }
         public void EndFollowing()
         {
@@ -33,6 +34,7 @@ namespace amogus
         {
             float dist = curve.Getlength();
             float time01 = 0;
+            _footSteps.DoStep();
             while (time01 < 1)
             {
                 time01 += _speed / dist * Time.deltaTime;

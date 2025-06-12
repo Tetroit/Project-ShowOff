@@ -17,6 +17,8 @@ namespace amogus
         {
             startRotation = target.GetStartRotation();
             targetRotation = target.GetTargetRotation();
+            if(target.isOpen) target.PlayCloseSound();
+            else target.PlayOpenSound();
         }
         public override void End(Door target)
         {
