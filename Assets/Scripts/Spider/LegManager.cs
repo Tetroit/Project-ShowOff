@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [SelectionBase]
@@ -52,6 +53,7 @@ public class LegManager : MonoBehaviour
     bool _waitForFirstLegs;
     int _currentPathNode;
     float _currMoveVal;
+    Collider[] _contactPoints = new Collider[10];
 
     void Start()
     {
@@ -136,8 +138,9 @@ public class LegManager : MonoBehaviour
 
         Vector3 currentTarget = _path.points[_currentPathNode];
         Vector3 forward = transform.forward;
+        Vector3 currentPos = transform.position;
 
-        bool nodeIsBehind = Vector3.Distance(currentTarget, transform.position) < 1;
+        bool nodeIsBehind = Vector3.Distance(currentTarget, currentPos) < 1;
         if (nodeIsBehind)
         {
             _currentPathNode++;
@@ -149,13 +152,26 @@ public class LegManager : MonoBehaviour
                 return;
             }
         }
-        //move towards next node
-        currentTarget = _path.points[_currentPathNode];
-        forward = Vector3.Lerp(forward, (currentTarget - transform.position).normalized, _pathLerpTime * Time.deltaTime);
-        _currMoveVal += MoveVarianceSpeed;
-        transform.forward = forward;
+
+        int contacts = Physics.OverlapSphereNonAlloc(currentPos, _groundOffset, _contactPoints);
+        if(contacts > 0)
+        {
+            currentTarget = _path.points[_currentPathNode];
+            forward = Vector3.Lerp(forward, (currentTarget - currentPos).normalized, _pathLerpTime * Time.deltaTime);
+            _currMoveVal += MoveVarianceSpeed;
+            transform.forward = forward;
+            float min = int.MaxValue;
+
+            foreach (Collider col in _contactPoints.Take(contacts))
+            {
+                Vector3 contactPoint = col.ClosestPoint(currentPos);
+                float d = Vector3.Distance(currentPos, currentTarget);
+
+                if (d < min) min = d;
+            }
+        }
+
         transform.position += MoveSpeed * _varianceRange.Evaluate(Mathf.PerlinNoise1D(_currMoveVal)) * Time.deltaTime * forward;
-        
     }
     
     void SetUpFirstStep()
