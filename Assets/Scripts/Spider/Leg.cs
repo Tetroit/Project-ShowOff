@@ -29,7 +29,7 @@ public class Leg
 
     public event Action<Leg> OnStep;
 
-    public float StepSize;
+    public float StepDistance;
     public float ForwardReach;
     LayerMask _groundMask;
 
@@ -39,7 +39,7 @@ public class Leg
         _angleX = angleX;
         _angleY = angleY;
         ForwardReach = forwardReach;
-        StepSize = data.StepDistance;
+        StepDistance = data.StepDistance;
         _groundMask = groundMask;
         members = new Member[jointCount];
         for (int i = 0; i < jointCount; i++)
@@ -48,7 +48,7 @@ public class Leg
         //initial positioning
         if (!GetGroundTarget(out Vector3 groundPoint, out Vector3 groundNormal))
         {
-            Vector3 direction = GetYAngle() + data.ForwardReach * data.transform.forward + GetLegReach() * -data.transform.up / 2f;
+            Vector3 direction = GetYAngle() + data.ForwardReach * GetScale() * data.transform.forward + GetLegReach() * -data.transform.up / 2f;
             groundPoint = data.transform.position + direction;
         }
         CurrentGroundPosition = groundPoint;
@@ -57,7 +57,13 @@ public class Leg
         _lastTarget = groundPoint;
         _nextTarget = groundPoint;
         PositionLeg();
-        //InverseKinematics(_lastTarget);
+        //
+        InverseKinematics(_lastTarget);
+    }
+
+    float GetScale()
+    {
+        return data.transform.lossyScale.x;
     }
 
     public void ClearEvents()
@@ -74,62 +80,60 @@ public class Leg
         }
         CurrentGroundPosition = currentTarget;
         CurrentGroundNormal = groundNormal;
-
+        if(currentTarget == Vector3.zero)
+        {
+            currentTarget = GetYAngle() * data.DistanceFromBody * GetScale() - data.transform.up * data.GroundOffset * GetScale();
+        }
         Vector3 target = InterpolateToTarget(currentTarget);
 
         _debug = new() { last = _lastTarget, current = _nextTarget, live = currentTarget };
 
         PositionLeg();
-
-        //Member foot = members[0];
-        //int tries = 0;
-        //while (Vector3.Distance(foot.GetEndPosition(), target) > data.AcceptableDistance && tries < data.CalibrationAttempts)
-        //{
-        //    InverseKinematics(target);
-        //    tries++;
-        //}
+        //
+        Member foot = members[0];
+        int tries = 0;
+        while (Vector3.Distance(foot.GetEndPosition(), target) > data.AcceptableDistance * GetScale() && tries < data.CalibrationAttempts)
+        {
+            InverseKinematics(target);
+            tries++;
+        }
 
     }
 
     Vector3 InterpolateToTarget(Vector3 currentTarget)
     {
+        //current target is where the static position of the legs are
         _currLerpTime += Time.deltaTime;
 
         bool interpolationEnded = _currLerpTime >= data.StepSpeed;
-        float triggerDistance = (!data.IsMoving && interpolationEnded) ? data.RestStepDistance : StepSize;
-
-        if (Vector3.Distance(_nextTarget, currentTarget) > triggerDistance && AdjacentLegsAreGrounded())
+        float triggerDistance = (!data.IsMoving && interpolationEnded) ? data.RestStepDistance * GetScale() : StepDistance * GetScale();
+        float distanceBetweenCurrentAndNextTarget = Vector3.Distance(_nextTarget, currentTarget);
+        if (distanceBetweenCurrentAndNextTarget > triggerDistance && AdjacentLegsAreGrounded())
         {
+            //setting the next target
             _lastTarget = _nextTarget;
             _currLerpTime = 0;
             _nextTarget = currentTarget;
             
             OnStep?.Invoke(this);
         }
-        else if (!data.IsMoving)
+        else if (distanceBetweenCurrentAndNextTarget > triggerDistance + .5f * GetScale())
         {
-            _lastTarget = Vector3.Slerp(_lastTarget, _nextTarget, _currLerpTime / data.StepSpeed);
+            _lastTarget = _nextTarget;
             _currLerpTime = 0;
             _nextTarget = currentTarget;
+            OnStep?.Invoke(this);
+
         }
+        //else if (!data.IsMoving)
+        //{
+        //    //returns to the original place
+        //    _lastTarget = Vector3.Slerp(_lastTarget, _nextTarget, _currLerpTime / data.StepSpeed);
+        //    _currLerpTime = 0;
+        //    _nextTarget = currentTarget;
+        //}
 
         return Vector3.Slerp(_lastTarget, _nextTarget, _currLerpTime / data.StepSpeed);
-    }
-
-    public void SetNextTarget()
-    {
-        if(GetGroundTarget(out Vector3 target))
-        {
-            _nextTarget = target;
-        }
-    }
-
-    bool GetGroundTarget(out Vector3 target)
-    {
-        bool hasHit = GetGroundTarget(out RaycastHit hit);
-        target = hit.point;
-
-        return hasHit;
     }
 
     bool GetGroundTarget(out Vector3 target, out Vector3 normal)
@@ -142,20 +146,36 @@ public class Leg
 
     bool GetGroundTarget(out RaycastHit hit)
     {
-        Vector3 direction = GetYAngle() * data.DistanceFromBody + data.transform.forward * (data.IsMoving ? ForwardReach : 0);
+        Vector3 direction = GetYAngle() * data.DistanceFromBody * GetScale() + data.transform.forward * (data.IsMoving ? ForwardReach * GetScale() : 0);
         //in case the ground is higher than the body position, so the ray doesn't ignore the mesh 
-        Vector3 abovePoint = data.transform.up * 3;
+        Vector3 abovePoint = data.transform.up * data.AbovePointHeight * GetScale();
 
-        bool hasHit = Physics.Raycast
+        bool hasHit = Physics.SphereCast
         (
             data.transform.position + abovePoint + direction,
+            data.TouchRaySize,
             -data.transform.up,
             out hit,
             GetLegReach() + abovePoint.magnitude,
             _groundMask
         );
+
+        //if(!hasHit)
+        //{
+        //    hasHit = Physics.SphereCast
+        //    (
+        //        data.transform.position + abovePoint + direction,
+        //        .5f,
+        //        -data.transform.up,
+        //        out hit,
+        //        GetLegReach() + abovePoint.magnitude,
+        //        _groundMask
+        //    );
+        //}
+
         return hasHit;
     }
+
 
     bool AdjacentLegsAreGrounded()
     {
@@ -193,6 +213,7 @@ public class Leg
         return member.GetSize() * 2 * members.Length;
     }
 
+    //initial position of legs (pointing up to have an arch)
     void PositionLeg()
     {
         Vector3 direction = GetYAngle();
@@ -204,7 +225,7 @@ public class Leg
         {
             Member current = members[i];
 
-            float l = current.Box.transform.lossyScale.y * .5f;
+            float l = current.GetSize();
 
             current.Box.transform.up = direction;
             current.Box.transform.position = target + direction * l;

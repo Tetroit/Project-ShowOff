@@ -130,8 +130,23 @@ public class CurveEditor : Editor
 
             if (i > 0)
             {
-                Handles.color = Color.white;
-                Handles.DrawLine(previousPoint, currentPoint);
+                SceneView sceneView = SceneView.currentDrawingSceneView;
+                if (sceneView != null)
+                {
+                    Camera cam = sceneView.camera;
+                    float distance = Vector3.Distance(cam.transform.position, currentPoint);
+
+                    // This multiplier controls how big the cone appears on screen
+                    float screenSizeFactor = 0.06f; // Adjust this as needed
+                    float capSize = distance * screenSizeFactor;
+
+                    Handles.color = Color.white;
+                    Handles.DrawLine(previousPoint, currentPoint);
+
+                    Handles.color = Color.blue;
+                    Vector3 dir = (currentPoint - previousPoint).normalized;
+                    Handles.ConeHandleCap(i, currentPoint - capSize * 0.5f * dir, Quaternion.LookRotation(dir), capSize, EventType.Repaint);
+                }
             }
 
             previousPoint =currentPoint;
