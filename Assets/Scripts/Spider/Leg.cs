@@ -56,7 +56,7 @@ public class Leg
 
         _lastTarget = groundPoint;
         _nextTarget = groundPoint;
-        PositionLeg();
+        SetLegStartPosition();
         //
         InverseKinematics(_lastTarget);
     }
@@ -82,14 +82,14 @@ public class Leg
         CurrentGroundNormal = groundNormal;
         if(currentTarget == Vector3.zero)
         {
-            currentTarget = GetYAngle() * data.DistanceFromBody * GetScale() - data.transform.up * data.GroundOffset * GetScale();
+            currentTarget = data.DistanceFromBody * GetScale() * GetYAngle() - data.GroundOffset * GetScale() * data.transform.up;
         }
         Vector3 target = InterpolateToTarget(currentTarget);
 
         _debug = new() { last = _lastTarget, current = _nextTarget, live = currentTarget };
 
-        PositionLeg();
-        //
+        SetLegStartPosition();
+        
         Member foot = members[0];
         int tries = 0;
         while (Vector3.Distance(foot.GetEndPosition(), target) > data.AcceptableDistance * GetScale() && tries < data.CalibrationAttempts)
@@ -108,6 +108,7 @@ public class Leg
         bool interpolationEnded = _currLerpTime >= data.StepSpeed;
         float triggerDistance = (!data.IsMoving && interpolationEnded) ? data.RestStepDistance * GetScale() : StepDistance * GetScale();
         float distanceBetweenCurrentAndNextTarget = Vector3.Distance(_nextTarget, currentTarget);
+
         if (distanceBetweenCurrentAndNextTarget > triggerDistance && AdjacentLegsAreGrounded())
         {
             //setting the next target
@@ -146,14 +147,14 @@ public class Leg
 
     bool GetGroundTarget(out RaycastHit hit)
     {
-        Vector3 direction = GetYAngle() * data.DistanceFromBody * GetScale() + data.transform.forward * (data.IsMoving ? ForwardReach * GetScale() : 0);
+        Vector3 direction = data.DistanceFromBody * GetScale() * GetYAngle() + data.transform.forward * (data.IsMoving ? ForwardReach * GetScale() : 0);
         //in case the ground is higher than the body position, so the ray doesn't ignore the mesh 
-        Vector3 abovePoint = data.transform.up * data.AbovePointHeight * GetScale();
+        Vector3 abovePoint = data.AbovePointHeight * GetScale() * data.transform.up;
 
         bool hasHit = Physics.SphereCast
         (
             data.transform.position + abovePoint + direction,
-            data.TouchRaySize,
+            data.TouchRaySize * GetScale(),
             -data.transform.up,
             out hit,
             GetLegReach() + abovePoint.magnitude,
@@ -192,16 +193,16 @@ public class Leg
         if (_debug == null) return;
        
         Gizmos.color = Color.white;
-        Vector3 direction = GetYAngle() * data.DistanceFromBody + data.transform.forward * (data.IsMoving ? data.ForwardReach : 0);
-        Ray ray = new Ray(data.transform.position + direction, -data.transform.up);
+        Vector3 direction = data.DistanceFromBody * GetScale() * GetYAngle() + data.transform.forward * (data.IsMoving ? data.ForwardReach * GetScale() : 0);
+        Ray ray = new(data.transform.position + direction, -data.transform.up * GetScale());
         Gizmos.DrawRay(ray);
 
         Gizmos.color = Color.yellow;
 
-        Gizmos.DrawSphere(_debug.current, .1f);
+        Gizmos.DrawSphere(_debug.current, .1f * GetScale());
         Gizmos.color = Color.red;
 
-        Gizmos.DrawSphere(_debug.last, .1f);
+        Gizmos.DrawSphere(_debug.last, .1f * GetScale());
         Gizmos.color = Color.blue;
 
        Gizmos.DrawLine(_debug.live, _debug.last);
@@ -214,7 +215,7 @@ public class Leg
     }
 
     //initial position of legs (pointing up to have an arch)
-    void PositionLeg()
+    void SetLegStartPosition()
     {
         Vector3 direction = GetYAngle();
         direction = GetXAngle(direction);

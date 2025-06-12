@@ -11,6 +11,7 @@ public class LegManager : MonoBehaviour
     [field: SerializeField] public bool Gizmos { get; private set; } = false;
 
     [SerializeField] Curve _path;
+    [SerializeField] float _nextNodeActivationDistance = .5f;
     [SerializeField] LayerMask _groundMask;
     [SerializeField] float _pathLerpTime = 10;
     [SerializeField] float _upLerpTime = 10;
@@ -60,6 +61,7 @@ public class LegManager : MonoBehaviour
     int _currentPathNode;
     float _currMoveVal;
     readonly Collider[] _contactPoints = new Collider[10];
+    Vector3 _lastUp;
 
     //for debug
     Vector3 _closestContactPoint;
@@ -142,15 +144,13 @@ public class LegManager : MonoBehaviour
             leg.Update();
     }
 
-    void MoveBody()
+    void GetCurrentNode()
     {
         if (_currentPathNode == _path.points.Count) return;
 
         Vector3 currentTarget = _path.points[_currentPathNode];
-        Vector3 forward = transform.forward;
-        Vector3 currentPos = transform.position;
 
-        bool nodeIsBehind = Vector3.Distance(currentTarget, currentPos) < 1;
+        bool nodeIsBehind = Vector3.Distance(currentTarget, transform.position) < _nextNodeActivationDistance * GetSize();
         if (nodeIsBehind)
         {
             _currentPathNode++;
@@ -159,14 +159,24 @@ public class LegManager : MonoBehaviour
             {
                 _move = false;
                 _currentPathNode = 0;
-                return;
             }
         }
+    }
 
-        int contacts = Physics.OverlapSphereNonAlloc(currentPos, GroundOffset + .7f, _contactPoints, _groundMask);
+    void MoveBody()
+    {
+        if (_currentPathNode == _path.points.Count) return;
+
+        GetCurrentNode();
+
+        Vector3 currentTarget = _path.points[_currentPathNode];
+        Vector3 forward = transform.forward;
+        Vector3 currentPos = transform.position;
+
+
+        int contacts = Physics.OverlapSphereNonAlloc(currentPos, (GroundOffset  + .7f) * GetSize(), _contactPoints, _groundMask);
         if (contacts > 0)
         {
-            currentTarget = _path.points[_currentPathNode];
             forward = Vector3.Lerp(forward, (currentTarget - currentPos).normalized, _pathLerpTime * Time.deltaTime);
 
             Vector3 closestContactPoint = GetClosestContactPoint(contacts, currentPos);
@@ -182,7 +192,10 @@ public class LegManager : MonoBehaviour
         transform.position += MoveSpeed * _varianceRange.Evaluate(Mathf.PerlinNoise1D(_currMoveVal)) * Time.deltaTime * forward;
     }
 
-    Vector3 _lastUp;
+    float GetSize()
+    {
+        return transform.lossyScale.y;
+    }
 
     Vector3 GetClosestContactPoint(int contacts, Vector3 pos)
     {
@@ -276,8 +289,8 @@ public class LegManager : MonoBehaviour
             UnityEngine.Gizmos.color = Color.yellow;
             Vector3 currentTarget = _path.points[_currentPathNode];
 
-            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + (currentTarget - transform.position).normalized);
-            UnityEngine.Gizmos.DrawSphere(currentTarget, .1f);
+            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + (currentTarget - transform.position).normalized * transform.lossyScale.y);
+            UnityEngine.Gizmos.DrawSphere(currentTarget, .1f * transform.lossyScale.y);
         }
 
 
@@ -285,7 +298,8 @@ public class LegManager : MonoBehaviour
             leg.OnDrawGizmos();
 
         UnityEngine.Gizmos.color = Color.black;
-        UnityEngine.Gizmos.DrawSphere(_closestContactPoint, .2f);
+        //UnityEngine.Gizmos.DrawSphere(transform.position /*+ transform.up * GetSize() * .5f*/, (GroundOffset + .7f) * GetSize());
+        UnityEngine.Gizmos.DrawSphere(_closestContactPoint, .2f * transform.lossyScale.y);
     }
 
     void OnDisable()

@@ -137,7 +137,7 @@ public class CurveEditor : Editor
                     float distance = Vector3.Distance(cam.transform.position, currentPoint);
 
                     // This multiplier controls how big the cone appears on screen
-                    float screenSizeFactor = 0.06f; // Adjust this as needed
+                    float screenSizeFactor = 0.06f * curve.PointSize; // Adjust this as needed
                     float capSize = distance * screenSizeFactor;
 
                     Handles.color = Color.white;
