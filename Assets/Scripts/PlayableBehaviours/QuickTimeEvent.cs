@@ -50,8 +50,8 @@ public class QuickTimeEvent : MonoBehaviour
 
         if (indicator != null)
         {
-            indicator.gameObject.SetActive(true);
             indicator.pressCount = pressCount;
+            indicator.gameObject.SetActive(true);
         }
     }
 
