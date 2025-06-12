@@ -6,8 +6,6 @@ using UnityEngine.Playables;
 
 public class QuickTimeEvent : MonoBehaviour
 {
-    [Header("Animation")]
-    [SerializeField] PlayableDirector playableDirector;
 
     [Header("Time")]
     public float totalTime;
