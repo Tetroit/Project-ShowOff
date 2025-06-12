@@ -36,16 +36,26 @@ namespace amogus
         {
             isOpen = true;
             transform.localRotation = openRotation;
-            if(AudioManager.instance != null)
-            {
-                AudioManager.instance.PlayOneShot(doorOpenSFX, transform.position);
-            }
+            
         }
 
         public void Close()
         {
             isOpen = false;
             transform.localRotation = closedRotation;
+            
+        }
+
+        public void PlayOpenSound()
+        {
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.PlayOneShot(doorOpenSFX, transform.position);
+            }
+        }
+
+        public void PlayCloseSound()
+        {
             if (AudioManager.instance != null)
             {
                 AudioManager.instance.PlayOneShot(doorCloseSFX, transform.position);

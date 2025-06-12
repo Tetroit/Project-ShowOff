@@ -10,11 +10,6 @@ public class MillerCutsceneTrigger : TimelinePlayerTrigger
     [Header("Cutscene Camera")]
     public Camera cutsceneCamera;
 
-    //[SerializeField] GhostChaseTrigger _loreRoomDoor;
-
-    private bool cutscenePlaying = false;
-    private GameObject spawnedObject;
-
     public void SwitchToCutsceneCam()
     {
         cutsceneCamera.enabled = true;
@@ -26,11 +21,6 @@ public class MillerCutsceneTrigger : TimelinePlayerTrigger
     {
         cutsceneCamera.enabled = false;
         objectToSpawn.SetActive(false);
-        //_loreRoomDoor.CanUnlcok = true;
-        
-        //_loreRoomDoor.Unlock();
-        //_loreRoomDoor.Trigger();
-
     }
 
 }

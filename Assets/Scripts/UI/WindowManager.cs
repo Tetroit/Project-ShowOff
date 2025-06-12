@@ -81,6 +81,7 @@ public class WindowManager : MonoBehaviour
         if (_history.Count == 1)
         {
             _history.RemoveAt(0);
+            if(_currentActiveWindow != null)
             _currentActiveWindow.gameObject.SetActive(false);
             _currentActiveWindow = null;
             return;

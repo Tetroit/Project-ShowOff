@@ -100,5 +100,26 @@ public class AnimationClipContextEditor : Editor
 
         GUILayout.EndHorizontal();
 
+        GUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("Get Timeline Clip"))
+        {
+            if (context.animationTrackContext == null)
+            {
+                Debug.LogWarning("Animation Track Context is not set. Please set it before getting clips.", this);
+                return;
+            }
+            context.GetTimelineClipFromAnimationTrack();
+        }
+        if (GUILayout.Button("Get Animation Track Insertion Info"))
+        {
+            if (context.animationTrackContext == null)
+            {
+                Debug.LogWarning("Animation Track Context is not set. Please set it before getting clips.", this);
+                return;
+            }
+            context.GetAnimationTrackInsertInfo();
+        }
+        GUILayout.EndHorizontal();
     }
 }
