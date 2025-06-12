@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -10,12 +12,18 @@ namespace amogus
 
         [SerializeField] protected bool noArm = false;
 
+        public bool isOpen => door.isOpen;
+
+        public void OpenInstant() => door.Open();
+        public void CloseInstant() => door.Close();
+
         [Header("Animations")]
         [SerializeField] protected TimelineAsset closingCutscene;
         [SerializeField] protected TimelineAsset openingCutscene => closingCutscene;
 
         [SerializeField] protected DoorCutsceneAnimation cutscene;
 
+        List<Action> afterAnimation = new();
         public void SetNoArm(bool val) => noArm = val;
 
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
@@ -35,7 +43,25 @@ namespace amogus
                 return false;
             }
             return true;
-        }    
+        }
+
+        public void TriggerOnceAfterAnimation(Action action)
+        {
+            if (cutscene == null)
+            {
+                Debug.LogError("Cutscene is null", this);
+                return;
+            }
+            afterAnimation.Add(action);
+        }
+        public void SearchForFields()
+        {
+            FindBinder();
+            _gameStateManager = FindAnyObjectByType<GameStateManager>();
+            director = binder.GetDirector(PlayerDirectorName);
+            closingCutscene = binder.GetTimeline(PlayerTimelineName);
+
+        }
         protected override bool NullHandling(PlayerFSM target)
         {
             if (target == null)
@@ -94,6 +120,18 @@ namespace amogus
             cutscene.StartAnimation(door);
         }
 
+        public void TriggerExternally()
+        {
+            SearchForFields();
+            Trigger();
+        }
+        public void SetExternally(bool needsToBeOpen)
+        {
+            if (needsToBeOpen != door.isOpen)
+            {
+                TriggerExternally();
+            }
+        }
         void OnEndInternal()
         {
             AnimationEnd();
@@ -106,6 +144,12 @@ namespace amogus
         protected override void AnimationEnd()
         {
             base.AnimationEnd();
+            Debug.Log($"{afterAnimation.Count} postAnim was triggered");
+            foreach (var action in afterAnimation)
+            {
+                action();
+            }
+            afterAnimation.Clear();
         }
 
         public override void Unlock()

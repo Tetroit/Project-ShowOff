@@ -17,21 +17,21 @@ namespace amogus
         }
         public void Hook()
         {
-            if (!TryGetComponent<DoorCutsceneTrigger>(out var door))
-            {
-                Debug.LogError("DoorCutsceneTrigger component is missing on the GameObject.");
-                return;
-            }
-            door.OnTrigger.AddListener(Trigger);
+            //if (!TryGetComponent<DoorCutsceneTrigger>(out var door))
+            //{
+            //    Debug.LogError("DoorCutsceneTrigger component is missing on the GameObject.");
+            //    return;
+            //}
+            //door.OnTrigger.AddListener(Trigger);
         }
         public void Unhook()
         {
-            if (!TryGetComponent<DoorCutsceneTrigger>(out var door))
-            {
-                Debug.LogError("DoorCutsceneTrigger component is missing on the GameObject.");
-                return;
-            }
-            door.OnTrigger.RemoveListener(Trigger);
+            //if (!TryGetComponent<DoorCutsceneTrigger>(out var door))
+            //{
+            //    Debug.LogError("DoorCutsceneTrigger component is missing on the GameObject.");
+            //    return;
+            //}
+            //door.OnTrigger.RemoveListener(Trigger);
         }
         public void OnDisable()
         {
