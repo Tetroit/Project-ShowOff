@@ -12,7 +12,9 @@ namespace amogus
     {
         [SerializeField] float _destinationUpdateSpeed;
         [SerializeField] Animator _anim;
-
+        [SerializeField] GameStateManager _gameStateManager;
+        [SerializeField] float _followWait;
+ 
         [Header("For testing")]
         [SerializeField] Transform _testTarget;
         [SerializeField] bool _test;
@@ -47,10 +49,7 @@ namespace amogus
         public void StartFollowing(Transform target)
         {
             _followBehavior = StartCoroutine(Follow(target));
-            _anim.Play("Walk");
-            followMusicEvent = RuntimeManager.CreateInstance(FMODEvents.instance.followMusic);
-            followMusicEvent.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
-            followMusicEvent.start();
+            
         }
 
         public void StopFollowing()
@@ -64,6 +63,11 @@ namespace amogus
 
         IEnumerator Follow(Transform target)
         {
+            followMusicEvent = RuntimeManager.CreateInstance(FMODEvents.instance.followMusic);
+            followMusicEvent.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+            followMusicEvent.start();
+            yield return new WaitForSeconds(_followWait);
+            _anim.Play("Walk");
             WaitForSeconds wait = new(_destinationUpdateSpeed);
             while(true)
             {
@@ -76,6 +80,14 @@ namespace amogus
         private void OnDisable()
         {
             followMusicEvent.setParameterByName("FadeOut", 1);
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+
+            WindowManager.Instance.TrySwitchWindow("GameOverUI");
+            _gameStateManager.SwitchState<S_Pause>();
         }
     }
 }

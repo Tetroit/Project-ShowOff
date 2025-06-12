@@ -28,6 +28,8 @@ public class PauseController : MonoBehaviour
         }
         else
         {
+            if (_gameStateManager.CurrentState == typeof(S_Pause)) return;
+
             _gameStateManager.SwitchState<S_Pause>();
             _isPaused = true;
         }

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.Timeline;
 
 namespace amogus
 {
+    [SelectionBase]
     public class DoorCutsceneTrigger : DoorTrigger
     {
 
