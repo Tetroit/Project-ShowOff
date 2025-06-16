@@ -19,7 +19,6 @@ namespace amogus
         [SerializeField] bool _test;
         [SerializeField] bool _stopTest;
 
-        [SerializeField] EventReference followMusic;
         EventInstance followMusicEvent;
 
         NavMeshAgent _agent;

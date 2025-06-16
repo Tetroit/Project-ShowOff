@@ -18,13 +18,21 @@ public class MainQuest : MonoBehaviour
     public UnityEvent<QuestStep> OnNextGoal;
     [SerializeField] QuestStep _currentStep = 0;
 
+    [SerializeField] bool playAllStepsTillCurrentStepOnAwake = true;
     [SerializeField] DoorCutsceneTrigger LoreRoomDoor;
     [SerializeField] DoorCutsceneTrigger HallwayDoor;
     [SerializeField] DoorCutsceneTrigger OfficeDoor;
+    [SerializeField] PlayerTrigger footstepTriggerStart;
+    [SerializeField] PlayerTrigger footstepTriggerEnd;
+    [SerializeField] FollowingSteps footsteps;
+    [SerializeField] QuickTimeEvent doorCloseQTE;
 
     private void Awake()
     {
-        
+        if (playAllStepsTillCurrentStepOnAwake)
+        {
+            FastForward((int)_currentStep);
+        }
     }
     public QuestStep currentStep => _currentStep;
     public void Advance()
@@ -39,28 +47,108 @@ public class MainQuest : MonoBehaviour
     }
     public void AdvanceTo(int step)
     {
-        _currentStep = (QuestStep)step;
-        OnNextStep();
+        //_currentStep = (QuestStep)step;
+        //OnNextStep();
+        FastForward(step);
     }
 
-    public void OnNextStep()
+    public void OnNextStep(bool instant = false)
     {
         Debug.Log("Quest update: " + _currentStep, this);
         OnNextGoal?.Invoke(_currentStep);
         switch (_currentStep)
         {
+            //case QuestStep.Start:
+            //    LoreRoomDoor.Unlock();
+            //    break;
+            case QuestStep.FootstepsTriggered:
+                footstepTriggerStart.enabled = false;
+                footstepTriggerEnd.enabled = true;
+                footsteps.StartFollowing();
+
+                HallwayDoor.enabled = false;
+                break;
+            case QuestStep.FootstepsDoorClosed:
+                footstepTriggerEnd.enabled = false;
+                footsteps.EndFollowing();
+                
+                HallwayDoor.enabled = true;
+                if (instant)
+                    HallwayDoor.CloseInstant();
+                else
+                    HallwayDoor.SetExternally(false);
+                break;
             case QuestStep.GhostChaseStarted:
-                var gcd = HallwayDoor.GetComponent<GhostChaseDeactivator>();
-                gcd.enabled = true;
-                gcd.Hook();
+                {
+                    var gcd = doorCloseQTE.GetComponent<GhostChaseDeactivator>();
+                    gcd.enabled = true;
+                    //gcd.Hook();
+                }
+                {
+                    var gca = LoreRoomDoor.GetComponent<GhostChaseActivator>();
+                    gca.enabled = false;
+                }
+                {
+                    var pltr = doorCloseQTE.GetComponent<PlayerTrigger>();
+                    pltr.enabled = true;    
+                }
+
+                if (instant)
+                {
+                    if (HallwayDoor.isOpen)
+                    {
+                        HallwayDoor.enabled = false;
+                    }
+                    else
+                    {
+                        HallwayDoor.TriggerOnceAfterAnimation(() =>
+                        {
+                            HallwayDoor.enabled = false;
+                        });
+                        HallwayDoor.TriggerExternally();
+                    }
+                }
+                else
+                {
+                    HallwayDoor.enabled = false;
+                    HallwayDoor.OpenInstant();
+                }
                 break;
             case QuestStep.GhostChaseEnded:
+
+                HallwayDoor.enabled = true;
+                if (instant)
+                    HallwayDoor.CloseInstant();
+                else
+                    HallwayDoor.SetExternally(false);
+
                 HallwayDoor.Lock();
                 OfficeDoor.Unlock();
+
+                if (instant)
+                    OfficeDoor.OpenInstant();
+                else
+                    OfficeDoor.SetExternally(true);
+
+                {
+                    var pltr = doorCloseQTE.GetComponent<PlayerTrigger>();
+                    pltr.enabled = false;
+                }
                 break;
         }
     }
 
+    public void FastForward(int step)
+    {
+        for (; (int)_currentStep < step; )
+        {
+            _currentStep++;
+            if ((int)_currentStep == step)
+                OnNextStep();
+            else
+                OnNextStep(true);
+        }
+    }
 
     public bool Validate()
     {
