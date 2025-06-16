@@ -9,56 +9,68 @@ public class SpiderController : MonoBehaviour
     public bool IsMoving { get; private set; }
     [SerializeField] bool _move;
     [field: SerializeField] public bool Gizmos { get; private set; } = false;
+    [field: Space]
 
+    [field: Header("Pathing")]
     [SerializeField] Curve _path;
+    [Tooltip("How close do you have to be to the following node to then move on to the next one")]
     [SerializeField] float _nextNodeActivationDistance = .5f;
+    [Tooltip("colliders taht legs detect and can walk on")]
     [SerializeField] LayerMask _groundMask;
     [Tooltip("How fast does the spider change axis forward direction when following a new node")]
     [SerializeField] float _pathLerpTime = 10;
     [Tooltip("How fast does the spider change axis up direction when following a new node")]
     [SerializeField] float _upLerpTime = 10;
-    [Tooltip("How far above does the ground checking raycast start")]
-    [field: SerializeField] public float AbovePointHeight { get; private set; } = 1f;
-    [Tooltip("Size of raycast that is searching for ground")]
-    [field: SerializeField] public float TouchRaySize { get; private set; } = 1f;
-
-
-    [SerializeField, Range(1, 20)] int _jointCount = 3;
-    [Tooltip("How close can leg joints be")]
-    [field: SerializeField] public float AcceptableDistance { get; private set; } = .05f;
-    [Tooltip("How many attempts to connect legs to ground before giving up")]
-    [field: SerializeField] public int CalibrationAttempts { get; private set; } = 5;
-    [Header("Leg positioning")]
+    [field: Space]
+    
+    [field: Header("Leg positioning")]
+    [Tooltip("How far up do legs initially point")]
     [field: SerializeField] public float AngleX { get; private set; } = .31f;
     [field: SerializeField] public float AngleY { get; private set; } = .2f;
-    [Tooltip("The radius of the circle in which the legs are touching the ground")]
+    [field: Tooltip("The radius of the circle in which the legs are touching the ground")]
     [field: SerializeField] public float DistanceFromBody { get; private set; } = .5f;
-
-    [Tooltip("How far forward do the leg extend when walking")]
+    [field: Tooltip("How far forward do the leg extend when walking")]
     [field: SerializeField] public float ForwardReach { get; private set; } = .8f;
-    [Tooltip("Interpolation speed between the current step and next step")]
+    [field: Space]
+
+    [field: Header("Movement")]
+    [field: Tooltip("Interpolation speed between the current step and next step")]
     [field: SerializeField] public float StepSpeed { get; private set; } = .5f;
-    [Tooltip("Distance betweeen last step and current step default position as a threshhold for the next step")]
+    [field: Tooltip("Distance betweeen last step and current step default position as a threshhold for the next step")]
     [field: SerializeField] public float StepDistance { get; private set; } = 1f;
-    [Tooltip("Distance betweeen last step and current step default position as a threshhold for the next step")]
+    [field: Tooltip("Distance betweeen last step and current step default position as a threshhold for the next step")]
     [field: SerializeField] public float RestStepDistance { get; private set; } = .1f;
-    [Header("Move Variance")]
+    [field: SerializeField] public float GroundOffset { get; private set; } = .8f;
+    [field: Space]
+
+    [field: Header("Move Variance")]
+    [Tooltip("How often does the movement speed change per frame")]
     [field: SerializeField] public float MoveVarianceSpeed { get; private set; } = 5;
     [field: SerializeField] public float MoveSpeed { get; private set; } = 5;
     [Tooltip("How fast and slow can the spider Move")]
     [SerializeField] AnimationCurve _varianceRange;
+    [field: Space]
 
-    [field: SerializeField] public float GroundOffset { get; private set; } = .8f;
-
-    [Header("Leg models")]
+    [field: Header("Leg models")]
+    [SerializeField, Range(1, 20)] int _jointCount = 3;
     [SerializeField] BoxCollider _legPrefab;
     [SerializeField] BoxCollider firstLeg;
     [SerializeField] BoxCollider firstSecondLeg;
+    [field: Space]
+
+    [field: Header("Advanced")]
+    [field: Tooltip("How far above does the ground checking raycast start")]
+    [field: SerializeField] public float AbovePointHeight { get; private set; } = 1f;
+    [field: Tooltip("Size of raycast that is searching for ground")]
+    [field: SerializeField] public float TouchRaySize { get; private set; } = 1f;
+    [field: Tooltip("How close can leg joints be")]
+    [field: SerializeField] public float AcceptableDistance { get; private set; } = .05f;
+    [field: Tooltip("How many attempts to connect leg joints to each other before giving up")]
+    [field: SerializeField] public int CalibrationAttempts { get; private set; } = 5;
 
     public event Action OnFinishedWalking;
 
     Leg[] _legs;
-    public bool Step;
     bool _startedMoving;
     bool _waitForFirstLegs;
     int _currentPathNode;
