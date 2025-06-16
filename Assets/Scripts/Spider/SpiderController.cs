@@ -4,58 +4,73 @@ using System.Linq;
 using UnityEngine;
 
 [SelectionBase]
-public class LegManager : MonoBehaviour
+public class SpiderController : MonoBehaviour
 {
     public bool IsMoving { get; private set; }
     [SerializeField] bool _move;
     [field: SerializeField] public bool Gizmos { get; private set; } = false;
+    [field: Space]
 
+    [field: Header("Pathing")]
     [SerializeField] Curve _path;
+    [Tooltip("How close do you have to be to the following node to then move on to the next one")]
     [SerializeField] float _nextNodeActivationDistance = .5f;
+    [Tooltip("colliders taht legs detect and can walk on")]
     [SerializeField] LayerMask _groundMask;
+    [Tooltip("How fast does the spider change axis forward direction when following a new node")]
     [SerializeField] float _pathLerpTime = 10;
+    [Tooltip("How fast does the spider change axis up direction when following a new node")]
     [SerializeField] float _upLerpTime = 10;
-    [field: SerializeField] public float AbovePointHeight { get; private set; } = 1f;
-    [field: SerializeField] public float TouchRaySize { get; private set; } = 1f;
-
-
-    [SerializeField, Range(1, 20)] int _jointCount = 3;
-    [Tooltip("How close can leg joints")]
-    [field: SerializeField] public float AcceptableDistance { get; private set; } = .05f;
-    [Tooltip("How many attempts to connect legs to ground before giving up")]
-    [field: SerializeField] public int CalibrationAttempts { get; private set; } = 5;
-    [Header("Leg positioning")]
+    [field: Space]
+    
+    [field: Header("Leg positioning")]
+    [Tooltip("How far up do legs initially point")]
     [field: SerializeField] public float AngleX { get; private set; } = .31f;
     [field: SerializeField] public float AngleY { get; private set; } = .2f;
+    [field: Tooltip("The radius of the circle in which the legs are touching the ground")]
     [field: SerializeField] public float DistanceFromBody { get; private set; } = .5f;
-
-
-    [field: SerializeField] public float WobbleSpeed { get; private set; } = 1.69f;
-    [field: SerializeField] public float WobbleAmplitude { get; private set; } = .15f;
+    [field: Tooltip("How far forward do the leg extend when walking")]
     [field: SerializeField] public float ForwardReach { get; private set; } = .8f;
+    [field: Space]
+
+    [field: Header("Movement")]
+    [field: Tooltip("Interpolation speed between the current step and next step")]
     [field: SerializeField] public float StepSpeed { get; private set; } = .5f;
+    [field: Tooltip("Distance betweeen last step and current step default position as a threshhold for the next step")]
     [field: SerializeField] public float StepDistance { get; private set; } = 1f;
+    [field: Tooltip("Distance betweeen last step and current step default position as a threshhold for the next step")]
     [field: SerializeField] public float RestStepDistance { get; private set; } = .1f;
-    [Header("Move Variance")]
+    [field: SerializeField] public float GroundOffset { get; private set; } = .8f;
+    [field: Space]
+
+    [field: Header("Move Variance")]
+    [Tooltip("How often does the movement speed change per frame")]
     [field: SerializeField] public float MoveVarianceSpeed { get; private set; } = 5;
     [field: SerializeField] public float MoveSpeed { get; private set; } = 5;
     [Tooltip("How fast and slow can the spider Move")]
     [SerializeField] AnimationCurve _varianceRange;
+    [field: Space]
 
-    [Header("Bodyheight related")]
-    [Tooltip("Smoothing of changing body height")]
-    [SerializeField] float _heightChangeLerp;
-    [field: SerializeField] public float GroundOffset { get; private set; } = .8f;
-    [SerializeField] bool _useGeneralHeightDetection;
-
-    [Header("Leg models")]
+    [field: Header("Leg models")]
+    [SerializeField, Range(1, 20)] int _jointCount = 3;
     [SerializeField] BoxCollider _legPrefab;
     [SerializeField] BoxCollider firstLeg;
     [SerializeField] BoxCollider firstSecondLeg;
+    [field: Space]
+
+    [field: Header("Advanced")]
+    [field: Tooltip("How far above does the ground checking raycast start")]
+    [field: SerializeField] public float AbovePointHeight { get; private set; } = 1f;
+    [field: Tooltip("Size of raycast that is searching for ground")]
+    [field: SerializeField] public float TouchRaySize { get; private set; } = 1f;
+    [field: Tooltip("How close can leg joints be")]
+    [field: SerializeField] public float AcceptableDistance { get; private set; } = .05f;
+    [field: Tooltip("How many attempts to connect leg joints to each other before giving up")]
+    [field: SerializeField] public int CalibrationAttempts { get; private set; } = 5;
+
+    public event Action OnFinishedWalking;
 
     Leg[] _legs;
-    public bool Step;
-    float _lastBodyHeight;
     bool _startedMoving;
     bool _waitForFirstLegs;
     int _currentPathNode;
@@ -68,21 +83,27 @@ public class LegManager : MonoBehaviour
 
     void Start()
     {
-        _lastBodyHeight = transform.position.y;
         _lastUp = transform.up;
         _legs = new Leg[]
         {
            new (AngleX, 0, firstLeg, _jointCount, this                    , ForwardReach, _groundMask),
+           new (AngleX, -AngleY*.5f, _legPrefab, _jointCount, this            , ForwardReach, _groundMask),
            new (AngleX, -AngleY, _legPrefab, _jointCount, this            , ForwardReach, _groundMask),
            new (AngleX, -AngleY*2, _legPrefab, _jointCount, this          , ForwardReach, _groundMask),
 
            new (AngleX, -AngleY*2 - 135, firstSecondLeg, _jointCount, this, ForwardReach, _groundMask),
            new (AngleX, -AngleY-135, _legPrefab, _jointCount, this        , ForwardReach, _groundMask),
+           new (AngleX, -AngleY*.5f-135, _legPrefab, _jointCount, this        , ForwardReach, _groundMask),
            new (AngleX, - 135, _legPrefab, _jointCount, this              , ForwardReach, _groundMask),
 
         };
 
         SetAdjacentLegs(_legs);
+    }
+
+    public void StartMove()
+    {
+        _move = true;
     }
 
     void SetAdjacentLegs(Leg[] arr)
@@ -132,10 +153,6 @@ public class LegManager : MonoBehaviour
 
         IsMoving = _move;
         UpdateLegs();
-        if (_useGeneralHeightDetection)
-            SetBodyHeightGeneral();
-        else
-            SetBodyHeight();
     }
 
     void UpdateLegs()
@@ -148,7 +165,7 @@ public class LegManager : MonoBehaviour
     {
         if (_currentPathNode == _path.points.Count) return;
 
-        Vector3 currentTarget = _path.points[_currentPathNode];
+        Vector3 currentTarget = _path.GetGlobalSpace(_currentPathNode);
 
         bool nodeIsBehind = Vector3.Distance(currentTarget, transform.position) < _nextNodeActivationDistance * GetSize();
         if (nodeIsBehind)
@@ -158,6 +175,7 @@ public class LegManager : MonoBehaviour
             if (_currentPathNode == _path.points.Count)
             {
                 _move = false;
+                OnFinishedWalking?.Invoke();
                 _currentPathNode = 0;
             }
         }
@@ -168,16 +186,15 @@ public class LegManager : MonoBehaviour
         if (_currentPathNode == _path.points.Count) return;
 
         GetCurrentNode();
-
-        Vector3 currentTarget = _path.points[_currentPathNode];
+        float deltaTime = Time.deltaTime;
+        Vector3 currentTarget = _path.GetGlobalSpace(_currentPathNode);
         Vector3 forward = transform.forward;
         Vector3 currentPos = transform.position;
-
 
         int contacts = Physics.OverlapSphereNonAlloc(currentPos, (GroundOffset  + .7f) * GetSize(), _contactPoints, _groundMask);
         if (contacts > 0)
         {
-            forward = Vector3.Lerp(forward, (currentTarget - currentPos).normalized, _pathLerpTime * Time.deltaTime);
+            forward = Vector3.Lerp(forward, (currentTarget - currentPos).normalized, _pathLerpTime * deltaTime);
 
             Vector3 closestContactPoint = GetClosestContactPoint(contacts, currentPos);
             _closestContactPoint = closestContactPoint;
@@ -188,8 +205,8 @@ public class LegManager : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(forward, up);
             transform.rotation = targetRotation;
         }
-        _currMoveVal += MoveVarianceSpeed;
-        transform.position += MoveSpeed * _varianceRange.Evaluate(Mathf.PerlinNoise1D(_currMoveVal)) * Time.deltaTime * forward;
+        _currMoveVal += MoveVarianceSpeed * deltaTime;
+        transform.position += MoveSpeed * _varianceRange.Evaluate(Mathf.PerlinNoise1D(_currMoveVal)) * deltaTime * forward;
     }
 
     float GetSize()
@@ -235,51 +252,6 @@ public class LegManager : MonoBehaviour
 
     }
 
-    void SetBodyHeight()
-    {
-        return;
-        float groundPositionAverage = 0;
-
-        foreach (Leg leg in _legs)
-            groundPositionAverage += leg.CurrentGroundPosition.y;
-
-        groundPositionAverage = (groundPositionAverage / _legs.Length) + GroundOffset;
-        //adding wobble
-        groundPositionAverage += Time.deltaTime * WobbleAmplitude * Mathf.Sin(Time.time * WobbleSpeed);
-
-        float lerpedHeight = Lerp(_lastBodyHeight, groundPositionAverage, _heightChangeLerp * Time.deltaTime);
-        transform.position = new Vector3(transform.position.x, lerpedHeight, transform.position.z);
-        _lastBodyHeight = lerpedHeight;
-    }
-
-    void SetBodyHeightGeneral()
-    {
-        Vector3 groundPositionAverage = Vector3.zero;
-        Vector3 upDir = transform.up;
-
-        foreach (Leg leg in _legs)
-            groundPositionAverage += leg.CurrentGroundPosition;
-
-        groundPositionAverage = (groundPositionAverage / _legs.Length) + GroundOffset * upDir;
-        //adding wobble
-        groundPositionAverage += Time.deltaTime * WobbleAmplitude * Mathf.Sin(Time.time * WobbleSpeed) * upDir;
-
-        //get average position
-        //check distance,
-        //if distance is lower than needed, move body in the plane normal
-        //if can't figure out the plane normal, 
-
-        Vector3 lerpedHeight = Vector3.Lerp(transform.position, groundPositionAverage, _heightChangeLerp * Time.deltaTime);
-        transform.position = lerpedHeight;
-
-    }
-
-
-    float Lerp(float start, float end, float t)
-    {
-        return start + (end - start) * t;
-    }
-
     void OnDrawGizmos()
     {
         if (_legs == null || !Gizmos) return;
@@ -287,10 +259,10 @@ public class LegManager : MonoBehaviour
         if (_currentPathNode != _path.points.Count)
         {
             UnityEngine.Gizmos.color = Color.yellow;
-            Vector3 currentTarget = _path.points[_currentPathNode];
+            Vector3 currentTarget = _path.GetGlobalSpace(_currentPathNode);
 
-            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + (currentTarget - transform.position).normalized * transform.lossyScale.y);
-            UnityEngine.Gizmos.DrawSphere(currentTarget, .1f * transform.lossyScale.y);
+            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + (currentTarget - transform.position).normalized * GetSize());
+            UnityEngine.Gizmos.DrawSphere(currentTarget, .1f * GetSize());
         }
 
 
