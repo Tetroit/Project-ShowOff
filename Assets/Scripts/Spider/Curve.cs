@@ -5,13 +5,15 @@ using UnityEngine.Events;
 public class Curve : MonoBehaviour {
 	public UnityEvent<Curve> OnChange { get; private set; }
 	public List<Vector3> points;
+    public bool AddOnMouse;
+    public float PointSize;
+
 
     public Vector3 start => points[0];
     public Vector3 end => points[^1];
     public Vector3 startGS => transform.TransformPoint(points[0]);
     public Vector3 endGS => transform.TransformPoint(points[^1]);
 
-    public bool AddOnMouse;
 
     public Vector3 GetPositionFromDistanceGS(float distance)
     {
