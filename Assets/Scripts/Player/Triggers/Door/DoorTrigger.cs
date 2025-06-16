@@ -16,10 +16,13 @@ namespace amogus
         {
             if (!NullHandling(other)) return;
 
-            if (isLocked)
-                TryUnlocking(other);
-            else
-                Open(other);
+            if (!(useRaycast && !RaycastCheck(other.camera.transform)))
+            {
+                if (isLocked)
+                    TryUnlocking(other);
+                else
+                    Open(other);
+            }
         }
         protected virtual void TryUnlocking(PlayerFSM other)
         {

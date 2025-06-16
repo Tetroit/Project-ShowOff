@@ -240,6 +240,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 2
   action: Interact
+  useRaycast: 1
+  raycastTarget: {fileID: 160759250949228764}
   OnTrigger:
     m_PersistentCalls:
       m_Calls: []
@@ -256,7 +258,7 @@ MonoBehaviour:
   unlockCode: 
   isLocked: 0
   door: {fileID: 150861125051368009}
-  OnTryUnlock:
+  OnFailUnlock:
     m_PersistentCalls:
       m_Calls: []
   OnUnlock:
