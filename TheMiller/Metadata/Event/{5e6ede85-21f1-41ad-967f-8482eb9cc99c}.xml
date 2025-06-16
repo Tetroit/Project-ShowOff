@@ -5,7 +5,7 @@
 			<value>SpottedByMiller</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{a8587977-db84-4b31-8578-5ef5c9d16de3}</destination>
@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{ccb36d66-c702-4726-a3e4-edd4e147b3dd}">
+		<property name="volume">
+			<value>8</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{38f7a9e8-07d0-497a-93b6-81361bb4faee}</destination>
 		</relationship>
@@ -113,6 +116,7 @@
 	<object class="MixerBusEffectChain" id="{38f7a9e8-07d0-497a-93b6-81361bb4faee}">
 		<relationship name="effects">
 			<destination>{e4bb3b2c-bc23-4ce7-88f6-f3ef3b60f839}</destination>
+			<destination>{036c4833-e234-4849-a57e-906992251288}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{745a72cb-a03a-4bb4-933a-4c99288be706}" />
@@ -124,5 +128,13 @@
 	</object>
 	<object class="MixerBusPanner" id="{af56be0f-2e50-4223-8d35-3daf02ab0fc5}" />
 	<object class="MixerBusFader" id="{e4bb3b2c-bc23-4ce7-88f6-f3ef3b60f839}" />
+	<object class="SpatialiserEffect" id="{036c4833-e234-4849-a57e-906992251288}">
+		<property name="panBlend">
+			<value>0.664999962</value>
+		</property>
+		<property name="userStereoSeparation">
+			<value>0</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{b65028f4-8871-427d-8e22-bb0cd1c45ae0}" />
 </objects>
