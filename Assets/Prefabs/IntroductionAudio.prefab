@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4392392568548691737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2868776661918919180}
+  - component: {fileID: 3042972312040705195}
+  m_Layer: 0
+  m_Name: IntroductionAudio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2868776661918919180
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4392392568548691737}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 19.093906, y: 1.5703049, z: 2.0245323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3042972312040705195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4392392568548691737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71aa63872eb4d3949a20a0f86bf3d54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LineView: {fileID: 0}
+  _lines:
+  - characterName: Landlord
+    text: 'first off, congrats on your purchase of the northern mill! '
+    playTimeSeconds: 2.5
+  - characterName: Landlord
+    text: "Not sure what you plan to do with the place, might make for a nice museum,
+      but it\u2019s all yours now!"
+    playTimeSeconds: 2.5
+  - characterName: Landlord
+    text: "To be honest, the place always gave me the creeps, but in the summer it\u2019s
+      beautiful."
+    playTimeSeconds: 3
+  - characterName: Landlord
+    text: Now, i gotta level with you, i may have forgotten to keep the door unlocked
+      for you.
+    playTimeSeconds: 3
+  - characterName: Landlord
+    text: "But it\u2019s an old mill in need of a renovation anyways, so i\u2019m
+      sure you can find a way in by exploring a bit."
+    playTimeSeconds: 4
+  - characterName: Landlord
+    text: Good luck!
+    playTimeSeconds: 1
+  _runOnStart: 1
+  _disableAfterFinish: 1
+  _useDialogueTime: 1
+  voiceLines:
+    Guid:
+      Data1: -802618882
+      Data2: 1186625240
+      Data3: -1972667224
+      Data4: -309990102
+    Path: event:/Voicemail
