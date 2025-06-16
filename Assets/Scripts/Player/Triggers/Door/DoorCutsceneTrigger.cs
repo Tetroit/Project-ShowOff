@@ -101,6 +101,15 @@ namespace amogus
                     }
                 }
             }
+            if (useRaycast && raycastTarget == null)
+            {
+                raycastTarget = door.GetComponentInChildren<Collider>();
+                if (raycastTarget == null)
+                {
+                    Debug.LogError("Raycast target was null", this);
+                    return false;
+                }
+            }
             return true;
         }
         public override void Trigger()

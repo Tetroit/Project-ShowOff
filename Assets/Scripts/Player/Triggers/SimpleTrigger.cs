@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System;
+using UnityEditor;
 
 
 public enum TriggerType
@@ -21,6 +22,9 @@ public abstract class SimpleTrigger<TargetType> : MonoBehaviour
 
     [SerializeField] TriggerType triggerType;
     public string action = "Interact";
+    public bool useRaycast = false;
+    public Collider raycastTarget;
+
 
     [Header("Events")]
     [SerializeField] public UnityEvent OnTrigger;
@@ -66,7 +70,8 @@ public abstract class SimpleTrigger<TargetType> : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (triggerType == TriggerType.PRESS_KEY && InputSystem.actions.FindActionMap("Player").FindAction(action).WasPressedThisFrame())
+        if (triggerType == TriggerType.PRESS_KEY &&
+            InputSystem.actions.FindActionMap("Player").FindAction(action).WasPressedThisFrame())
         {
             for (int i = targetsInQuestion.Count - 1; i >= 0; i--)
             {
@@ -88,11 +93,16 @@ public abstract class SimpleTrigger<TargetType> : MonoBehaviour
         }
         return true;
     }
+    public bool RaycastCheck (Transform other)
+    {
+        Ray ray = new Ray(other.position, other.forward);
+        return raycastTarget.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity);
+    }
     protected virtual void TryTrigger(TargetType other)
     {
         if (!NullHandling(other)) return;
 
-        if (Predicate(other) && enabled)
+        if (Predicate(other) && enabled && !(useRaycast && !RaycastCheck(other.transform)))
         {
             Debug.Log("Triggered", this);
             triggerObject = other;
