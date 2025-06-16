@@ -16,7 +16,7 @@ public class PickupManager : InteractionBehavior<IPickupable>
 
     public override IEnumerator OnDismiss()
     {
-        yield return null;
+        yield return _item.Deselect();
         Destroy((_item as MonoBehaviour).gameObject);
         _item = null;
     }
@@ -30,6 +30,7 @@ public class PickupManager : InteractionBehavior<IPickupable>
         }
         KeyInventory.AddItem(interactable.ItemData);
         KeyInventory.ChangeItemPosition(SelectDirection.Right);
-        yield return null;
+
+        yield return interactable.Interact();
     }
 }

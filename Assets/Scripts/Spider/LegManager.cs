@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [SelectionBase]
@@ -10,8 +11,14 @@ public class LegManager : MonoBehaviour
     [field: SerializeField] public bool Gizmos { get; private set; } = false;
 
     [SerializeField] Curve _path;
+    [SerializeField] float _nextNodeActivationDistance = .5f;
     [SerializeField] LayerMask _groundMask;
     [SerializeField] float _pathLerpTime = 10;
+    [SerializeField] float _upLerpTime = 10;
+    [field: SerializeField] public float AbovePointHeight { get; private set; } = 1f;
+    [field: SerializeField] public float TouchRaySize { get; private set; } = 1f;
+
+
     [SerializeField, Range(1, 20)] int _jointCount = 3;
     [Tooltip("How close can leg joints")]
     [field: SerializeField] public float AcceptableDistance { get; private set; } = .05f;
@@ -21,7 +28,7 @@ public class LegManager : MonoBehaviour
     [field: SerializeField] public float AngleX { get; private set; } = .31f;
     [field: SerializeField] public float AngleY { get; private set; } = .2f;
     [field: SerializeField] public float DistanceFromBody { get; private set; } = .5f;
-    
+
 
     [field: SerializeField] public float WobbleSpeed { get; private set; } = 1.69f;
     [field: SerializeField] public float WobbleAmplitude { get; private set; } = .15f;
@@ -32,12 +39,13 @@ public class LegManager : MonoBehaviour
     [Header("Move Variance")]
     [field: SerializeField] public float MoveVarianceSpeed { get; private set; } = 5;
     [field: SerializeField] public float MoveSpeed { get; private set; } = 5;
+    [Tooltip("How fast and slow can the spider Move")]
     [SerializeField] AnimationCurve _varianceRange;
 
     [Header("Bodyheight related")]
     [Tooltip("Smoothing of changing body height")]
     [SerializeField] float _heightChangeLerp;
-    [SerializeField] float _groundOffset = 1f;
+    [field: SerializeField] public float GroundOffset { get; private set; } = .8f;
     [SerializeField] bool _useGeneralHeightDetection;
 
     [Header("Leg models")]
@@ -52,18 +60,24 @@ public class LegManager : MonoBehaviour
     bool _waitForFirstLegs;
     int _currentPathNode;
     float _currMoveVal;
+    readonly Collider[] _contactPoints = new Collider[10];
+    Vector3 _lastUp;
+
+    //for debug
+    Vector3 _closestContactPoint;
 
     void Start()
     {
         _lastBodyHeight = transform.position.y;
+        _lastUp = transform.up;
         _legs = new Leg[]
         {
            new (AngleX, 0, firstLeg, _jointCount, this                    , ForwardReach, _groundMask),
-           //new (AngleX, -AngleY, _legPrefab, _jointCount, this            , ForwardReach, _groundMask),
+           new (AngleX, -AngleY, _legPrefab, _jointCount, this            , ForwardReach, _groundMask),
            new (AngleX, -AngleY*2, _legPrefab, _jointCount, this          , ForwardReach, _groundMask),
 
            new (AngleX, -AngleY*2 - 135, firstSecondLeg, _jointCount, this, ForwardReach, _groundMask),
-           //new (AngleX, -AngleY-135, _legPrefab, _jointCount, this        , ForwardReach, _groundMask),
+           new (AngleX, -AngleY-135, _legPrefab, _jointCount, this        , ForwardReach, _groundMask),
            new (AngleX, - 135, _legPrefab, _jointCount, this              , ForwardReach, _groundMask),
 
         };
@@ -71,15 +85,15 @@ public class LegManager : MonoBehaviour
         SetAdjacentLegs(_legs);
     }
 
-    void SetAdjacentLegs( Leg[] arr)
+    void SetAdjacentLegs(Leg[] arr)
     {
         Debug.Assert(arr.Length % 2 == 0);
 
         int legsOnSide = (int)(arr.Length * .5f);
-        for (int i = 0; i< arr.Length; i++)//attaches left right up down neighbours but assumes that the grid has only two rows
+        for (int i = 0; i < arr.Length; i++)//attaches left right up down neighbours but assumes that the grid has only two rows
         {
             int left = i - 1;
-            int right = i+1;
+            int right = i + 1;
             int up = i - legsOnSide;
             int down = i + legsOnSide;
             bool firstRow = i < legsOnSide;
@@ -93,21 +107,21 @@ public class LegManager : MonoBehaviour
             }
             else//there are no down neighbours
             {
-                if (left > legsOnSide-1) adjLegs.Add(arr[left]);
+                if (left > legsOnSide - 1) adjLegs.Add(arr[left]);
                 if (right < arr.Length) adjLegs.Add(arr[right]);
                 adjLegs.Add(arr[up]);
             }
-            
+
             arr[i].SetAdjacentLegs(adjLegs.ToArray());
         }
     }
 
     void Update()
     {
-        if(_move)
+        if (_move)
         {
             SetUpFirstStep();
-            if(_waitForFirstLegs)
+            if (_waitForFirstLegs)
                 MoveBody();
         }
         else
@@ -130,14 +144,13 @@ public class LegManager : MonoBehaviour
             leg.Update();
     }
 
-    void MoveBody()
+    void GetCurrentNode()
     {
         if (_currentPathNode == _path.points.Count) return;
 
         Vector3 currentTarget = _path.points[_currentPathNode];
-        Vector3 forward = transform.forward;
 
-        bool nodeIsBehind = Vector3.Distance(currentTarget, transform.position) < 1;
+        bool nodeIsBehind = Vector3.Distance(currentTarget, transform.position) < _nextNodeActivationDistance * GetSize();
         if (nodeIsBehind)
         {
             _currentPathNode++;
@@ -146,18 +159,63 @@ public class LegManager : MonoBehaviour
             {
                 _move = false;
                 _currentPathNode = 0;
-                return;
             }
         }
-        //move towards next node
-        currentTarget = _path.points[_currentPathNode];
-        forward = Vector3.Lerp(forward, (currentTarget - transform.position).normalized, _pathLerpTime * Time.deltaTime);
-        _currMoveVal += MoveVarianceSpeed;
-        transform.forward = forward;
-        transform.position += MoveSpeed * _varianceRange.Evaluate(Mathf.PerlinNoise1D(_currMoveVal)) * Time.deltaTime * forward;
-        
     }
-    
+
+    void MoveBody()
+    {
+        if (_currentPathNode == _path.points.Count) return;
+
+        GetCurrentNode();
+
+        Vector3 currentTarget = _path.points[_currentPathNode];
+        Vector3 forward = transform.forward;
+        Vector3 currentPos = transform.position;
+
+
+        int contacts = Physics.OverlapSphereNonAlloc(currentPos, (GroundOffset  + .7f) * GetSize(), _contactPoints, _groundMask);
+        if (contacts > 0)
+        {
+            forward = Vector3.Lerp(forward, (currentTarget - currentPos).normalized, _pathLerpTime * Time.deltaTime);
+
+            Vector3 closestContactPoint = GetClosestContactPoint(contacts, currentPos);
+            _closestContactPoint = closestContactPoint;
+            Vector3 up = (currentPos - closestContactPoint).normalized;
+            up = Vector3.Lerp(_lastUp, up, Time.deltaTime * _upLerpTime);
+            _lastUp = up;
+
+            Quaternion targetRotation = Quaternion.LookRotation(forward, up);
+            transform.rotation = targetRotation;
+        }
+        _currMoveVal += MoveVarianceSpeed;
+        transform.position += MoveSpeed * _varianceRange.Evaluate(Mathf.PerlinNoise1D(_currMoveVal)) * Time.deltaTime * forward;
+    }
+
+    float GetSize()
+    {
+        return transform.lossyScale.y;
+    }
+
+    Vector3 GetClosestContactPoint(int contacts, Vector3 pos)
+    {
+        float min = int.MaxValue;
+        Vector3 closestCol = Vector3.zero;
+        foreach (Collider col in _contactPoints.Take(contacts))
+        {
+            Vector3 contactPoint = col.ClosestPoint(pos);
+            float d = Vector3.Distance(pos, contactPoint);
+
+            if (d < min)
+            {
+                min = d;
+                closestCol = contactPoint;
+            }
+        }
+
+        return closestCol;
+    }
+
     void SetUpFirstStep()
     {
         if (_startedMoving) return;
@@ -166,12 +224,12 @@ public class LegManager : MonoBehaviour
         // after the first stem, make step distance lower
         void legStepSizeReset(Leg l)
         {
-            l.StepSize = StepDistance;
+            l.StepDistance = StepDistance;
             _waitForFirstLegs = true;
             l.OnStep -= legStepSizeReset;
         }
-        _legs[0].StepSize = RestStepDistance;
-        _legs[_legs.Length/2].StepSize = RestStepDistance;
+        _legs[0].StepDistance = RestStepDistance;
+        _legs[_legs.Length / 2].StepDistance = RestStepDistance;
         _legs[0].OnStep += legStepSizeReset;
         _legs[_legs.Length / 2].OnStep += legStepSizeReset;
 
@@ -184,8 +242,8 @@ public class LegManager : MonoBehaviour
 
         foreach (Leg leg in _legs)
             groundPositionAverage += leg.CurrentGroundPosition.y;
-        
-        groundPositionAverage = (groundPositionAverage / _legs.Length) + _groundOffset;
+
+        groundPositionAverage = (groundPositionAverage / _legs.Length) + GroundOffset;
         //adding wobble
         groundPositionAverage += Time.deltaTime * WobbleAmplitude * Mathf.Sin(Time.time * WobbleSpeed);
 
@@ -202,7 +260,7 @@ public class LegManager : MonoBehaviour
         foreach (Leg leg in _legs)
             groundPositionAverage += leg.CurrentGroundPosition;
 
-        groundPositionAverage = (groundPositionAverage / _legs.Length) + _groundOffset * upDir;
+        groundPositionAverage = (groundPositionAverage / _legs.Length) + GroundOffset * upDir;
         //adding wobble
         groundPositionAverage += Time.deltaTime * WobbleAmplitude * Mathf.Sin(Time.time * WobbleSpeed) * upDir;
 
@@ -226,19 +284,22 @@ public class LegManager : MonoBehaviour
     {
         if (_legs == null || !Gizmos) return;
 
-        if( _currentPathNode != _path.points.Count)
+        if (_currentPathNode != _path.points.Count)
         {
             UnityEngine.Gizmos.color = Color.yellow;
             Vector3 currentTarget = _path.points[_currentPathNode];
 
-            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + (currentTarget - transform.position).normalized);
-            UnityEngine.Gizmos.DrawSphere(currentTarget, .1f);
+            UnityEngine.Gizmos.DrawLine(transform.position, transform.position + (currentTarget - transform.position).normalized * transform.lossyScale.y);
+            UnityEngine.Gizmos.DrawSphere(currentTarget, .1f * transform.lossyScale.y);
         }
 
 
         foreach (var leg in _legs)
             leg.OnDrawGizmos();
 
+        UnityEngine.Gizmos.color = Color.black;
+        //UnityEngine.Gizmos.DrawSphere(transform.position /*+ transform.up * GetSize() * .5f*/, (GroundOffset + .7f) * GetSize());
+        UnityEngine.Gizmos.DrawSphere(_closestContactPoint, .2f * transform.lossyScale.y);
     }
 
     void OnDisable()

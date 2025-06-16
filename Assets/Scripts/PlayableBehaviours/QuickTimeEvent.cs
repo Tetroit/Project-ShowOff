@@ -6,8 +6,6 @@ using UnityEngine.Playables;
 
 public class QuickTimeEvent : MonoBehaviour
 {
-    [Header("Animation")]
-    [SerializeField] PlayableDirector playableDirector;
 
     [Header("Time")]
     public float totalTime;
@@ -28,6 +26,8 @@ public class QuickTimeEvent : MonoBehaviour
     public UnityEvent OnFail;
     public UnityEvent OnActionPress;
 
+    public QuickTimeEventIndicator indicator;
+
     public bool Check()
     {
         if (pressCountCurrent >= pressCount)
@@ -47,19 +47,26 @@ public class QuickTimeEvent : MonoBehaviour
         InputSystem.actions.FindActionMap("Player").FindAction(actionName).started += OnPress;
         isReading = true;
         pressCountCurrent = 0;
+
+        if (indicator != null)
+        {
+            indicator.pressCount = pressCount;
+            indicator.gameObject.SetActive(true);
+        }
     }
 
     public void Update()
     {
         if (isReading)
-            time += Time.deltaTime;
-        if (time >= totalTime)
         {
-            isReading = false;
-            StopReading();
-            time = 0f;
+            time += Time.deltaTime;
+            if (time >= totalTime || pressCountCurrent >= pressCount)
+            {
+                isReading = false;
+                StopReading();
+                time = 0f;
+            }
         }
-
     }
     public void StopReading()
     {
@@ -70,6 +77,11 @@ public class QuickTimeEvent : MonoBehaviour
             OnSuccess?.Invoke();
         else
             OnFail?.Invoke();
+
+        if (indicator != null)
+        {
+            indicator.gameObject.SetActive(false);
+        }
     }
     public void OnPress(InputAction.CallbackContext callback)
     {

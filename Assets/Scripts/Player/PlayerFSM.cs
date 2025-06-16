@@ -188,7 +188,10 @@ namespace amogus
         {
             inAnimation = false;
             if (enableCamera)
+            {
                 EnableCamera();
+                ReadCamera();
+            }
         }
         public void EnableCamera()
         {
