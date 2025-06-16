@@ -259,7 +259,8 @@ MonoBehaviour:
   _underGroundLumen: 200
   _surfaceLumen: 2.5
   _enableFlickering: 1
-  _flickeringScale: 0.3
+  _flickeringScaleUnder: 300
+  _flickeringScaleOutside: 0.3
   _flickeringSpeed: 6.63
   t: 1
 --- !u!1 &437675632302061308
@@ -483,6 +484,7 @@ GameObject:
   - component: {fileID: 8621820410908911760}
   - component: {fileID: 7143161083505511038}
   - component: {fileID: 1517695482512913670}
+  - component: {fileID: 4561254371200007251}
   m_Layer: 8
   m_Name: Player avatar
   m_TagString: Untagged
@@ -712,6 +714,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4561254371200007251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5016133296133080745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f6fb844d461704b9edbf20a94a414e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5934188970371696708
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,7 +985,8 @@ MonoBehaviour:
   _underGroundLumen: 129.5
   _surfaceLumen: 2.5
   _enableFlickering: 1
-  _flickeringScale: 0.3
+  _flickeringScaleUnder: 300
+  _flickeringScaleOutside: 0.3
   _flickeringSpeed: 6.63
   t: 1
 --- !u!1 &6084352469510230677
@@ -1221,6 +1236,7 @@ MonoBehaviour:
   inputDevice: 0
   cameraTransform: {fileID: 3234403363261146957}
   _debug: 0
+  _roofDetectionRange: 0
 --- !u!1 &9047221866948527922
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,7 +1836,8 @@ MonoBehaviour:
   _underGroundLumen: 329
   _surfaceLumen: 2.5
   _enableFlickering: 1
-  _flickeringScale: 0.3
+  _flickeringScaleUnder: 300
+  _flickeringScaleOutside: 0.3
   _flickeringSpeed: 6.63
   t: 1
 --- !u!1001 &3781899370377097464
