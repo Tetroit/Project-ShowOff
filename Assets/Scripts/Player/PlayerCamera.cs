@@ -12,7 +12,7 @@ namespace amogus
         public bool isCinematic;
         Quaternion targetRotation;
         Vector2 turn;
-        Camera cam;
+        public Camera cam { get; private set; }
 
         public float targetFOV = 60;
         public float currentFOV { 

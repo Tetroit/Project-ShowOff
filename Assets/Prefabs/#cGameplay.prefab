@@ -666,9 +666,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _currentStep: 0
+  playAllStepsTillCurrentStepOnAwake: 1
   LoreRoomDoor: {fileID: 8071116695559565032}
   HallwayDoor: {fileID: 1551339914958023901}
   OfficeDoor: {fileID: 2603565037497807458}
+  footstepTriggerStart: {fileID: 0}
+  footstepTriggerEnd: {fileID: 0}
+  footsteps: {fileID: 0}
+  doorCloseQTE: {fileID: 0}
 --- !u!1 &2577155450401865479
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,7 +1030,6 @@ Transform:
   - {fileID: 7634553344605863646}
   - {fileID: 8474119320966362500}
   - {fileID: 3329612588140833813}
-  - {fileID: 7510246307100056899}
   - {fileID: 7918991170223131211}
   - {fileID: 2550392320575248218}
   m_Father: {fileID: 2483331025979228883}
@@ -4064,68 +4068,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984af9caa590f904a94adb6cf05c7c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &4416777734122782725
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4528652418799837537}
-    m_Modifications:
-    - target: {fileID: 79150748351000713, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-      propertyPath: m_Name
-      value: QuickTimeTrigBookshelf
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157065876716461382, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -13.193911
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157065876716461382, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.9223723
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157065876716461382, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 13.880222
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157065876716461382, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9659259
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157065876716461382, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157065876716461382, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.258819
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157065876716461382, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157065876716461382, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157065876716461382, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157065876716461382, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
---- !u!4 &7510246307100056899 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6157065876716461382, guid: a7a7cb2fbd421194a844cb18a53f211c, type: 3}
-  m_PrefabInstance: {fileID: 4416777734122782725}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6654191612792112569
 PrefabInstance:
   m_ObjectHideFlags: 0
