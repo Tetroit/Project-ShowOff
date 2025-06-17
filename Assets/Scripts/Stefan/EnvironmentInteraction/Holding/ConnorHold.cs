@@ -25,10 +25,12 @@ public class ConnorHold : HoldManager
 
     void OnMouseClick(InputAction.CallbackContext context)
     {
-        if(!(Physics.Raycast(_cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit)
-            &&
-            hit.transform.TryGetComponent<IHoldable>(out _))
-        )
+        if(!Physics.Raycast(
+            _cam.ScreenPointToRay(Mouse.current.position.ReadValue()),
+            out RaycastHit hit,
+            1,
+            1<< LayerMask.NameToLayer("Interactable"))
+            )
         {
             return;
         }

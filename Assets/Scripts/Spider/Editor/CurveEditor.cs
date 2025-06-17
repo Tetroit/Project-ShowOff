@@ -84,7 +84,7 @@ public class CurveEditor : Editor
             Vector3 neighbour = curve.points[_lastModifiedPointIndex - 1];
             Vector3 lastModified = curve.points[_lastModifiedPointIndex];
             direction = lastModified - neighbour;
-            direction = direction.normalized;
+            //direction = direction.normalized;
             direction += lastModified;
         }
         else 
