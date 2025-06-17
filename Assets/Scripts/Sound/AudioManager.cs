@@ -81,10 +81,13 @@ public class AudioManager : MonoBehaviour
             eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             eventInstance.release();
         }
+
+        masterBus.stopAllEvents(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
     void OnDestroy()
     {
         CleanUp();
+
     }
 }
