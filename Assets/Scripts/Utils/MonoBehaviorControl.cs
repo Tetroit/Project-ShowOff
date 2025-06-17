@@ -6,6 +6,7 @@ using static UnityEditor.Progress;
 
 public class MonoBehaviorControl : MonoBehaviour
 {
+    [Header("Use Inspector Context Menu For Functions")]
     public List<MonoBehaviour> Collection;
     [SerializeField] string _typeToSearch;
     [ContextMenu("PopulateWithType")]
