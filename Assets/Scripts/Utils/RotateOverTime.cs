@@ -26,7 +26,7 @@ public class RotateOverTime : MonoBehaviour
         {
             _wasSet = false;
         }
-
-        transform.Rotate(Rotation, Speed * Time.fixedDeltaTime);
+        float speedMult = RotationData == null ? 1 : RotationData.Speed;
+        transform.Rotate(Rotation, Speed * speedMult * Time.fixedDeltaTime);
     }
 }

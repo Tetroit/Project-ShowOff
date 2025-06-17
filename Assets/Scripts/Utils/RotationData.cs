@@ -4,4 +4,5 @@ using UnityEngine;
 public class RotationData : ScriptableObject
 {
     public Vector3 Euler;
+    public float Speed = 1;
 }

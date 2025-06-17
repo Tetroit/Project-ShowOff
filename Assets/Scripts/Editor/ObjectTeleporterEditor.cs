@@ -15,6 +15,15 @@ public class ObjectTeleporterEditor : Editor
             if(GUILayout.Button(new GUIContent(point.gameObject.name)))
             {
                 mono.TeleportToPoint(point);
+
+                if (SceneView.lastActiveSceneView != null)
+                {
+                    SceneView.lastActiveSceneView.LookAt(
+                        point.position,
+                        point.rotation,
+                        1f // optional zoom distance
+                    );
+                }
             }
         }
 
