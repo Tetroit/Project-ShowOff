@@ -45,8 +45,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cedf01dc4a003d4db8a6a7854968f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  _speed: 0
   curve: {fileID: 7865727168632375125}
+  _timeCurve01:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _footSteps: {fileID: 0}
+  _footStepDistanceCHanger:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _cameraShake: {fileID: 0}
+  _time: 0
+  _scale: 0
+  _frequency: 0
 --- !u!114 &8864717080952403690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +77,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DistanceUntilStep: 1
+  _sound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <OnStep>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4587356172683794140
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,9 +119,95 @@ Transform:
   - {fileID: 4644788507079103567}
   - {fileID: 565005519127977778}
   - {fileID: 4952204277964659670}
+  - {fileID: 4790853260072649401}
   - {fileID: 6137762914222969158}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5444986204047616007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4790853260072649401}
+  - component: {fileID: 8768488948010620959}
+  - component: {fileID: 394920471407125199}
+  m_Layer: 0
+  m_Name: EndFootstepTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4790853260072649401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5444986204047616007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.188, y: -12.965, z: 19.817}
+  m_LocalScale: {x: 0.33905, y: 1, z: 1.5658}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7400294997735377490}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8768488948010620959
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5444986204047616007}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &394920471407125199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5444986204047616007}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4baf8ab308aae49a7efaf15bfe0348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 1
+  action: Interact
+  useRaycast: 0
+  raycastTarget: {fileID: 0}
+  OnTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: MainQuest, Assembly-CSharp
+        m_MethodName: AdvanceTo
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5748046095074777343
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,6 +257,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 8.437356}
   - {x: -10.187371, y: 0, z: 8.120567}
   AddOnMouse: 0
+  PointSize: 0
 --- !u!1 &8095156818323713419
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +268,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6137762914222969158}
   - component: {fileID: 2881121129312781671}
-  - component: {fileID: 4840384100755873587}
   m_Layer: 0
   m_Name: EndFootstepTrigger
   m_TagString: Untagged
@@ -198,36 +311,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4840384100755873587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8095156818323713419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a4baf8ab308aae49a7efaf15bfe0348, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnTrigger:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8182855851250488076}
-        m_TargetAssemblyTypeName: amogus.FollowingSteps, Assembly-CSharp
-        m_MethodName: EndFollowing
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  triggerType: 0
-  action: 
-  targetsInQuestion: []
 --- !u!1 &9134904589314801633
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +377,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a4baf8ab308aae49a7efaf15bfe0348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerType: 0
+  action: 
+  useRaycast: 0
+  raycastTarget: {fileID: 0}
   OnTrigger:
     m_PersistentCalls:
       m_Calls:
@@ -309,6 +396,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  triggerType: 0
-  action: 
-  targetsInQuestion: []

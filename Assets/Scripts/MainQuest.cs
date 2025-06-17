@@ -93,7 +93,7 @@ public class MainQuest : MonoBehaviour
                     pltr.enabled = true;    
                 }
 
-                if (instant)
+                if (!instant)
                 {
                     if (HallwayDoor.isOpen)
                     {
@@ -129,11 +129,22 @@ public class MainQuest : MonoBehaviour
                     OfficeDoor.OpenInstant();
                 else
                     OfficeDoor.SetExternally(true);
-
                 {
                     var pltr = doorCloseQTE.GetComponent<PlayerTrigger>();
                     pltr.enabled = false;
                 }
+                break;
+
+            case QuestStep.SawMiller:
+
+                HallwayDoor.Unlock();
+                LoreRoomDoor.Unlock();
+
+                if (instant)
+                    LoreRoomDoor.OpenInstant();
+                else
+                    LoreRoomDoor.SetExternally(true);
+
                 break;
         }
     }
