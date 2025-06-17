@@ -8,17 +8,22 @@ public class Curve : MonoBehaviour {
     public bool AddOnMouse;
     public float PointSize;
 
-
+    //Gs means global space / world space
     public Vector3 start => points[0];
     public Vector3 end => points[^1];
     public Vector3 startGS => transform.TransformPoint(points[0]);
     public Vector3 endGS => transform.TransformPoint(points[^1]);
 
+    public Vector3 GetGlobalSpace(int i)
+    {
+        return transform.TransformPoint(points[i]);
+    }
 
     public Vector3 GetPositionFromDistanceGS(float distance)
     {
         return transform.TransformPoint(GetPositionFromDistance(distance));
     }
+
     public Vector3 GetPositionFromDistance(float distance)
     {
         if (points.Count == 0) return Vector3.zero;

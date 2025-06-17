@@ -3,7 +3,6 @@ using FMODUnity;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
 
 namespace amogus
 {
@@ -20,7 +19,6 @@ namespace amogus
         [SerializeField] bool _test;
         [SerializeField] bool _stopTest;
 
-        [SerializeField] EventReference followMusic;
         EventInstance followMusicEvent;
 
         NavMeshAgent _agent;
