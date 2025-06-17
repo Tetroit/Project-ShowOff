@@ -259,6 +259,25 @@ MonoBehaviour:
   minSolidAngle:
     m_OverrideState: 1
     m_Value: 4
+--- !u!114 &-5670911342818779979
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b937e570c03364788389d22a07c0dc, type: 3}
+  m_Name: CustomPPtest
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0
+  enableEffect:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-5417088123620451709
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -729,6 +748,8 @@ MonoBehaviour:
   - {fileID: -6365069635776777695}
   - {fileID: 6184612543910486582}
   - {fileID: -7107258706953464681}
+  - {fileID: -5670911342818779979}
+  - {fileID: 594202974417872739}
 --- !u!114 &106336961593330077
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1197,6 +1218,23 @@ MonoBehaviour:
   texture:
     m_OverrideState: 1
     m_Value: {fileID: 0}
+--- !u!114 &594202974417872739
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c5f8b86cb0224f827a6eef3f93947, type: 3}
+  m_Name: CustomPPRenderer
+  m_EditorClassIdentifier: 
+  active: 1
+  m_Material: {fileID: 0}
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &1501199423866068322
 MonoBehaviour:
   m_ObjectHideFlags: 3
