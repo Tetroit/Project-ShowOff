@@ -24,6 +24,7 @@ public class S_Play : State
     {
         Cursor.visible = cursoreVisibility;
         Cursor.lockState = lockMode;
+        if(fsm.PlayerController != null ) 
         if (movement)
             fsm.PlayerController.EnableControls();
         else

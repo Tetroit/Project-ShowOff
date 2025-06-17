@@ -2,6 +2,7 @@ using Dialogue;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Note : MonoBehaviour, IHoldable, ITextDisplayer
@@ -13,6 +14,8 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
     [SerializeField] TextRunner _runner;
     [SerializeField] InteractionSettings _interactionSettings;
     [field: SerializeField] public BookPage PagePrefab { get; private set; }
+    [field: SerializeField] public UnityEvent OnRotate { get; private set; }
+    [field: SerializeField] public UnityEvent OnDismiss { get; private set; }
 
     Vector3 _initialPosition;
     Quaternion _initialRotation;
@@ -70,6 +73,8 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
         _showTextButton.onClick.RemoveListener(SetActiveStateFromSettings);
 
         WindowManager.Instance.CloseCurrentWindow();
+
+        OnDismiss?.Invoke();
     }
 
     public IEnumerator Interact()
@@ -85,6 +90,7 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
         _runner.DisplayText(_text);
         SetActiveStateFromSettings();
         AudioManager.instance.PlayOneShot(FMODEvents.instance.paperHandling, transform.position);
+
     }
 
     public void Activate()
@@ -106,6 +112,8 @@ public class Note : MonoBehaviour, IHoldable, ITextDisplayer
             Deactivate();   
         else
             Activate();
+
+        OnRotate?.Invoke();
     }
 
     void SetActiveStateFromSettings()
