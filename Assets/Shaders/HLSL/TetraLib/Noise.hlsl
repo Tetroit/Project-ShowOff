@@ -13,6 +13,13 @@ float nrand(float4 uv)
 {
     return frac(sin(dot(uv, float4(12.9898, 78.233, 975.7463, 47.9264))) * 43758.5453);
 }
+float2 nrand2(float2 uv)
+{
+    return float2(
+        nrand(uv * 5.2486 + float2(-97.5927, 1825.97)),
+        nrand(uv * 4.486 + float2(92.47, -25.97))
+   );
+}
 float3 nrand3(float3 uv)
 {
     return float3(

@@ -13,7 +13,10 @@ float invLerpByMinAndScale (float fac, float min, float scale)
 //made to get rid of the division part
 	return (fac - min) * scale;
 }
-
+float2 lenSqr(float2 v1)
+{
+	return dot(v1, v1);
+}
 float3 lenSqr(float3 v1)
 {
 	return dot(v1, v1);
