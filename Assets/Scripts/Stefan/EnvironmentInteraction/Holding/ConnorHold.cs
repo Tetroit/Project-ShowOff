@@ -14,13 +14,14 @@ public class ConnorHold : HoldManager
     Coroutine _itemHoldBehavior;
     Quaternion baseRotation = Quaternion.identity;
     int _rotationState = 1;
+    InteractionManager _interactionManager;
 
     public override void Init(InputFacade input)
     {
         _input = input;
         _input.UI.Click.started += OnMouseClick;
         _cam = Camera.main;
-
+        _interactionManager = GetComponent<InteractionManager>();
     }
 
     void OnMouseClick(InputAction.CallbackContext context)
@@ -32,6 +33,7 @@ public class ConnorHold : HoldManager
             1<< LayerMask.NameToLayer("Interactable"))
             )
         {
+            _interactionManager.Dissmised();
             return;
         }
 
