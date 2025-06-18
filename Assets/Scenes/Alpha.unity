@@ -137,6 +137,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority: 0
+--- !u!1 &127562214 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2240739390433859046, guid: 2ebca0f6c939ecd4486c0a5934d99f7e, type: 3}
+  m_PrefabInstance: {fileID: 1033328284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &127562219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127562214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf3e4137aa8198f4ebb265f914625408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Time: 1
+--- !u!225 &127562220
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127562214}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &165253687
 GameObject:
   m_ObjectHideFlags: 0
@@ -8184,6 +8214,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '#bUI'
       objectReference: {fileID: 0}
+    - target: {fileID: 2240739390433859046, guid: 2ebca0f6c939ecd4486c0a5934d99f7e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3173094658545618030, guid: 2ebca0f6c939ecd4486c0a5934d99f7e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -8251,7 +8285,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2240739390433859046, guid: 2ebca0f6c939ecd4486c0a5934d99f7e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 127562219}
+    - targetCorrespondingSourceObject: {fileID: 2240739390433859046, guid: 2ebca0f6c939ecd4486c0a5934d99f7e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 127562220}
   m_SourcePrefab: {fileID: 100100000, guid: 2ebca0f6c939ecd4486c0a5934d99f7e, type: 3}
 --- !u!114 &1033328285 stripped
 MonoBehaviour:
