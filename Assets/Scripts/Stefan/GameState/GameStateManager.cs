@@ -119,6 +119,12 @@ public class GameStateManager : MonoBehaviour
         SwitchState<S_UI>();
     }
 
+    public void SwitchToGameOver()
+    {
+        WindowManager.Instance.TrySwitchWindow("GameOverUI");
+        SwitchState<S_Pause>();
+    }
+
     public void SwitchToPlay()
     {
         SwitchState<S_Play>();

@@ -74,7 +74,7 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    void Dissmised()
+    public void Dissmised()
     {
         if (_currentInteractingItem == null || _interactAnimation != null) return;
         

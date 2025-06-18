@@ -304,7 +304,6 @@ namespace amogus
             }
         }
 
-
         public void SwitchState (MovementState newState)
         {
             if (currentState == newState) return;
