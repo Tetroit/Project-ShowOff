@@ -22,6 +22,7 @@ public class SpiderJumpScare : MonoBehaviour
 
     void CancelAnimation()
     {
+        if (_note == null || _spider == null) return;
         _note.OnRotate.RemoveListener(OnNoteRotate);
         _note.OnDismiss.RemoveListener(CancelAnimation);
         _spider.OnFinishedWalking += OnSpiderFinishedWalking;
