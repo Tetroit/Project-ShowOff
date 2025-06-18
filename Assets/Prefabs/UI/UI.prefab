@@ -10017,7 +10017,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6869577845021418908
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12348,15 +12348,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5465623579878160710, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5465623579878160710, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5465623579878160710, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.43051904
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5769662726883942160, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_SizeDelta.y
@@ -12368,7 +12368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5843853823654266041, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 1.0000001
       objectReference: {fileID: 0}
     - target: {fileID: 6507432342968572806, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_Color.a
@@ -12396,15 +12396,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6592292637282453111, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6592292637282453111, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6592292637282453111, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6879198573212265938, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_Name
@@ -12444,7 +12444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9098281113336422774, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_text
-      value: Dialogue inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue
+      value: 'Start Dialogue inputDialogue inputDialogue inputDialogue inputDialogue
         inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue
         inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue
         inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue
@@ -12456,19 +12456,29 @@ PrefabInstance:
         inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue
         inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue
         inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue inputDialogue
-        input
+        inputDialogue input End
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 9098281113336422774, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_fontSize
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9098281113336422774, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
+      propertyPath: m_margin.w
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 9098281113336422774, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_margin.x
-      value: 43.625565
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 9098281113336422774, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
+      propertyPath: m_margin.y
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 9098281113336422774, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_margin.z
-      value: 43.625565
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 9098281113336422774, guid: 8c2bf9c41908aa649944cd9b42b1ab39, type: 3}
       propertyPath: m_fontAsset
