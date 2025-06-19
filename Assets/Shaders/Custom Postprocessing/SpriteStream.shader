@@ -1,4 +1,4 @@
-Shader "Hidden/Shader/CustomPP"
+Shader "Hidden/Shader/SpriteStream"
 {
     Properties
     {
@@ -19,6 +19,7 @@ Shader "Hidden/Shader/CustomPP"
 
     #include "Assets/Shaders/HLSL/TetraLib/UVTransform.hlsl"
     #include "Assets/Shaders/HLSL/TetraLib/Noise.hlsl"
+    #include "Assets/Shaders/HLSL/TetraLib/Math.hlsl"
 
     struct Attributes
     {
@@ -44,12 +45,17 @@ Shader "Hidden/Shader/CustomPP"
     }
 
     // List of properties to control your post process effect
+    float4 _ColorMask;
     float _Intensity;
     float2 _Scale;
     float2 _Offset;
     float _Twist;
     float _TwistOffset;
     float _TwistScale;
+    float _Speed;
+
+    float _MaskMin;
+    float _MaskMax;
 
 
     TEXTURE2D_X(_MainTex);
@@ -87,7 +93,12 @@ Shader "Hidden/Shader/CustomPP"
         // Note that if HDUtils.DrawFullScreen is not used to render the post process, you don't need to call ClampAndScaleUVForBilinearPostProcessTexture.
 
         UVInputs uvs = GetUVInputs(input.texcoord.xy);
+
+#ifdef _DRAW_FULLSCREEN
         float2 uvScaled = ClampAndScaleUVForBilinearPostProcessTexture(input.texcoord.xy);
+#else
+        float2 uvScaled = input.texcoord.xy;
+#endif
 
         float3 sourceColor = SAMPLE_TEXTURE2D_X(_MainTex, s_linear_clamp_sampler, uvScaled).xyz;
 
@@ -105,7 +116,7 @@ Shader "Hidden/Shader/CustomPP"
         if (_Scale.y <= 0) _Scale.y = 1;
         #ifdef _OVERLAY_ON
             float4 color = float4(0,0,0,1);
-            float2 scaledPolar = polarDtrt * _Scale - float2(0, _Time.y);
+            float2 scaledPolar = polarDtrt * _Scale - float2(0, _Time.y * _Speed);
 
             float2 origin1;
 
@@ -154,7 +165,10 @@ Shader "Hidden/Shader/CustomPP"
         #else   
             float4 color = float4(polarDtrt, 0, 1);
         #endif
+
+        color *= _ColorMask;
         //float3 color = lerp(sourceColor, Luminance(sourceColor), _Intensity) * float3(uvRatio,1);
+        color.a *= invLerpByMinAndMaxClamped(centerDist, _MaskMin, _MaskMax) * _Intensity;
 
         return float4(lerp (sourceColor, color, color.a), 1);
 
@@ -181,6 +195,7 @@ Shader "Hidden/Shader/CustomPP"
 
             HLSLPROGRAM
                 #pragma multi_compile_local _ _OVERLAY_ON
+                #pragma multi_compile_local _ _DRAW_FULLSCREEN
                 #pragma fragment CustomPostProcess
                 #pragma vertex Vert
             ENDHLSL

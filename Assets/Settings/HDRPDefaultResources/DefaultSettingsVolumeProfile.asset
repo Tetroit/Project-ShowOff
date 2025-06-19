@@ -272,10 +272,13 @@ MonoBehaviour:
   m_Name: CustomPPtest
   m_EditorClassIdentifier: 
   active: 1
+  <displayName>k__BackingField: 
   intensity:
+    <debugId>k__BackingField: intensity
     m_OverrideState: 1
     m_Value: 0
   enableEffect:
+    <debugId>k__BackingField: enableEffect
     m_OverrideState: 1
     m_Value: 0
 --- !u!114 &-5417088123620451709
@@ -409,6 +412,23 @@ MonoBehaviour:
   highlightsEnd:
     m_OverrideState: 1
     m_Value: 1
+--- !u!114 &-2445270358244402115
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f016f652cb78f1a44a3836ee5e5f2a6f, type: 3}
+  m_Name: RadialDistortion
+  m_EditorClassIdentifier: 
+  active: 1
+  m_Material: {fileID: 0}
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-2263581922573943470
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -748,8 +768,8 @@ MonoBehaviour:
   - {fileID: -6365069635776777695}
   - {fileID: 6184612543910486582}
   - {fileID: -7107258706953464681}
-  - {fileID: -5670911342818779979}
   - {fileID: 594202974417872739}
+  - {fileID: -2445270358244402115}
 --- !u!114 &106336961593330077
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1235,6 +1255,33 @@ MonoBehaviour:
   intensity:
     m_OverrideState: 1
     m_Value: 0
+  speed:
+    m_OverrideState: 1
+    m_Value: 1
+  texture:
+    m_OverrideState: 1
+    m_Value: {fileID: 0}
+  colorMask:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  scale:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1}
+  offset:
+    m_OverrideState: 1
+    m_Value: {x: 0, y: 0}
+  twist:
+    m_OverrideState: 1
+    m_Value: 0.01
+  twistOffset:
+    m_OverrideState: 1
+    m_Value: 0
+  twistScale:
+    m_OverrideState: 1
+    m_Value: 10
+  maskMinMax:
+    m_OverrideState: 1
+    m_Value: {x: 0.2, y: 1.4}
 --- !u!114 &1501199423866068322
 MonoBehaviour:
   m_ObjectHideFlags: 3
