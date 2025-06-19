@@ -17,13 +17,17 @@ public class PickupManager : InteractionBehavior<IPickupable>
     public override IEnumerator OnDismiss()
     {
         yield return _item.Deselect();
-        Destroy((_item as MonoBehaviour).gameObject);
+        var item = (_item as MonoBehaviour);
+        Dismissed?.Invoke(item.gameObject, _item);
+
+        Destroy(item.gameObject);
         _item = null;
     }
 
     public override IEnumerator OnInteract(IPickupable interactable)
     {
         _item = interactable;
+        Interacted?.Invoke((_item as MonoBehaviour).gameObject, _item);
         if(_selectAfterPickup)
         {
             Controller.SwitchToInventory("KeyInventory");

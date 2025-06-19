@@ -18,6 +18,7 @@ public class BookPage : InventoryItemView, ITextDisplayer
     static Button _showTextButton;
     static Button _interuptButton;
     static TextMeshProUGUI _header;
+    static GameObject _pressE;
 
     private void Start()
     {
@@ -34,6 +35,7 @@ public class BookPage : InventoryItemView, ITextDisplayer
             _showTextButton = _textDisplayWindow.transform.FindDeepChild("Btn_ShowText").GetComponent<Button>();
             _interuptButton = _textDisplayWindow.transform.FindDeepChild("Btn_Interupt").GetComponent<Button>();
             _header = _textDisplayWindow.transform.FindDeepChild("Header").GetComponentInChildren<TextMeshProUGUI>(true);
+            _pressE = _textDisplayWindow.transform.FindDeepChild("PressE").gameObject;
         }
         _runner.LineView = _textDisplay;
 
@@ -42,12 +44,12 @@ public class BookPage : InventoryItemView, ITextDisplayer
     public void Activate()
     {
         _interuptButton.gameObject.SetActive(true);
-
         _runner.EnableTextArea();
     }
 
     public void Deactivate()
     {
+
         _interuptButton.gameObject.SetActive(false);
 
         _runner.InteruptDialogue();
@@ -65,9 +67,11 @@ public class BookPage : InventoryItemView, ITextDisplayer
     public override void Select()
     {
         Init();
+        _pressE.SetActive(false);
 
         _textDisplayWindow.gameObject.SetActive(true);
         _showTextButton.gameObject.SetActive(_haveDisplay);
+        _header.transform.parent.gameObject.SetActive(_haveDisplay);
         if (!_haveDisplay) return;
 
         _showTextButton.onClick.AddListener(_interactionSettings.ToggleNoteShowText);
@@ -85,6 +89,9 @@ public class BookPage : InventoryItemView, ITextDisplayer
     {
         Init();
         _showTextButton.gameObject.SetActive(!_haveDisplay);
+        _header.transform.parent.gameObject.SetActive(!_haveDisplay);
+
+        _pressE.SetActive(true);
 
         _showTextButton.onClick.RemoveListener(_interactionSettings.ToggleNoteShowText);
         _showTextButton.onClick.RemoveListener(SetActiveStateFromSettings);

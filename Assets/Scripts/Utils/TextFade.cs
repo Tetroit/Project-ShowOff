@@ -5,6 +5,7 @@ using UnityEngine;
 public class TextFade : MonoBehaviour
 {
     [SerializeField] float _time;
+    [SerializeField] Ease _ease;
     TextMeshPro _text;
     private void Awake()
     {
@@ -12,7 +13,12 @@ public class TextFade : MonoBehaviour
     }
     private void OnEnable()
     {
-        _text.alpha = 0.0f;
-        _text.DOFade(1, _time);
+        var startColor = _text.color;
+        startColor.a = 0f;
+        _text.color = startColor;
+
+        var endColor = startColor;
+        endColor.a = 1f;
+        _text.DOColor(endColor, _time).SetEase(_ease);
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace amogus
 {
+    [SelectionBase]
     public class Ladder : MonoBehaviour
     {
         public const bool noRotation = true;
