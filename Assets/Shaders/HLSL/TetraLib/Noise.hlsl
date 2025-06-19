@@ -1,6 +1,10 @@
 #ifndef TETRALIB_NOISE_INCLUDED
 #define TETRALIB_NOISE_INCLUDED
 
+float nrand(float uv)
+{
+    return frac(sin(dot(uv, 12.9898)) * 43758.5453);
+}
 float nrand(float2 uv)
 {
     return frac(sin(dot(uv, float2(12.9898, 78.233))) * 43758.5453);
@@ -12,6 +16,13 @@ float nrand(float3 uv)
 float nrand(float4 uv)
 {
     return frac(sin(dot(uv, float4(12.9898, 78.233, 975.7463, 47.9264))) * 43758.5453);
+}
+float2 nrand2(float2 uv)
+{
+    return float2(
+        nrand(uv * 5.2486 + float2(-97.5927, 1825.97)),
+        nrand(uv * 4.486 + float2(92.47, -25.97))
+   );
 }
 float3 nrand3(float3 uv)
 {
@@ -31,6 +42,28 @@ float4 nrand4(float3 uv)
    );
 }
 
+float LerpNoise(float fac)
+{
+    float peak1 = nrand(floor(fac));
+    float peak2 = nrand(ceil(fac));
+    float peakFac = frac(fac);
+    //return lerp(peak1, peak2, peakFac);
+    return lerp(peak1, peak2, smoothstep(0,1,peakFac));
+}
+float LerpNoise(float2 fac)
+{
+    float peak11 = nrand(floor(fac));
+    float peak22 = nrand(ceil(fac));
+    float peak12 = nrand(float2(floor(fac.x), ceil(fac.y)));
+    float peak21 = nrand(float2(ceil(fac.x), floor(fac.y)));
+    
+    float2 peakFac = smoothstep(0,1,frac(fac));
+
+    float peak1 = lerp(peak11, peak12, peakFac.y);
+    float peak2 = lerp(peak21, peak22, peakFac.y);
+
+    return lerp(peak1, peak2, peakFac.x);
+}
 float Voronoi3D (float3 pos, float3 scale, out float3 nodePos)
 {
 	pos /= scale;

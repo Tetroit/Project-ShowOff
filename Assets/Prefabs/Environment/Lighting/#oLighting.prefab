@@ -4837,6 +4837,7 @@ GameObject:
   - component: {fileID: 1466384111470521269}
   - component: {fileID: 6965166610853204617}
   - component: {fileID: 8299890699335400876}
+  - component: {fileID: 944439590589298303}
   - component: {fileID: 200771689113681054}
   - component: {fileID: 1937309166117708170}
   m_Layer: 0
@@ -4891,10 +4892,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsGlobal: 1
-  priority: 0.28
+  priority: 1
   blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 594f3f270013f9645982a779cb6d81dd, type: 2}
+  weight: 0
+  sharedProfile: {fileID: 11400000, guid: bb93509e9dca264409343bb7fecc6520, type: 2}
+--- !u!114 &944439590589298303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8314483466611515836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 2
+  blendDistance: 0
+  weight: 0
+  sharedProfile: {fileID: 11400000, guid: 387ab930f15872840a0b4d0ce14224f3, type: 2}
 --- !u!114 &200771689113681054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4911,6 +4929,7 @@ MonoBehaviour:
   volumes:
   - {fileID: 6965166610853204617}
   - {fileID: 8299890699335400876}
+  - {fileID: 944439590589298303}
 --- !u!95 &1937309166117708170
 Animator:
   serializedVersion: 7
@@ -4979,7 +4998,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsGlobal: 0
-  priority: 2
+  priority: 0.5
   blendDistance: 1.35
   weight: 1
   sharedProfile: {fileID: 11400000, guid: b50a72946b762be488d22ba04eaa24d8, type: 2}

@@ -19,6 +19,7 @@ public class BookPage : InventoryItemView, ITextDisplayer
     static Button _interuptButton;
     static TextMeshProUGUI _header;
     static GameObject _pressE;
+    static GameObject _clickNote;
 
     private void Start()
     {
@@ -36,6 +37,7 @@ public class BookPage : InventoryItemView, ITextDisplayer
             _interuptButton = _textDisplayWindow.transform.FindDeepChild("Btn_Interupt").GetComponent<Button>();
             _header = _textDisplayWindow.transform.FindDeepChild("Header").GetComponentInChildren<TextMeshProUGUI>(true);
             _pressE = _textDisplayWindow.transform.FindDeepChild("PressE").gameObject;
+            _clickNote = _textDisplayWindow.transform.FindDeepChild("ClickNote").gameObject;
         }
         _runner.LineView = _textDisplay;
 
@@ -72,6 +74,7 @@ public class BookPage : InventoryItemView, ITextDisplayer
         _textDisplayWindow.gameObject.SetActive(true);
         _showTextButton.gameObject.SetActive(_haveDisplay);
         _header.transform.parent.gameObject.SetActive(_haveDisplay);
+        _clickNote.SetActive(_haveDisplay);
         if (!_haveDisplay) return;
 
         _showTextButton.onClick.AddListener(_interactionSettings.ToggleNoteShowText);
@@ -90,6 +93,7 @@ public class BookPage : InventoryItemView, ITextDisplayer
         Init();
         _showTextButton.gameObject.SetActive(!_haveDisplay);
         _header.transform.parent.gameObject.SetActive(!_haveDisplay);
+        _clickNote.SetActive(!_haveDisplay);
 
         _pressE.SetActive(true);
 
