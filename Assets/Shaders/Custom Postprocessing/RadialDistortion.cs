@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
-using static Unity.VisualScripting.Member;
 
 [Serializable, VolumeComponentMenu("Post-processing/Custom/RadialDistortion")]
 public class RadialDistortion : CustomPostProcessVolumeComponent, IPostProcessComponent
