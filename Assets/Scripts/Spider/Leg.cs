@@ -13,7 +13,7 @@ public class Leg
 
 
     protected readonly Member[] members;
-    protected LegManager data;
+    protected SpiderController data;
 
     protected GizmosInfo _debug;
     Vector3 _nextTarget;
@@ -33,7 +33,7 @@ public class Leg
     public float ForwardReach;
     LayerMask _groundMask;
 
-    public Leg(float angleX, float angleY, BoxCollider legPrefab, int jointCount, LegManager data, float forwardReach, LayerMask groundMask)
+    public Leg(float angleX, float angleY, BoxCollider legPrefab, int jointCount, SpiderController data, float forwardReach, LayerMask groundMask)
     {
         this.data = data;
         _angleX = angleX;
@@ -191,11 +191,14 @@ public class Leg
     public void OnDrawGizmos()
     {
         if (_debug == null) return;
-       
+
         Gizmos.color = Color.white;
-        Vector3 direction = data.DistanceFromBody * GetScale() * GetYAngle() + data.transform.forward * (data.IsMoving ? data.ForwardReach * GetScale() : 0);
-        Ray ray = new(data.transform.position + direction, -data.transform.up * GetScale());
-        Gizmos.DrawRay(ray);
+        Vector3 direction = data.DistanceFromBody * GetScale() * GetYAngle() + data.transform.forward * (data.IsMoving ? ForwardReach * GetScale() : 0);
+        //in case the ground is higher than the body position, so the ray doesn't ignore the mesh 
+        Vector3 abovePoint = data.AbovePointHeight * GetScale() * data.transform.up;
+        Vector3 origin = data.transform.position + abovePoint + direction;
+        Vector3 dir = -data.transform.up * (GetLegReach() + abovePoint.magnitude);
+        Gizmos.DrawLine(origin, origin + dir);
 
         Gizmos.color = Color.yellow;
 

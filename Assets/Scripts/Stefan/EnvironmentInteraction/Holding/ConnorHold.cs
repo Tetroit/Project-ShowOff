@@ -14,22 +14,26 @@ public class ConnorHold : HoldManager
     Coroutine _itemHoldBehavior;
     Quaternion baseRotation = Quaternion.identity;
     int _rotationState = 1;
+    InteractionManager _interactionManager;
 
     public override void Init(InputFacade input)
     {
         _input = input;
         _input.UI.Click.started += OnMouseClick;
         _cam = Camera.main;
-
+        _interactionManager = GetComponent<InteractionManager>();
     }
 
     void OnMouseClick(InputAction.CallbackContext context)
     {
-        if(!(Physics.Raycast(_cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit)
-            &&
-            hit.transform.TryGetComponent<IHoldable>(out _))
-        )
+        if(!Physics.Raycast(
+            _cam.ScreenPointToRay(Mouse.current.position.ReadValue()),
+            out RaycastHit hit,
+            1,
+            1<< LayerMask.NameToLayer("Interactable"))
+            )
         {
+            _interactionManager.Dissmised();
             return;
         }
 

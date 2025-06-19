@@ -170,7 +170,8 @@ namespace amogus
             if (!lockControls)
             {
                 Vector3 forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;
-                Vector3 up = Vector3.up;
+                Vector3 up;
+
                 //account for slope
                 if (isGrounded)
                 {
@@ -194,7 +195,10 @@ namespace amogus
                         needsCrouchHandling = false;
                     }
                     else if (PlayerInputHandler.Instance.SprintPressed)
-                        SwitchState(MovementState.Sprint);
+                    {
+                        if (!Physics.Raycast(transform.position, transform.up, _roofDetectionRange))
+                            SwitchState(MovementState.Sprint);
+                    }
                 }
                 else
                 {
@@ -242,7 +246,6 @@ namespace amogus
             }
 
 
-
             moveDirection = moveDirection.normalized * state.movementSpeed;
             Vector3 rbCopy;
             if (isGrounded)
@@ -255,7 +258,6 @@ namespace amogus
                 rbCopy = rb.linearVelocity + new Vector3(moveDirection.x * state.airSpeed, 0, moveDirection.z * state.airSpeed);
                 rb.useGravity = true;
             }
-
 
 
             //-------------COLLISION RESOLUTION-------------
@@ -301,7 +303,6 @@ namespace amogus
                 }
             }
         }
-
 
         public void SwitchState (MovementState newState)
         {

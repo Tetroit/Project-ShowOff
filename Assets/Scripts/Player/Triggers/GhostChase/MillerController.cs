@@ -3,7 +3,6 @@ using FMODUnity;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
 
 namespace amogus
 {
@@ -28,6 +27,8 @@ namespace amogus
         void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
+            _anim.Play("Idle");
+
         }
 
         private void Update()
@@ -85,8 +86,7 @@ namespace amogus
         {
             if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
 
-            WindowManager.Instance.TrySwitchWindow("GameOverUI");
-            _gameStateManager.SwitchState<S_Pause>();
+            _gameStateManager.SwitchToGameOver();
         }
     }
 }
