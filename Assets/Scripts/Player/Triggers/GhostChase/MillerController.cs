@@ -27,7 +27,7 @@ namespace amogus
         void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-            _anim.Play("Walk");
+            _anim.Play("Idle");
 
         }
 
