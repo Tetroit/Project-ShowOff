@@ -193,27 +193,7 @@ MonoBehaviour:
       - rid: 7259578447211528215
       - rid: 7259578447211528216
     m_RuntimeSettings:
-      m_List:
-      - rid: 8556427327610290176
-      - rid: 8556427327610290180
-      - rid: 7259578447211528192
-      - rid: 7259578447211528193
-      - rid: 7259578447211528194
-      - rid: 7259578447211528195
-      - rid: 7259578447211528197
-      - rid: 7259578447211528198
-      - rid: 7259578447211528199
-      - rid: 7259578447211528202
-      - rid: 7259578447211528203
-      - rid: 7259578447211528204
-      - rid: 7259578447211528205
-      - rid: 7259578447211528206
-      - rid: 7259578447211528209
-      - rid: 7259578447211528210
-      - rid: 7259578447211528212
-      - rid: 7259578447211528213
-      - rid: 7259578447211528214
-      - rid: 7259578447211528215
+      m_List: []
   renderingLayerNames:
   - Light Layer default
   - Light Layer 1
@@ -336,10 +316,14 @@ MonoBehaviour:
           m_CustomPostProcessTypesAsString: []
         m_AfterPostProcessBlursCustomPostProcesses:
           m_InjectionPoint: 4
-          m_CustomPostProcessTypesAsString: []
+          m_CustomPostProcessTypesAsString:
+          - Blink, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
         m_AfterPostProcessCustomPostProcesses:
           m_InjectionPoint: 2
-          m_CustomPostProcessTypesAsString: []
+          m_CustomPostProcessTypesAsString:
+          - SpriteStream, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+          - RadialDistortion, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
     - rid: 7259578447211528196
       type: {class: DiffusionProfileDefaultSettings, ns: UnityEngine.Rendering.HighDefinition, asm: Unity.RenderPipelines.HighDefinition.Runtime}
       data:
