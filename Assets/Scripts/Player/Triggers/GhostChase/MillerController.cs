@@ -84,8 +84,7 @@ namespace amogus
         {
             if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
 
-            WindowManager.Instance.TrySwitchWindow("GameOverUI");
-            _gameStateManager.SwitchState<S_Pause>();
+            _gameStateManager.SwitchToGameOver();
         }
     }
 }

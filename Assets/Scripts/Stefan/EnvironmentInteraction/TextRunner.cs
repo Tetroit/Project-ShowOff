@@ -6,6 +6,9 @@ public class TextRunner : MonoBehaviour
 {
     public LineView LineView;
     [SerializeField] DialogueLine[] _lines;
+    [SerializeField] bool _overridePause;
+    [SerializeField] float _holdBeforeEnd;
+    [SerializeField] float _holdTime;
     [SerializeField] bool _runOnStart;
     [SerializeField] bool _disableAfterFinish;
     [SerializeField] bool _useDialogueTime;
@@ -71,9 +74,15 @@ public class TextRunner : MonoBehaviour
         currentDialogueIndex = i;
         var line = _lines[i];
         _currentDialogue = line;
+        if(_overridePause)
+            this.LineView.holdTime = _holdTime;
         i++;
         if (i > _lines.Length - 1)
+        {
+            if (_overridePause)
+                LineView.holdTime = _holdBeforeEnd;
             LineView.RunLine(line, () => { if (_disableAfterFinish) DisableTextArea(); });
+        }
         else
         {
             LineView.RunLine(line, () => {
