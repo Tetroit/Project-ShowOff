@@ -5376,6 +5376,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8779041887700218328}
   - component: {fileID: 2389814610329395595}
+  - component: {fileID: 6334553104927372864}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5398,6 +5399,8 @@ Transform:
   m_Children:
   - {fileID: 3234403363261146957}
   - {fileID: 7383816030633284379}
+  - {fileID: 6394511120067244778}
+  - {fileID: 2713855686173304460}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2389814610329395595
@@ -5424,6 +5427,35 @@ MonoBehaviour:
     asset: {fileID: 11400000, guid: aca1da869e0f430428708b27ee959e3a, type: 2}
   - key: arm rip
     asset: {fileID: 11400000, guid: 4af9a441b35b7df419268a8eadf57d49, type: 2}
+--- !u!320 &6334553104927372864
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4252457874729850611}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -8469160735278646148, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
+    value: {fileID: 1517695482512913670}
+  - key: {fileID: 8346864088782878413, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1476227785420586532, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -4251945743406117540, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 8008783979479372380, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
+    value: {fileID: 5016133296133080745}
+  - key: {fileID: 890028651535349766, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &5016133296133080745
 GameObject:
   m_ObjectHideFlags: 0
@@ -5703,6 +5735,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crouchTrigger: {fileID: 0}
+--- !u!1 &5607952573330744811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2713855686173304460}
+  - component: {fileID: 7211566619165958773}
+  m_Layer: 0
+  m_Name: UnderwaterArms
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2713855686173304460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5607952573330744811}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.2066526, y: -6.6654997, z: -1.4931946}
+  m_LocalScale: {x: 1, y: 0.25472, z: 1.500055}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6869030694235901122}
+  m_Father: {fileID: 8779041887700218328}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &7211566619165958773
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5607952573330744811}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5934188970371696708
 GameObject:
   m_ObjectHideFlags: 0
