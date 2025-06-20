@@ -13,7 +13,28 @@ float invLerpByMinAndScale (float fac, float min, float scale)
 //made to get rid of the division part
 	return (fac - min) * scale;
 }
-
+float invLerpByMinAndMax (float fac, float min, float max)
+{
+//scale = 1 / (max - min)
+//made to get rid of the division part
+	return (fac - min) / (max - min);
+}
+float invLerpByMinAndScaleClamped (float fac, float min, float scale)
+{
+//scale = 1 / (max - min)
+//made to get rid of the division part
+	return saturate((fac - min) * scale);
+}
+float invLerpByMinAndMaxClamped (float fac, float min, float max)
+{
+//scale = 1 / (max - min)
+//made to get rid of the division part
+	return saturate((fac - min) / (max - min));
+}
+float2 lenSqr(float2 v1)
+{
+	return dot(v1, v1);
+}
 float3 lenSqr(float3 v1)
 {
 	return dot(v1, v1);
