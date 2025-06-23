@@ -46,22 +46,22 @@ public class UIMainMenu : MonoBehaviour
                 Application.OpenURL("https://www.linkedin.com/in/ivan-shychynov-b6a9482ba/");
                 break;
             case "Stefan":
-                Application.OpenURL("");
+                Application.OpenURL("https://www.linkedin.com/in/stefan-carpeliuc-b2880427b/");
                 break;
             case "Connor":
-                Application.OpenURL("");
+                Application.OpenURL("https://www.linkedin.com/in/connor-smith-59222a253/");
                 break;
             case "Lluis":
-                Application.OpenURL("");
+                Application.OpenURL("https://www.linkedin.com/in/lluis-alguersuari-4831562b9/");
                 break;
             case "Rianne":
                 Application.OpenURL("https://www.linkedin.com/in/rianne-jongerius-0410411ab/");
                 break;
             case "Kyra":
-                Application.OpenURL("");
+                Application.OpenURL("https://www.linkedin.com/in/kyra-zendman-2467bb223/");
                 break;
             case "Jade":
-                Application.OpenURL("");
+                Application.OpenURL("https://www.linkedin.com/in/jade-izmirlioglu/");
                 break;
         }
     }
