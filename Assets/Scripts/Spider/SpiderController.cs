@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,6 +81,9 @@ public class SpiderController : MonoBehaviour
 
     //for debug
     Vector3 _closestContactPoint;
+
+    //for FMOD
+    [SerializeField] EventReference sound;
 
     void Start()
     {
@@ -272,6 +276,11 @@ public class SpiderController : MonoBehaviour
         UnityEngine.Gizmos.color = Color.black;
         //UnityEngine.Gizmos.DrawSphere(transform.position /*+ transform.up * GetSize() * .5f*/, (GroundOffset + .7f) * GetSize());
         UnityEngine.Gizmos.DrawSphere(_closestContactPoint, .2f * transform.lossyScale.y);
+    }
+
+    private void OnEnable()
+    {
+        AudioManager.instance.PlayOneShot(sound, transform.position);
     }
 
     void OnDisable()

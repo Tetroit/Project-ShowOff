@@ -33,7 +33,7 @@ public class ConnorHold : HoldManager
             1<< LayerMask.NameToLayer("Interactable"))
             )
         {
-            _interactionManager.Dissmised();
+            //_interactionManager.Dissmised();
             return;
         }
 
