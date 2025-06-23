@@ -92,5 +92,5 @@ public static class UnityEventUtility
             serializedObject.ApplyModifiedProperties();
         }
     }
-#endif
 }
+#endif

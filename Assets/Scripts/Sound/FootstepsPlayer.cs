@@ -1,6 +1,4 @@
-using UnityEditor.ShaderGraph.Legacy;
 using UnityEngine;
-using UnityEngine.Rendering.HighDefinition;
 
 public class FootstepsPlayer : MonoBehaviour
 {
