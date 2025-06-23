@@ -2,10 +2,10 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{9ba75da3-818e-4a45-b679-b561c7c94713}">
 		<property name="name">
-			<value>FenceToggle</value>
+			<value>FenceClose</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{dfd5d448-04d8-4853-a023-b78d5a79528b}</destination>
@@ -92,6 +92,9 @@
 	</object>
 	<object class="MixerBusPanner" id="{ec6f1380-09e4-4c49-8349-54fb27cf63e7}" />
 	<object class="MultiSound" id="{253425db-dba6-4961-aeea-7017e322c498}">
+		<property name="start">
+			<value>0.65000000000000002</value>
+		</property>
 		<property name="length">
 			<value>2</value>
 		</property>
@@ -122,6 +125,7 @@
 	<object class="MixerBusEffectChain" id="{c1014921-2fb9-407f-a1a9-cf2e29941a83}">
 		<relationship name="effects">
 			<destination>{59783986-586d-49fd-be68-da432f7acdc2}</destination>
+			<destination>{74e773b5-ab56-484f-b15d-20afa5bc7bb4}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{6a4e9f9a-1c5b-4937-99d2-9624396b22a3}" />
@@ -145,6 +149,9 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{cb43e2a1-8e23-48a2-85eb-a54ad2e47ece}">
+		<property name="startOffset">
+			<value>13.5</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{96bcab77-edb4-4fd3-9a7f-e1763126e140}</destination>
 		</relationship>
@@ -162,9 +169,10 @@
 	</object>
 	<object class="MixerBusPanner" id="{30cea0bb-603a-4b56-8f0a-9be77cc351b1}" />
 	<object class="MixerBusFader" id="{59783986-586d-49fd-be68-da432f7acdc2}" />
+	<object class="SpatialiserEffect" id="{74e773b5-ab56-484f-b15d-20afa5bc7bb4}" />
 	<object class="AutomationPoint" id="{0766c942-a086-4775-b10a-3a80cd6c3ad7}">
 		<property name="position">
-			<value>1</value>
+			<value>1.6499999999999999</value>
 		</property>
 		<property name="value">
 			<value>1</value>
@@ -175,7 +183,7 @@
 	</object>
 	<object class="AutomationPoint" id="{33582033-ebc1-42e7-a061-3c940e4007dd}">
 		<property name="position">
-			<value>2</value>
+			<value>2.6499999999999986</value>
 		</property>
 		<property name="value">
 			<value>0</value>
