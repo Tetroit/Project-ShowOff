@@ -8,4 +8,10 @@ public class PostProcessingManager : MonoBehaviour
     public Volume mainVolume;
 
     public List<Volume> volumes = new();
+
+    public List<float> overrideWeights = new();
+
+    public void Update()
+    {
+    }
 }

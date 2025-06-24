@@ -110,6 +110,12 @@ MonoBehaviour:
   _runner: {fileID: 6401850189536414502}
   _interactionSettings: {fileID: 11400000, guid: ad4a5144977d1174d960034d7795a0aa, type: 2}
   <PagePrefab>k__BackingField: {fileID: 7098146086979426264, guid: fe613d6139548d44bae35031c79c7bfe, type: 3}
+  <OnRotate>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  <OnDismiss>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6401850189536414502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,6 +130,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LineView: {fileID: 0}
   _lines: []
+  _overridePause: 0
+  _holdBeforeEnd: 0
+  _holdTime: 0
   _runOnStart: 0
   _disableAfterFinish: 0
   _useDialogueTime: 0
