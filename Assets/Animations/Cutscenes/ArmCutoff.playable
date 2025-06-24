@@ -660,6 +660,57 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events: []
+--- !u!114 &-7220816059101082003
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987a467495df9d942b56b1b51381d095, type: 3}
+  m_Name: FMODEventPlayable
+  m_EditorClassIdentifier: 
+  Template:
+    EventReference:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+    StopType: 0
+    Parameters: []
+    ParameterLinks: []
+    ParameterAutomation:
+      Slot00: 0
+      Slot01: 0
+      Slot02: 0
+      Slot03: 0
+      Slot04: 0
+      Slot05: 0
+      Slot06: 0
+      Slot07: 0
+      Slot08: 0
+      Slot09: 0
+      Slot10: 0
+      Slot11: 0
+      Slot12: 0
+      Slot13: 0
+      Slot14: 0
+      Slot15: 0
+  EventLength: 33.358
+  eventName: 
+  EventReference:
+    Guid:
+      Data1: -1771971082
+      Data2: 1214447032
+      Data3: 1309168283
+      Data4: -1754508342
+    Path: event:/VoiceActing/ArmBreakDialogue
+  StopType: 0
+  Parameters: []
 --- !u!114 &-6612835396233607573
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6079,6 +6130,100 @@ MonoBehaviour:
   m_Markers:
     m_Objects: []
   m_PostPlaybackState: 3
+--- !u!114 &-1008122402866417836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 133253f56854570409c222a87786b263, type: 3}
+  m_Name: FMOD Event Track (1)
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 4.8
+    m_ClipIn: 0
+    m_Asset: {fileID: 3787891326493141287}
+    m_Duration: 39.810001373291016
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -1008122402866417836}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: ArmBreakMusicFull
+  m_Markers:
+    m_Objects: []
+  template:
+    volume: 1
 --- !u!114 &-992242323562870467
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6142,6 +6287,7 @@ MonoBehaviour:
   - {fileID: -8783423305451365084}
   - {fileID: -1864133160808942704}
   - {fileID: 4642411552298685896}
+  - {fileID: -1008122402866417836}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 30
@@ -6531,6 +6677,57 @@ MonoBehaviour:
   m_Loop: 0
   m_Version: 1
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
+--- !u!114 &3787891326493141287
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987a467495df9d942b56b1b51381d095, type: 3}
+  m_Name: FMODEventPlayable
+  m_EditorClassIdentifier: 
+  Template:
+    EventReference:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+    StopType: 0
+    Parameters: []
+    ParameterLinks: []
+    ParameterAutomation:
+      Slot00: 0
+      Slot01: 0
+      Slot02: 0
+      Slot03: 0
+      Slot04: 0
+      Slot05: 0
+      Slot06: 0
+      Slot07: 0
+      Slot08: 0
+      Slot09: 0
+      Slot10: 0
+      Slot11: 0
+      Slot12: 0
+      Slot13: 0
+      Slot14: 0
+      Slot15: 0
+  EventLength: 39.81
+  eventName: 
+  EventReference:
+    Guid:
+      Data1: -337135386
+      Data2: 1284099589
+      Data3: -198571625
+      Data4: -501651894
+    Path: event:/Music/ArmBreakMusicFull
+  StopType: 0
+  Parameters: []
 --- !u!114 &4266367345703670212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7418,10 +7615,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 5
+    m_Start: 4.8
     m_ClipIn: 0
-    m_Asset: {fileID: 8551010100737025960}
-    m_Duration: 25.051000595092773
+    m_Asset: {fileID: -7220816059101082003}
+    m_Duration: 39.810001373291016
     m_TimeScale: 1
     m_ParentTrack: {fileID: 6589744318534200025}
     m_EaseInDuration: 0
@@ -7485,7 +7682,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: ArmBreakMusic
+    m_DisplayName: ArmBreakDialogue
   m_Markers:
     m_Objects: []
   template:
@@ -7682,57 +7879,6 @@ MonoBehaviour:
   m_OpenClipOffsetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_ApplyOffsets: 0
---- !u!114 &8551010100737025960
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 987a467495df9d942b56b1b51381d095, type: 3}
-  m_Name: FMODEventPlayable
-  m_EditorClassIdentifier: 
-  Template:
-    EventReference:
-      Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
-    StopType: 0
-    Parameters: []
-    ParameterLinks: []
-    ParameterAutomation:
-      Slot00: 0
-      Slot01: 0
-      Slot02: 0
-      Slot03: 0
-      Slot04: 0
-      Slot05: 0
-      Slot06: 0
-      Slot07: 0
-      Slot08: 0
-      Slot09: 0
-      Slot10: 0
-      Slot11: 0
-      Slot12: 0
-      Slot13: 0
-      Slot14: 0
-      Slot15: 0
-  EventLength: 25.051
-  eventName: 
-  EventReference:
-    Guid:
-      Data1: -1786140671
-      Data2: 1222314665
-      Data3: -1128291649
-      Data4: 1460971045
-    Path: event:/Music/ArmBreakMusic
-  StopType: 0
-  Parameters: []
 --- !u!114 &8557858553042126379
 MonoBehaviour:
   m_ObjectHideFlags: 1
