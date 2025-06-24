@@ -26,6 +26,8 @@ namespace amogus
     {
         [SerializeField] List<PhysicsControllerState> states = new List<PhysicsControllerState>();
         [SerializeField] MovementState currentState = 0;
+        [SerializeField] private float walkFOV = 60f;
+        [SerializeField] private float sprintFOV = 60f;
         public PhysicsControllerState state => states[(int)currentState];
 
         public float height
@@ -228,7 +230,7 @@ namespace amogus
             {
                 if(!_startedSprinting)
                 {
-                    OnFOVChange?.Invoke(80);
+                    OnFOVChange?.Invoke(sprintFOV);
                 }
                 _startedSprinting = true;
                 _stopedSprinting = false;
@@ -237,7 +239,7 @@ namespace amogus
             {
                 if(!_stopedSprinting)
                 {
-                    OnFOVChange?.Invoke(60);
+                    OnFOVChange?.Invoke(walkFOV);
 
                 }
                 _startedSprinting = false;
