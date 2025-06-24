@@ -5481,6 +5481,7 @@ GameObject:
   - component: {fileID: 7143161083505511038}
   - component: {fileID: 1517695482512913670}
   - component: {fileID: 4561254371200007251}
+  - component: {fileID: 19856732577601437}
   m_Layer: 8
   m_Name: Player avatar
   m_TagString: Untagged
@@ -5745,6 +5746,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crouchTrigger: {fileID: 0}
+--- !u!114 &19856732577601437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5016133296133080745}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6bd6fc2e05e9cd4b8b2b8951f9534db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fearPostProcessing: {fileID: 0}
+  closeCapDist: 2
+  farCapDist: 10
+  closeCapValue: 1
+  farCapValue: 0
 --- !u!1 &5479127651129596375
 GameObject:
   m_ObjectHideFlags: 0
