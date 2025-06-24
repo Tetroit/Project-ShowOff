@@ -190,7 +190,7 @@ namespace amogus
                 {
                     if (needsCrouchHandling)
                     {
-                        if (!Physics.Raycast(transform.position, transform.up, _roofDetectionRange))
+                        if (!Physics.Raycast(transform.position, transform.up, _roofDetectionRange,int.MaxValue,QueryTriggerInteraction.Ignore))
                             SwitchState(MovementState.Walk);
                         needsCrouchHandling = false;
                     }

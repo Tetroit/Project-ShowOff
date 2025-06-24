@@ -8,10 +8,17 @@ public class HandController : MonoBehaviour
     [SerializeField] TimelineAsset _grabAnimator;
     [SerializeField] TimelineAsset _lighterAnimator;
     [SerializeField] PlayableDirector _playableDirector;
+    bool _canGrab = true;
+    public void DisableGrab()
+    {
+        _canGrab = false;
+    }
 
     [ContextMenu("Grab")]
     public void PlayGrab()
     {
+        if (!_canGrab) return;
+
         _playableDirector.time = 1;
         _playableDirector.Evaluate();
         _playableDirector.playableAsset = _grabAnimator;
