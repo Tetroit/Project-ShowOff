@@ -16,6 +16,7 @@ public class PostProcessingManagerEditor : Editor
         if (GUILayout.Button ("Add Volume"))
         {
             manager.volumes.Add(null);
+            manager.overrideWeights.Add(1f);
         }
 
         for (int i=0;  i<manager.volumes.Count; i++)

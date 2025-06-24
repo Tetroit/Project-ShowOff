@@ -1,8 +1,4 @@
-using Mono.Cecil;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -35,25 +31,11 @@ public class AnimationClipContext : MonoBehaviour
         return playableDirectorContext != null;
     }
 
-
     private void OnDisable()
     {
         Unbind();
     }
-    /// <summary>
-    /// Path is relative to Assets folder.
-    /// </summary>
-    /// <param name="path"></param>
-    public AnimationClip LoadClip(string path)
-    {
-        animationClipContext = AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
-        return animationClipContext;
-    }
-    public TimelineAsset LoadTimeline(string path)
-    {
-        timelineAssetContext = AssetDatabase.LoadAssetAtPath<TimelineAsset>(path);
-        return timelineAssetContext;
-    }
+
     /// <summary>
     /// Gets an animation clip from <seealso cref="timelineAssetContext"/> by name.
     /// </summary>
@@ -176,22 +158,12 @@ public class AnimationClipContext : MonoBehaviour
         }
         return null;
     }
-    public void GetTimelineClipFromAnimationTrack()
-    {
-        GetTimelineClipFromAnimationTrack(inputField);
-    }
-    public void GetTimelineClipFromAnimationTrack(string name)
-    {
-        var clips = animationTrackContext.GetClips();
-        foreach (var clip in clips)
-        {
-            if (clip.animationClip.name == inputField)
-            {
-                timelineClipContext = clip;
-                return;
-            }
-        }
-    }
+
+
+
+
+
+#if UNITY_EDITOR
     public void GetAnimationPlayableAsset()
     {
         animationPlayableAsset = (AnimationPlayableAsset)timelineClipContext.asset;
@@ -220,8 +192,37 @@ public class AnimationClipContext : MonoBehaviour
         generatedATII = atii;
         return atii;
     }
+    public void GetTimelineClipFromAnimationTrack()
+    {
+        GetTimelineClipFromAnimationTrack(inputField);
+    }
+    public void GetTimelineClipFromAnimationTrack(string name)
+    {
+        var clips = animationTrackContext.GetClips();
+        foreach (var clip in clips)
+        {
+            if (clip.animationClip.name == inputField)
+            {
+                timelineClipContext = clip;
+                return;
+            }
+        }
+    }
 
-#if UNITY_EDITOR
+    /// <summary>
+    /// Path is relative to Assets folder.
+    /// </summary>
+    /// <param name="path"></param>
+    public AnimationClip LoadClip(string path)
+    {
+        animationClipContext = UnityEditor.AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
+        return animationClipContext;
+    }
+    public TimelineAsset LoadTimeline(string path)
+    {
+        timelineAssetContext = UnityEditor.AssetDatabase.LoadAssetAtPath<TimelineAsset>(path);
+        return timelineAssetContext;
+    }
 
     [Space(20)]
     [Header("Editing")]
@@ -259,7 +260,7 @@ public class AnimationClipContext : MonoBehaviour
         if (timelineAssetContext == null)
             return;
         list.Clear();
-        list.Add(AssetDatabase.GetAssetPath(timelineAssetContext));
+        list.Add(UnityEditor.AssetDatabase.GetAssetPath(timelineAssetContext));
     }
 #endif
 }

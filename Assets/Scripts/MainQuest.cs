@@ -26,6 +26,7 @@ public class MainQuest : MonoBehaviour
     [SerializeField] PlayerTrigger footstepTriggerEnd;
     [SerializeField] FollowingSteps footsteps;
     [SerializeField] QuickTimeEvent doorCloseQTE;
+    [SerializeField] FearValue fearValue;
 
     private void Awake()
     {
@@ -90,7 +91,12 @@ public class MainQuest : MonoBehaviour
                 }
                 {
                     var pltr = doorCloseQTE.GetComponent<PlayerTrigger>();
-                    pltr.enabled = true;    
+                    pltr.enabled = true;
+                }
+
+                if (fearValue != null)
+                {
+                    fearValue.enabled = true;
                 }
 
                 if (!instant)
@@ -117,6 +123,15 @@ public class MainQuest : MonoBehaviour
             case QuestStep.GhostChaseEnded:
 
                 HallwayDoor.enabled = true;
+
+                if (fearValue != null)
+                {
+                    if (instant)
+                        fearValue.enabled = false;
+                    else
+                        fearValue.SmoothlyDisable(1f);
+                }
+
                 if (instant)
                     HallwayDoor.CloseInstant();
                 else
