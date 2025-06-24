@@ -7359,6 +7359,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &518560995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4135395216476462213, guid: 85b3d20f761fbf84494e47655f25ff81, type: 3}
+  m_PrefabInstance: {fileID: 622323621}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &518780153 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 627377105167913976, guid: 780f8b5bbeb9b484d83adcc44d717adb, type: 3}
@@ -8649,13 +8654,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4135395216476462213, guid: 85b3d20f761fbf84494e47655f25ff81, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 622323623}
   m_SourcePrefab: {fileID: 100100000, guid: 85b3d20f761fbf84494e47655f25ff81, type: 3}
 --- !u!4 &622323622 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3614192193060570687, guid: 85b3d20f761fbf84494e47655f25ff81, type: 3}
   m_PrefabInstance: {fileID: 622323621}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &622323623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518560995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4aef79c0eea29642aa3564fded8f76d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noteText: In shake container hand controller there is a method you can use to disable
+    grabbing animation. Play it after animation ends.-Stefan
+  noteType: 0
 --- !u!114 &624530062 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5569758185806094273, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
@@ -11070,7 +11093,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 4af9a441b35b7df419268a8eadf57d49, type: 2}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 28
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.data[2].key
@@ -11179,7 +11202,7 @@ PrefabInstance:
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.data[28].key
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: -1008122402866417836, guid: 4af9a441b35b7df419268a8eadf57d49, type: 2}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.data[29].key
       value: 
@@ -50114,6 +50137,63 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4358153242147735597, guid: 2ebca0f6c939ecd4486c0a5934d99f7e, type: 3}
   m_PrefabInstance: {fileID: 1033328284}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4575435818764454859
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4848711749443640724, guid: 034116c9ccb71414a808550af135056f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848711749443640724, guid: 034116c9ccb71414a808550af135056f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848711749443640724, guid: 034116c9ccb71414a808550af135056f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848711749443640724, guid: 034116c9ccb71414a808550af135056f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848711749443640724, guid: 034116c9ccb71414a808550af135056f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848711749443640724, guid: 034116c9ccb71414a808550af135056f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848711749443640724, guid: 034116c9ccb71414a808550af135056f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848711749443640724, guid: 034116c9ccb71414a808550af135056f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848711749443640724, guid: 034116c9ccb71414a808550af135056f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848711749443640724, guid: 034116c9ccb71414a808550af135056f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4946734557564434841, guid: 034116c9ccb71414a808550af135056f, type: 3}
+      propertyPath: m_Name
+      value: terrain Prefab Backup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 034116c9ccb71414a808550af135056f, type: 3}
 --- !u!1 &4589396150323399777 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4374048371990156940, guid: 2ebca0f6c939ecd4486c0a5934d99f7e, type: 3}
@@ -50261,6 +50341,7 @@ SceneRoots:
   - {fileID: 2053595095}
   - {fileID: 1473989995}
   - {fileID: 937621582}
+  - {fileID: 4575435818764454859}
   - {fileID: 2047016086}
   - {fileID: 1914047732}
   - {fileID: 508282579}
