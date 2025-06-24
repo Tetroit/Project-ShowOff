@@ -1622,6 +1622,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4771918491848217281, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: fearValue
+      value: 
+      objectReference: {fileID: 737061646}
     - target: {fileID: 5509021221073766117, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
@@ -1707,13 +1711,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1952811777}
     - target: {fileID: 8035374607032988517, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: totalTime
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035374607032988517, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: pressCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035374607032988517, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: OnFail.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035374607032988517, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: OnActionPress.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8035374607032988517, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: OnFail.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1376461560}
+    - target: {fileID: 8035374607032988517, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: OnActionPress.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8242459016653386791, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.988
@@ -1778,7 +1798,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe42fb212e2b3604cb88545c60f2dac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  successAnimationClips: []
+  successAnimationClips:
+  - insertTime: 3.9666667
+    trackName: MillerApproach
+    clip: {fileID: 7400000, guid: 4e5d1f905d04c5a4d9fd03c6f424674e, type: 2}
+    positionOffset: {x: -1.4780002, y: -4.986, z: 9.074293}
+    rotationOffset: {x: 0, y: 270, z: 0}
+    fadeInTime: -1
+    fadeOutTime: -1
+    duration: 1.2666667
+    startOffset: 1
+  - insertTime: 3.0166667
+    trackName: Player_MillerApproach
+    clip: {fileID: 7400000, guid: 05a8887861298924b98a93bdbe9b0af9, type: 2}
+    positionOffset: {x: -0.47193813, y: -6.657, z: 27.980995}
+    rotationOffset: {x: 0.9629989, y: 88.968994, z: 0.004001829}
+    fadeInTime: 0.36666667
+    fadeOutTime: -1
+    duration: 1.45
+    startOffset: 1
+  - insertTime: 3.3833334
+    trackName: DoorTrack
+    clip: {fileID: 7400000, guid: af57695a472277a498524898980631e8, type: 2}
+    positionOffset: {x: 5.587, y: -13.5323715, z: 20.856}
+    rotationOffset: {x: 0, y: 270, z: 0}
+    fadeInTime: -1
+    fadeOutTime: -1
+    duration: 1.0833334
+    startOffset: 1
   failAnimationClips: []
   animationClipContext: {fileID: 200459049}
   animationTracks: []
@@ -1795,28 +1842,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timelineAssetContext: {fileID: 11400000, guid: 262949dd56ad0344d9ab6257d1b69364, type: 2}
-  animationTrackContext: {fileID: 0}
+  animationTrackContext: {fileID: 1197616662650281950, guid: 262949dd56ad0344d9ab6257d1b69364, type: 2}
   timelineClipContext:
     m_Version: 1
-    m_Start: 0
+    m_Start: 3.3833333333333333
     m_ClipIn: 0
     m_Asset: {fileID: 0}
-    m_Duration: 0
-    m_TimeScale: 0
-    m_ParentTrack: {fileID: 0}
+    m_Duration: 1.0833333333333333
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 1472034733867803359, guid: 262949dd56ad0344d9ab6257d1b69364, type: 2}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0
-    m_BlendOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1824,27 +1907,28 @@ MonoBehaviour:
     m_BlendOutCurveMode: 0
     m_ExposedParameterNames: []
     m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: 
-  animationPlayableAsset: {fileID: 0}
+    m_Recordable: 1
+    m_PostExtrapolationMode: 1
+    m_PreExtrapolationMode: 1
+    m_PostExtrapolationTime: Infinity
+    m_PreExtrapolationTime: 3.3833333333333333
+    m_DisplayName: DoorSuccesClip
+  animationPlayableAsset: {fileID: -4904857272821144104, guid: 262949dd56ad0344d9ab6257d1b69364, type: 2}
   animationClipContext: {fileID: 0}
   removeAfterOneNextPlay: []
-  inputField: 
-  list: []
+  inputField: DoorSuccesClip
+  list:
+  - DoorSuccesClip
   generatedATII:
-    insertTime: 0
-    trackName: 
+    insertTime: 3.3833334
+    trackName: DoorTrack
     clip: {fileID: 0}
-    positionOffset: {x: 0, y: 0, z: 0}
-    rotationOffset: {x: 0, y: 0, z: 0}
-    fadeInTime: 0
-    fadeOutTime: 0
-    duration: 0
-    startOffset: 0
+    positionOffset: {x: 5.587, y: -13.5323715, z: 20.856}
+    rotationOffset: {x: -0, y: 270, z: 0}
+    fadeInTime: -1
+    fadeOutTime: -1
+    duration: 1.0833334
+    startOffset: 1
 --- !u!114 &200459050 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8035374607032988517, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
@@ -2895,6 +2979,7 @@ MonoBehaviour:
   m_Script: {fileID: 1117125148}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Entries: []
 --- !u!4 &516339011
 Transform:
   m_ObjectHideFlags: 19
@@ -3606,6 +3691,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 19856732577601437, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: fearPostProcessing
+      value: 
+      objectReference: {fileID: 4910193030627814340}
     - target: {fileID: 67645630954950277, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: <Dismissed>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3672,7 +3761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2389814610329395595, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: timelines.Array.data[3].key
-      value: GhosteChaseEnd
+      value: GhostChaseEnd
       objectReference: {fileID: 0}
     - target: {fileID: 2389814610329395595, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: timelines.Array.data[3].asset
@@ -3896,6 +3985,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dad6005922f8bac4b83964957cb78719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &737061646 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 19856732577601437, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+  m_PrefabInstance: {fileID: 737061644}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560895870}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6bd6fc2e05e9cd4b8b2b8951f9534db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &737061648 stripped
@@ -11555,6 +11655,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 780f8b5bbeb9b484d83adcc44d717adb, type: 3}
+--- !u!114 &4910193030627814340 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8385487495685516739, guid: 780f8b5bbeb9b484d83adcc44d717adb, type: 3}
+  m_PrefabInstance: {fileID: 4910193030627814339}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5080452238359019962 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1106349720577250073, guid: 2ebca0f6c939ecd4486c0a5934d99f7e, type: 3}
