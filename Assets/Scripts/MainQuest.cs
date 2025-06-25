@@ -90,7 +90,7 @@ public class MainQuest : MonoBehaviour
                     gca.enabled = false;
                 }
                 {
-                    var pltr = doorCloseQTE.GetComponent<PlayerTrigger>();
+                    var pltr = doorCloseQTE.GetComponent<TimelinePlayerTrigger>();
                     pltr.enabled = true;
                 }
 
@@ -145,7 +145,7 @@ public class MainQuest : MonoBehaviour
                 else
                     OfficeDoor.SetExternally(true);
                 {
-                    var pltr = doorCloseQTE.GetComponent<PlayerTrigger>();
+                    var pltr = doorCloseQTE.GetComponent<TimelinePlayerTrigger>();
                     pltr.enabled = false;
                 }
                 break;

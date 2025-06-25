@@ -26,7 +26,10 @@ namespace amogus
         }
         protected virtual void TryUnlocking(PlayerFSM other)
         {
-            var inventory = FindAnyObjectByType<InventoryController>().transform.FindDeepChild("KeyInventory").gameObject.GetComponent<InventoryView>();
+            var controller = FindAnyObjectByType<InventoryController>(FindObjectsInactive.Include);
+            var keyInventoryTr = controller.transform.FindDeepChild("KeyInventory");
+            var inventory = keyInventoryTr.gameObject.GetComponent<InventoryView>();
+
             Key correctKey = inventory.First(k => (k as Key)?.doorCode == unlockCode) as Key;
             if (correctKey == null)
             {

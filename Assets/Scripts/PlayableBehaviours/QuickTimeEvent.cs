@@ -47,7 +47,7 @@ public class QuickTimeEvent : MonoBehaviour
         InputSystem.actions.FindActionMap("Player").FindAction(actionName).started += OnPress;
         isReading = true;
         pressCountCurrent = 0;
-
+        Debug.Log("QuickTimeEvent activated");
         if (indicator != null)
         {
             indicator.pressCount = pressCount;
