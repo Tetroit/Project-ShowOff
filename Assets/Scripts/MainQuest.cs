@@ -19,6 +19,7 @@ public class MainQuest : MonoBehaviour
     [SerializeField] QuestStep _currentStep = 0;
 
     [SerializeField] bool playAllStepsTillCurrentStepOnAwake = true;
+    [SerializeField] TimelinePlayerTrigger _floorFallTrigger;
     [SerializeField] DoorCutsceneTrigger LoreRoomDoor;
     [SerializeField] DoorCutsceneTrigger HallwayDoor;
     [SerializeField] DoorCutsceneTrigger OfficeDoor;
@@ -62,6 +63,10 @@ public class MainQuest : MonoBehaviour
             //case QuestStep.Start:
             //    LoreRoomDoor.Unlock();
             //    break;
+            case QuestStep.FellThroughFloor:
+                if (_floorFallTrigger == null) Debug.LogWarning("Go to Main quest and reference floor fall trigger");
+                else _floorFallTrigger.gameObject.SetActive(false); 
+                break;
             case QuestStep.FootstepsTriggered:
                 footstepTriggerStart.enabled = false;
                 footstepTriggerEnd.enabled = true;
