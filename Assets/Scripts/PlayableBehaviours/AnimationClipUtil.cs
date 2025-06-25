@@ -97,7 +97,7 @@ public class AnimationClipContext : MonoBehaviour
         }
 
         animationPlayableAsset.removeStartOffset = !startOffset;
-        Bind(GetComponent<PlayableDirector>());
+        Bind(playableDirectorContext);
         double directorTime = playableDirectorContext.time;
         playableDirectorContext.RebuildGraph();
         playableDirectorContext.time = directorTime;
