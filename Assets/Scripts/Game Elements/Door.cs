@@ -10,6 +10,8 @@ namespace amogus
         [SerializeField] Quaternion closedRotation;
         [SerializeField] EventReference doorOpenSFX;
         [SerializeField] EventReference doorCloseSFX;
+        [SerializeField] EventReference doorUnlockSFX;
+        [SerializeField] EventReference unlockAttemptSFX;
         [SerializeField] private GameObject handle;
 
         public void OnEnable()
@@ -60,6 +62,22 @@ namespace amogus
             if (AudioManager.instance != null)
             {
                 AudioManager.instance.PlayOneShot(doorCloseSFX, handle.transform.position);
+            }
+        }
+
+        public void PlayUnlockSound()
+        {
+            if(AudioManager.instance != null)
+            {
+                AudioManager.instance.PlayOneShot(doorUnlockSFX, handle.transform.position);
+            }
+        }
+
+        public void PlayAttemptUnlockSound()
+        {
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.PlayOneShot(unlockAttemptSFX, handle.transform.position);
             }
         }
     }

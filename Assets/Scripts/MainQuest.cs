@@ -129,7 +129,7 @@ public class MainQuest : MonoBehaviour
                     if (instant)
                         fearValue.enabled = false;
                     else
-                        fearValue.SmoothlyDisable(1f);
+                        fearValue.SmoothlyDisable(4f);
                 }
 
                 if (instant)
