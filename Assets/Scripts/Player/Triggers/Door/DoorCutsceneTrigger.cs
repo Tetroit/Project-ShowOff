@@ -163,6 +163,7 @@ namespace amogus
 
         public override void Unlock()
         {
+            door.PlayUnlockSound();
             isLocked = false;
         }
 

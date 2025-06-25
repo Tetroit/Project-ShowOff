@@ -28,7 +28,7 @@ public class VoiceMailController : MonoBehaviour
     void CancelPhone()
     {
         _playVoiceMail.action.started -= AnswerPhone;
-        _playVoiceMail.action.Disable();
+        //_playVoiceMail.action.Disable();
         _ui.DOFade(0, _fadeSpeed);
     }
 
@@ -38,7 +38,7 @@ public class VoiceMailController : MonoBehaviour
 
         _ui.DOFade(0,_fadeSpeed);
         _playVoiceMail.action.started -= AnswerPhone;
-        _playVoiceMail.action.Disable();
+        //_playVoiceMail.action.Disable();
 
     }
 }

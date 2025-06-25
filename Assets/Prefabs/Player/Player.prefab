@@ -6552,6 +6552,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 836cd5036733ad7439ef5a9fe6b621d9, type: 2}
   - {fileID: 11400000, guid: 801e8662d1f803a44b46e999b4ed74a8, type: 2}
   currentState: 0
+  walkFOV: 60
+  sprintFOV: 60
   lockControls: 0
   inputDevice: 0
   cameraTransform: {fileID: 3234403363261146957}
@@ -12244,6 +12246,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: da737ba487ccb424db1bfbcfd085e1ea, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3921553689790555629}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: da737ba487ccb424db1bfbcfd085e1ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8761892829717222697}
   m_SourcePrefab: {fileID: 100100000, guid: da737ba487ccb424db1bfbcfd085e1ea, type: 3}
 --- !u!4 &1585129523095448563 stripped
 Transform:
@@ -12277,6 +12282,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8761892829717222697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2212483802136506697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04873592cb2ce274a9d463f7f061de43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    Guid:
+      Data1: -1295882308
+      Data2: 1238602842
+      Data3: 438862487
+      Data4: 1581775367
+    Path: event:/SFX/ArmMovement
 --- !u!1001 &1847675064719227281
 PrefabInstance:
   m_ObjectHideFlags: 0
