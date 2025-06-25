@@ -34,7 +34,7 @@ namespace amogus
             if (correctKey == null)
             {
                 Debug.Log("No item to unlock with", this);
-                door.PlayCloseSound();
+                door.PlayAttemptUnlockSound();
                 OnFailUnlock?.Invoke();
                 return;
             }
