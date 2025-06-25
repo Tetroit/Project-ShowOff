@@ -73,11 +73,11 @@ namespace amogus
             }
         }
 
-        public void PlayAttemptUnlcokSound()
+        public void PlayAttemptUnlockSound()
         {
             if (AudioManager.instance != null)
             {
-                AudioManager.instance.PlayOneShot(doorUnlockSFX, handle.transform.position);
+                AudioManager.instance.PlayOneShot(unlockAttemptSFX, handle.transform.position);
             }
         }
     }
