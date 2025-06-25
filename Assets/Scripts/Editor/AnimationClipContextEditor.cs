@@ -76,11 +76,6 @@ public class AnimationClipContextEditor : Editor
 
         if (GUILayout.Button("Get Animation Clip"))
         {
-            if (context.animationTrackContext == null)
-            {
-                Debug.LogWarning("Animation Track Context is not set. Please set it before getting clips.", this);
-                return;
-            }
             var clip = context.GetAnimationClip(context.inputField);
             if (clip == null)
             {
