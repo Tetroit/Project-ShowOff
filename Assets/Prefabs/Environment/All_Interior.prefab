@@ -28032,6 +28032,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4648377996999298993}
     m_Modifications:
+    - target: {fileID: 1190121540680983253, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
+      propertyPath: m_UseViewFrustumForShadowCasterCull
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1208303091874211479, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -20.263
@@ -28929,6 +28933,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4648377996999298993}
     m_Modifications:
+    - target: {fileID: 1190121540680983253, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
+      propertyPath: m_UseViewFrustumForShadowCasterCull
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1208303091874211479, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -21.308
@@ -29929,7 +29937,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9164586321970795566, guid: 435bd05e36e1e984b8b88524b53dad9c, type: 3}
       propertyPath: m_LocalScale.x
-      value: -0.7500002
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 9164586321970795566, guid: 435bd05e36e1e984b8b88524b53dad9c, type: 3}
       propertyPath: m_LocalScale.y
@@ -30359,6 +30367,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3352055760062503586}
     m_Modifications:
+    - target: {fileID: 1190121540680983253, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
+      propertyPath: m_UseViewFrustumForShadowCasterCull
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1208303091874211479, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.08
@@ -34477,6 +34489,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2335592194062679825}
     m_Modifications:
+    - target: {fileID: 1190121540680983253, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
+      propertyPath: m_UseViewFrustumForShadowCasterCull
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1208303091874211479, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.18
@@ -34855,6 +34871,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3352055760062503586}
     m_Modifications:
+    - target: {fileID: 1190121540680983253, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
+      propertyPath: m_UseViewFrustumForShadowCasterCull
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1208303091874211479, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.09
@@ -36855,38 +36875,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5699887245443278206, guid: 65ea2b87b88742c41891553344b8c2c8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7573830393260509820}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65ea2b87b88742c41891553344b8c2c8, type: 3}
---- !u!1 &655381566191163860 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5699887245443278206, guid: 65ea2b87b88742c41891553344b8c2c8, type: 3}
-  m_PrefabInstance: {fileID: 5044721319930035370}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &7573830393260509820
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 655381566191163860}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2747142335891804183, guid: fa36cef7e82fea64f86e52ca0ecc5877, type: 3}
 --- !u!4 &8526942959207470220 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3483457614104274982, guid: 65ea2b87b88742c41891553344b8c2c8, type: 3}
@@ -38329,6 +38319,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4766542294614232371}
     m_Modifications:
+    - target: {fileID: 1190121540680983253, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
+      propertyPath: m_UseViewFrustumForShadowCasterCull
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1208303091874211479, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.187
@@ -39602,7 +39596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9164586321970795566, guid: 435bd05e36e1e984b8b88524b53dad9c, type: 3}
       propertyPath: m_LocalScale.x
-      value: -0.7500001
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 9164586321970795566, guid: 435bd05e36e1e984b8b88524b53dad9c, type: 3}
       propertyPath: m_LocalScale.y
@@ -40752,6 +40746,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6636851511923402370}
     m_Modifications:
+    - target: {fileID: 1190121540680983253, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
+      propertyPath: m_UseViewFrustumForShadowCasterCull
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1208303091874211479, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.991
@@ -42738,6 +42736,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 286694243251798262}
     m_Modifications:
+    - target: {fileID: 1190121540680983253, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
+      propertyPath: m_UseViewFrustumForShadowCasterCull
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1208303091874211479, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10
@@ -44232,6 +44234,10 @@ PrefabInstance:
       propertyPath: m_ShadowRadius
       value: 1.05
       objectReference: {fileID: 0}
+    - target: {fileID: 1190121540680983253, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
+      propertyPath: m_UseViewFrustumForShadowCasterCull
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1208303091874211479, guid: c89e34683b96af44d99f52d49099e1a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.131
@@ -44959,6 +44965,10 @@ PrefabInstance:
     - target: {fileID: 3455222968341951067, guid: 22b0cab7631be9c4e973dfe61e4973aa, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489990566346103422, guid: 22b0cab7631be9c4e973dfe61e4973aa, type: 3}
+      propertyPath: m_UseViewFrustumForShadowCasterCull
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3523205075188443533, guid: 22b0cab7631be9c4e973dfe61e4973aa, type: 3}
       propertyPath: m_StaticEditorFlags
