@@ -12,10 +12,12 @@ public class FearValue : MonoBehaviour
     [SerializeField] float closeCapValue = 1f;
     [SerializeField] float farCapValue = 0f;
 
+    [SerializeField] float _enablingTime = 2f;
+
     float fearValue;
-    private void OnEnable()
+    void OnEnable()
     {
-        SmoothlyEnable(1f);
+        SmoothlyEnable(_enablingTime);
     }
 
     public void SmoothlyDisable(float duration)
@@ -40,7 +42,7 @@ public class FearValue : MonoBehaviour
         var tween = DOTween.To(() => fade, x => fade = x, 1, duration);
 
     }
-    private void Update()
+    void Update()
     {
         EvaluateFearLevel();
         SetFearValue();
