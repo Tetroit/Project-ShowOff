@@ -66,13 +66,12 @@ Shader "Hidden/Shader/Blink"
         float horizontalFac = (0.5 - abs(0.5 - uvs.uvNormalized.x) * abs(0.5 - uvs.uvNormalized.x));
         
         _Intensity *= 0.5;
+
+        float verticalFac = uvs.uvNormalized.y;
+        float fac = 1 + max (1 - verticalFac, verticalFac) - 1 + _Intensity + (_Intensity - 0.5) * horizontalFac;
         //if (uvs.uvNormalized.y > 1 - _Intensity - (_Intensity - 0.5) * horizontalFac)
-        if ( 1 - uvs.uvNormalized.y > 1 - _Intensity - (_Intensity - 0.5) * horizontalFac ||
-            uvs.uvNormalized.y > 1 - _Intensity - (_Intensity - 0.5) * horizontalFac)
-        {
-            // Apply a simple blink effect by inverting the color
-            sourceColor = float3(0.02,0.01,0);
-        }
+        
+        sourceColor = lerp(sourceColor, float3(0.02, 0.01, 0), saturate(fac));
 
         return float4(sourceColor, Luminance(sourceColor).x);
 
