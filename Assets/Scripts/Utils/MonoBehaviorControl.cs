@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,11 @@ public class MonoBehaviorControl : MonoBehaviour
     [Header("Use Inspector Context Menu For Functions")]
     public List<MonoBehaviour> Collection;
     [SerializeField] string _typeToSearch;
+    [SerializeField] private EventReference gearAmbience;
+    [SerializeField] private EventReference gearConstant;
+    [SerializeField] private GameObject targetGear;
     [ContextMenu("PopulateWithType")]
+    
     public void PopulateWithType()
     {
         Type t = Type.GetType(_typeToSearch);
@@ -27,6 +32,15 @@ public class MonoBehaviorControl : MonoBehaviour
     [ContextMenu("EnableAll")]
     public void EnableAll()
     {
+        if(targetGear != null)
+        {
+            AudioManager.instance.PlayOneShot(gearAmbience, transform.position);
+            AudioManager.instance.PlayOneShot(gearConstant, targetGear.transform.position);
+        }
+        else
+        {
+            Debug.LogWarning("Sound not playing because targetGear is not assigned!");
+        }
         foreach (var item in Collection)
         {
             item.enabled = true;
