@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 //for now it only supports picking up keys, it should be extended to decide what pickup item goes into what inventory
 public class PickupManager : InteractionBehavior<IPickupable>
@@ -16,9 +17,13 @@ public class PickupManager : InteractionBehavior<IPickupable>
 
     public override IEnumerator OnDismiss()
     {
-        yield return _item.Deselect();
-        var item = (_item as MonoBehaviour);
-        Dismissed?.Invoke(item.gameObject, _item);
+        var item = (_item as ItemPickup);
+        _item = null;
+
+        if (!item.PlayAnim) yield break;
+
+        yield return item.Deselect();
+        Dismissed?.Invoke(item.gameObject, item);
 
         Destroy(item.gameObject);
         _item = null;
@@ -26,8 +31,11 @@ public class PickupManager : InteractionBehavior<IPickupable>
 
     public override IEnumerator OnInteract(IPickupable interactable)
     {
+        var item = (_item as ItemPickup);
         _item = interactable;
-        Interacted?.Invoke((_item as MonoBehaviour).gameObject, _item);
+        if (item == null || !item.PlayAnim) yield break;
+
+        Interacted?.Invoke(item.gameObject, _item);
         if(_selectAfterPickup)
         {
             Controller.SwitchToInventory("KeyInventory");
@@ -36,5 +44,12 @@ public class PickupManager : InteractionBehavior<IPickupable>
         KeyInventory.ChangeItemPosition(SelectDirection.Right);
 
         yield return interactable.Interact();
+    }
+
+    public void PickUpImmediate(ItemPickup item)
+    {
+        KeyInventory.AddItem(item.ItemData);
+        KeyInventory.ChangeItemPosition(SelectDirection.Right);
+        Destroy(item.gameObject);
     }
 }
