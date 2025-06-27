@@ -1,7 +1,9 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class QuickTimeEventIndicator : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class QuickTimeEventIndicator : MonoBehaviour
     public float pulseStrength = 0.5f;
     public float coolSpeed = 1f;
     public int pressCount = 1;
-    [SerializeField] Image image;
+    [SerializeField] UnityEngine.UI.Image image;
 
     Coroutine coroutine;
 
@@ -56,6 +58,19 @@ public class QuickTimeEventIndicator : MonoBehaviour
             if (_fac < 0)
                 _fac = 0;
             yield return null;
+        }
+    }
+
+    public void SmoothDisable()
+    {
+        var group = GetComponentInChildren<CanvasGroup>();
+        var tween = DOTween.To(() => group.alpha, x => group.alpha = x, 0, 1);
+        tween.onComplete += OnDisableAnimEnd;
+
+        void OnDisableAnimEnd()
+        {
+            tween.onComplete -= OnDisableAnimEnd;
+            gameObject.SetActive(false);
         }
     }
 }
