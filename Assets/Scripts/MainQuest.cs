@@ -137,10 +137,8 @@ public class MainQuest : MonoBehaviour
                         fearValue.SmoothlyDisable(4f);
                 }
 
-                if (instant)
-                    HallwayDoor.CloseInstant();
-                else
-                    HallwayDoor.SetExternally(false);
+                HallwayDoor.CloseInstant();
+
 
                 HallwayDoor.Lock();
                 OfficeDoor.Unlock();

@@ -12,7 +12,7 @@ namespace amogus
         public UnityEvent OnTrigger;
         public void Trigger()
         {
-            miller.gameObject.SetActive(false);
+            //miller.gameObject.SetActive(false);
             OnTrigger?.Invoke();
         }
         public void Hook()
