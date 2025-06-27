@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -80,7 +81,7 @@ public class QuickTimeEvent : MonoBehaviour
 
         if (indicator != null)
         {
-            indicator.gameObject.SetActive(false);
+            indicator.SmoothDisable();
         }
     }
     public void OnPress(InputAction.CallbackContext callback)
