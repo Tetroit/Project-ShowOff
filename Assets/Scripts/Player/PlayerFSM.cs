@@ -36,7 +36,7 @@ namespace amogus
         PlayerCamera cameraScript;
         CameraWalkingShake shake;
 
-        public Camera camera => cameraScript != null ? cameraScript.cam : null;
+        public Camera Camera => cameraScript != null ? cameraScript.cam : null;
 
         [field: SerializeField] public Transform animationRoot { get; private set; }
         public bool inAnimation = false;

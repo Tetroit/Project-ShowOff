@@ -29,13 +29,15 @@ public class MainQuest : MonoBehaviour
     [SerializeField] QuickTimeEvent doorCloseQTE;
     [SerializeField] FearValue fearValue;
 
-    private void Awake()
+
+    private void Start()
     {
         if (playAllStepsTillCurrentStepOnAwake)
         {
             FastForward((int)_currentStep);
         }
     }
+
     public QuestStep currentStep => _currentStep;
     public void Advance()
     {

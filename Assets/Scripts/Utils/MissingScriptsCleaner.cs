@@ -1,9 +1,9 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 
 public class MissingScriptsCleaner : MonoBehaviour
 {
-#if UNITY_EDITOR
     [ContextMenu("Clean Missing MonoBehaviours In Children")]
     void CleanMissingScriptsInChildren()
     {
@@ -26,5 +26,5 @@ public class MissingScriptsCleaner : MonoBehaviour
 
         Debug.Log($"Removed {count} missing script reference(s) from hierarchy under '{gameObject.name}'.");
     }
-#endif
 }
+#endif
