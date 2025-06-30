@@ -70,11 +70,16 @@ public class S_Cutscene : State
             fsm.PlayerController.EnableControls();
         else
             fsm.PlayerController.DisableControls();
+        if(fsm.InventoryController != null)
         fsm.InventoryController.gameObject.SetActive(inventoryControl);
+        if(fsm.InteractionManager != null)
         fsm.InteractionManager.enabled = interactionsEnabled;
 
+        if(fsm.InventoryController != null)
         fsm.InventoryController.SetInventory(inventorySelectIndex);
+        if(fsm.InventoryController != null)
         fsm.InventoryController.GetCurrentInventory().ChangeItemPosition(itemSelectIndex);
+        if(fsm.HUD != null)
         fsm.HUD.SetActive(hudActive);
 
     }
