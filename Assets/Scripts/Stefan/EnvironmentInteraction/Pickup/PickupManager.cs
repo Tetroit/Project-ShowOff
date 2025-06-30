@@ -31,8 +31,8 @@ public class PickupManager : InteractionBehavior<IPickupable>
 
     public override IEnumerator OnInteract(IPickupable interactable)
     {
-        var item = (_item as ItemPickup);
         _item = interactable;
+        var item = (_item as ItemPickup);
         if (item == null || !item.PlayAnim) yield break;
 
         Interacted?.Invoke(item.gameObject, _item);
