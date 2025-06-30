@@ -83,7 +83,8 @@ public class CameraWalkingShake : MonoBehaviour
 
     public void Shake(float time, float scale, float frequency)
     {
-        StartCoroutine(OneShotShake(time, scale, frequency));
+        if(gameObject.activeInHierarchy)
+            StartCoroutine(OneShotShake(time, scale, frequency));
     }
 
     IEnumerator OneShotShake(float time, float scale, float frequency)

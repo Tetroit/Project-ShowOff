@@ -1,9 +1,40 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.ShortcutManagement;
+using UnityEngine.SceneManagement;
 
 public static class PlaneToQuad
 {
+    [Shortcut("Tools/CleanMissingBehaviors", KeyCode.H, ShortcutModifiers.Action)]
+    public static void CleanMissingScriptsInScene()
+    {
+        int count = 0;
+
+        // Iterate through all root objects in the active scene
+        var roots = SceneManager.GetActiveScene().GetRootGameObjects();
+
+        foreach (var root in roots)
+        {
+            var transforms = root.GetComponentsInChildren<Transform>(true);
+
+            foreach (var t in transforms)
+            {
+                GameObject go = t.gameObject;
+                int before = GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(go);
+                if (before > 0)
+                {
+                    Undo.RegisterCompleteObjectUndo(go, "Remove Missing Scripts");
+                    GameObjectUtility.RemoveMonoBehavioursWithMissingScript(go);
+                    Debug.Log("Removed from " + go);
+                    count += before;
+                    EditorUtility.SetDirty(go);
+                }
+            }
+        }
+
+        Debug.Log($"Removed {count} missing script reference(s) from the entire scene.");
+    }
+
     [Shortcut("Tools/Convert Plane to Quad", KeyCode.G, ShortcutModifiers.Action)]
     public static void ConvertSelectedPlanes()
     {

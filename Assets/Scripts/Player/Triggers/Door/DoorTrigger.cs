@@ -16,7 +16,7 @@ namespace amogus
         {
             if (!NullHandling(other)) return;
 
-            if (!(useRaycast && !RaycastCheck(other.camera.transform)))
+            if (!(useRaycast && !RaycastCheck(other.Camera.transform)))
             {
                 if (isLocked)
                     TryUnlocking(other);
