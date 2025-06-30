@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 [System.Serializable]
 public struct AnimationTrackInsertionInfo
@@ -54,20 +55,24 @@ public class AnimationBranch : MonoBehaviour
     [ContextMenu("Set Success Clip")]
     void SetSuccess()
     {
+        var timelineAsset = animationClipContext.playableDirectorContext.playableAsset;
         foreach (var track in successAnimationClips)
         {
             animationClipContext.GetAnimationTrack(track.trackName);
             animationClipContext.AddClip(track.clip, track.insertTime, track.positionOffset, track.rotationOffset, track.fadeInTime, track.fadeOutTime, track.duration <= 0 ? -1 : track.duration, track.startOffset);
         }
+        animationClipContext.RefreshDirector(timelineAsset as TimelineAsset);
     }
 
     [ContextMenu("Set Fail Clip")]
     void SetFail()
     {
+        var timelineAsset = animationClipContext.playableDirectorContext.playableAsset;
         foreach (var track in failAnimationClips)
         {
             animationClipContext.GetAnimationTrack(track.trackName);
             animationClipContext.AddClip(track.clip, track.insertTime, track.positionOffset, track.rotationOffset, track.fadeInTime, track.fadeOutTime, track.duration <= 0 ? -1 : track.duration, track.startOffset);
         }
+        animationClipContext.RefreshDirector(timelineAsset as TimelineAsset);
     }
 }

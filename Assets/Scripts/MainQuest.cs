@@ -19,6 +19,8 @@ public class MainQuest : MonoBehaviour
     [SerializeField] QuestStep _currentStep = 0;
 
     [SerializeField] bool playAllStepsTillCurrentStepOnAwake = true;
+    [SerializeField] TimelinePlayerTrigger _floorFallTrigger;
+    [SerializeField] TimelinePlayerTrigger _pushOffBridgeScene;
     [SerializeField] DoorCutsceneTrigger LoreRoomDoor;
     [SerializeField] DoorCutsceneTrigger HallwayDoor;
     [SerializeField] DoorCutsceneTrigger OfficeDoor;
@@ -28,13 +30,15 @@ public class MainQuest : MonoBehaviour
     [SerializeField] QuickTimeEvent doorCloseQTE;
     [SerializeField] FearValue fearValue;
 
-    private void Awake()
+
+    void Start()
     {
         if (playAllStepsTillCurrentStepOnAwake)
         {
             FastForward((int)_currentStep);
         }
     }
+
     public QuestStep currentStep => _currentStep;
     public void Advance()
     {
@@ -62,6 +66,10 @@ public class MainQuest : MonoBehaviour
             //case QuestStep.Start:
             //    LoreRoomDoor.Unlock();
             //    break;
+            case QuestStep.FellThroughFloor:
+                if (_floorFallTrigger == null) Debug.LogWarning("Go to Main quest and reference floor fall trigger");
+                else _floorFallTrigger.gameObject.SetActive(false); 
+                break;
             case QuestStep.FootstepsTriggered:
                 footstepTriggerStart.enabled = false;
                 footstepTriggerEnd.enabled = true;
@@ -90,7 +98,7 @@ public class MainQuest : MonoBehaviour
                     gca.enabled = false;
                 }
                 {
-                    var pltr = doorCloseQTE.GetComponent<TimelinePlayerTrigger>();
+                    var pltr = doorCloseQTE.GetComponent<PlayerTrigger>();
                     pltr.enabled = true;
                 }
 
@@ -132,10 +140,8 @@ public class MainQuest : MonoBehaviour
                         fearValue.SmoothlyDisable(4f);
                 }
 
-                if (instant)
-                    HallwayDoor.CloseInstant();
-                else
-                    HallwayDoor.SetExternally(false);
+                HallwayDoor.CloseInstant();
+
 
                 HallwayDoor.Lock();
                 OfficeDoor.Unlock();
@@ -145,7 +151,7 @@ public class MainQuest : MonoBehaviour
                 else
                     OfficeDoor.SetExternally(true);
                 {
-                    var pltr = doorCloseQTE.GetComponent<TimelinePlayerTrigger>();
+                    var pltr = doorCloseQTE.GetComponent<PlayerTrigger>();
                     pltr.enabled = false;
                 }
                 break;
@@ -159,7 +165,7 @@ public class MainQuest : MonoBehaviour
                     LoreRoomDoor.OpenInstant();
                 else
                     LoreRoomDoor.SetExternally(true);
-
+                _pushOffBridgeScene.gameObject.SetActive(true);
                 break;
         }
     }

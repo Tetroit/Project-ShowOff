@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3682503678311027530}
   - component: {fileID: 5075588849954497316}
   - component: {fileID: 4542697811771368767}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 2363609775173520730}
   - component: {fileID: 7939163497205067966}
   - component: {fileID: 2071415149226755355}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,7 @@ GameObject:
   - component: {fileID: 7270267494331155697}
   - component: {fileID: 5974513550731773694}
   - component: {fileID: 7602030147165603696}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,6 +373,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a3d047d92bf57f4f9aeb2926fe8d4c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnSelect:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeselect:
+    m_PersistentCalls:
+      m_Calls: []
   UI_Icons: []
 --- !u!114 &7602030147165603696
 MonoBehaviour:

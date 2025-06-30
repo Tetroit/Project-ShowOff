@@ -65,6 +65,7 @@ public class S_Cutscene : State
     {
         Cursor.visible = cursoreVisibility;
         Cursor.lockState = lockMode;
+        if (fsm.PlayerController != null) 
         if (movement)
             fsm.PlayerController.EnableControls();
         else

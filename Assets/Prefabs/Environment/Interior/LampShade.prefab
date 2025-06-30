@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &8282610181625709211
 Transform:
@@ -91,7 +91,7 @@ Light:
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 1e-45}
   m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
+  m_UseViewFrustumForShadowCasterCull: 0
   m_ForceVisible: 0
   m_ShadowRadius: 0.025
   m_ShadowAngle: 0
@@ -251,7 +251,6 @@ GameObject:
   - component: {fileID: 6878662515204687796}
   - component: {fileID: 750217602458896933}
   - component: {fileID: 3608478878001592890}
-  - component: {fileID: 474789164181464879}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -305,7 +304,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d0c8e393a40c99c40800e2c67bcee537, type: 2}
+  - {fileID: 2100000, guid: c85f1a6ff4f82e1469b870d3b0f49a64, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -327,27 +326,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &474789164181464879
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7372683451783709421}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7450089550448388864
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,13 +337,14 @@ GameObject:
   - component: {fileID: 1208303091874211479}
   - component: {fileID: 8519628324089207645}
   - component: {fileID: 8700270865103857020}
+  - component: {fileID: 1931223158961670530}
   - component: {fileID: 5835835365139584172}
   m_Layer: 0
   m_Name: LampShade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 127
   m_IsActive: 1
 --- !u!4 &1208303091874211479
 Transform:
@@ -438,6 +417,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1931223158961670530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7450089550448388864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1581549e58dbe8f46a5b36739914b37b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ligtOnDurationMinMax: {x: 5, y: 10}
+  _lightOutDurationMinMax: {x: 0.1, y: 0.4}
+  _light: {fileID: 1190121540680983253}
+  _onMaterial: {fileID: 2100000, guid: d0c8e393a40c99c40800e2c67bcee537, type: 2}
+  _offMaterial: {fileID: 2100000, guid: cef16d862ce88ba4a80e2c1eb69a5dc2, type: 2}
+  _bulbRenderer: {fileID: 3608478878001592890}
 --- !u!65 &5835835365139584172
 BoxCollider:
   m_ObjectHideFlags: 0
