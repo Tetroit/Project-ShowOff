@@ -13,12 +13,13 @@ public class S_Pause : State
 
     public override void Enter()
     {
+
         _visibility = Cursor.visible;
         _lockMode = Cursor.lockState;
         _movement = fsm.PlayerController.inAnimation;
         _gameTime = Time.timeScale;
-        _inventoryControl = fsm.InventoryController.gameObject.activeSelf;
-        _interactionsEnabled = fsm.InteractionManager.enabled;
+        _inventoryControl = fsm.InventoryController != null ? fsm.InventoryController.gameObject.activeSelf : false;
+        _interactionsEnabled = fsm.InteractionManager != null ? fsm.InteractionManager.enabled : false;
 
         SetStates(true, CursorLockMode.None, false, 0.0f, false, false);
         WindowManager.Instance.TrySwitchWindow(fsm.PauseWindow);
