@@ -24,6 +24,9 @@ public class QuickTimeEventIndicator : MonoBehaviour
         coroutine = StartCoroutine(Pulse());
         _fac = 0;
         _pressFac = 0;
+
+        var group = GetComponentInChildren<CanvasGroup>();
+        group.alpha = 1;
     }
     public void OnDisable()
     {
