@@ -23,12 +23,12 @@ public class Fade : MonoBehaviour
         switch (Mode)
         {
             case FadeMode.In:
-                _image.alpha = 0;
-                _fadeTween = _image.DOFade(1, Time).SetUpdate(true);
-                break;
-            case FadeMode.Out:
                 _image.alpha = 1;
                 _fadeTween = _image.DOFade(0, Time).SetUpdate(true);
+                break;
+            case FadeMode.Out:
+                _image.alpha = 0;
+                _fadeTween = _image.DOFade(1, Time).SetUpdate(true);
                 break;
         }
         
