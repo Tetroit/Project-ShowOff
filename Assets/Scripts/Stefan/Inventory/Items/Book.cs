@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(InventoryView))]
@@ -14,6 +15,8 @@ public class Book : InventoryItemView
     [SerializeField] Transform _pagesContainer;
     [SerializeField] Quaternion _rightAngle;
     [SerializeField] Quaternion _leftAngle;
+
+    [field: SerializeField] public UnityEvent OnNoteAdded { get; private set; }
 
     InventoryView _notesContainer;
 
@@ -115,6 +118,8 @@ public class Book : InventoryItemView
         page.Text = note.Text;
         page.Title = note.Title;
         page.gameObject.SetActive(false);
+
+        OnNoteAdded?.Invoke();
     }
 
     public override void Select()
