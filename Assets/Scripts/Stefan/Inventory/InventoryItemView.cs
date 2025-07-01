@@ -7,6 +7,12 @@ public abstract class InventoryItemView : MonoBehaviour
 
     public UnityEvent OnSelect;
     public UnityEvent OnDeselect;
+
+    public void SetSeeItem(bool isSee)
+    {
+        SeeTheItem = isSee;
+    }
+
     public virtual void Select()
     {
         if (!SeeTheItem) return;
