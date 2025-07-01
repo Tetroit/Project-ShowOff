@@ -11419,7 +11419,6 @@ MonoBehaviour:
   m_Script: {fileID: 1117125148}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Entries: []
 --- !u!4 &516339011
 Transform:
   m_ObjectHideFlags: 19
@@ -24287,6 +24286,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: vfx_Blood
       objectReference: {fileID: 0}
+    - target: {fileID: 1688221503655207759, guid: 97bf314b9347bf84ba4f6d337ab1dbd2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3122620054819830076, guid: 97bf314b9347bf84ba4f6d337ab1dbd2, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -28189,27 +28192,33 @@ MonoBehaviour:
   LineView: {fileID: 442247341}
   _lines:
   - characterName: Landlord
-    text: 'first off, congrats on your purchase of the northern mill! '
+    text: Hey uhhh, congrats on your purchace of the northern mill.
     playTimeSeconds: 3
   - characterName: Landlord
-    text: "Not sure what you plan to do with the place, might make for a nice museum,
-      but it\u2019s all yours now!"
+    text: Thanks, I'm heading there right now.
+    playTimeSeconds: 1.5
+  - characterName: Landlord
+    text: Oh great, not sure what you want to do with the place, always creeped me
+      out, but I wish you the best of luck with it.
+    playTimeSeconds: 4.2
+  - characterName: Landlord
+    text: 'I''m not sure either, might make it into a museum. '
+    playTimeSeconds: 1.9
+  - characterName: Landlord
+    text: Hey by the way, are the keys in the mailbox somewhere or...
     playTimeSeconds: 3
   - characterName: Landlord
-    text: "To be honest, the place always gave me the creeps, but in summer it\u2019s
-      beautiful."
+    text: Oh, uhm, I may have forgotten to leave the door unlocked for you.
     playTimeSeconds: 3
   - characterName: Landlord
-    text: Now, i gotta level with you, i may have forgotten to keep the door unlocked
-      for you.
-    playTimeSeconds: 5
+    text: What?
+    playTimeSeconds: 0
   - characterName: Landlord
-    text: "But it\u2019s an old mill in need of renovation anyways, so i\u2019m sure
-      you can find a way in so you can explore a bit."
-    playTimeSeconds: 5
+    text: It's an old mill, I'm sure you'll figure out your way in somehow.
+    playTimeSeconds: 2.5
   - characterName: Landlord
-    text: Good luck!
-    playTimeSeconds: 1
+    text: 'What kind of a la- ugh, fine, I''ll figure it out. '
+    playTimeSeconds: 2.8
   _overridePause: 0
   _holdBeforeEnd: 0
   _holdTime: 0
@@ -28218,11 +28227,11 @@ MonoBehaviour:
   _useDialogueTime: 1
   voiceLines:
     Guid:
-      Data1: -802618882
-      Data2: 1186625240
-      Data3: -1972667224
-      Data4: -309990102
-    Path: event:/Voicemail
+      Data1: 1624246397
+      Data2: 1228475172
+      Data3: 1614238597
+      Data4: 728868172
+    Path: event:/Phonecall
 --- !u!4 &1554904867
 Transform:
   m_ObjectHideFlags: 0
@@ -28254,11 +28263,11 @@ MonoBehaviour:
   _voiceMailRunner: {fileID: 1554904866}
   _ringtone:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -211018774
+      Data2: 1217557529
+      Data3: 1258214066
+      Data4: -484051153
+    Path: event:/CellPhoneRinging
   _ui: {fileID: 1252689334}
   _fadeSpeed: 0.8
   _hangUpTimeAfter: 10
