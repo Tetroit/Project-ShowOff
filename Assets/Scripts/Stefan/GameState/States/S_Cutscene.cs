@@ -16,9 +16,9 @@ public class S_Cutscene : State
         _visibility = Cursor.visible;
         _lockMode = Cursor.lockState;
         _movement = fsm.PlayerController.inAnimation;
-        _inventoryControl = fsm.InventoryController.gameObject.activeSelf;
-        _interactionsEnabled = fsm.InteractionManager.enabled;
-        _selectedInventory = fsm.InventoryController.CurrentInventoryIndex;
+        _inventoryControl = fsm.InventoryController != null ? fsm.InventoryController.gameObject.activeSelf : false;
+        _interactionsEnabled = fsm.InventoryController != null ? fsm.InteractionManager.enabled : false;
+        _selectedInventory = fsm.InventoryController != null ? fsm.InventoryController.CurrentInventoryIndex : 0;
         _selectedItem = fsm.InventoryController.GetCurrentInventory().CurentItemIndex;
         _hudActive = fsm.HUD.activeSelf;
 

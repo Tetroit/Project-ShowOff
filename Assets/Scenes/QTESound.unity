@@ -13228,6 +13228,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 31.170166, y: 24.039255, z: 44.720215}
   m_Center: {x: 0, y: 9.031373, z: 0.0000009536743}
+--- !u!1 &619655018 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2191840605041583141, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+  m_PrefabInstance: {fileID: 2047016086}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &624179061
 GameObject:
   m_ObjectHideFlags: 0
@@ -14216,10 +14221,10 @@ PrefabInstance:
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_PlayableAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 97e2fd610e1581a46ace64b5187b99ac, type: 2}
+      objectReference: {fileID: 11400000, guid: 4af9a441b35b7df419268a8eadf57d49, type: 2}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 121
+      value: 123
       objectReference: {fileID: 0}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.data[12].key
@@ -14657,6 +14662,14 @@ PrefabInstance:
       propertyPath: m_SceneBindings.Array.data[120].key
       value: 
       objectReference: {fileID: -1803788011357160587, guid: 04660c67951b11548a5eb9a3c1fa856a, type: 2}
+    - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_SceneBindings.Array.data[121].key
+      value: 
+      objectReference: {fileID: 613626382540454302, guid: 97e2fd610e1581a46ace64b5187b99ac, type: 2}
+    - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_SceneBindings.Array.data[122].key
+      value: 
+      objectReference: {fileID: -7764785028949753474, guid: 97e2fd610e1581a46ace64b5187b99ac, type: 2}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.data[14].value
       value: 
@@ -15855,7 +15868,7 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
-            m_FloatArgument: 5
+            m_FloatArgument: 20
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
@@ -15867,7 +15880,7 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
-            m_FloatArgument: 5
+            m_FloatArgument: 20
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
@@ -15879,7 +15892,7 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
-            m_FloatArgument: 5
+            m_FloatArgument: 20
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
@@ -32145,8 +32158,52 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+      propertyPath: targetGear
+      value: 
+      objectReference: {fileID: 619655018}
+    - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+      propertyPath: gearAmbience.Path
+      value: event:/Ambience/GearTurningAmbienceMill
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+      propertyPath: gearConstant.Path
+      value: event:/Ambience/GearTurnConstant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
       propertyPath: Collection.Array.size
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+      propertyPath: gearAmbience.Guid.Data1
+      value: 457564818
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+      propertyPath: gearAmbience.Guid.Data2
+      value: 1171261760
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+      propertyPath: gearAmbience.Guid.Data3
+      value: 86603696
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+      propertyPath: gearAmbience.Guid.Data4
+      value: -427959300
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+      propertyPath: gearConstant.Guid.Data1
+      value: -303993105
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+      propertyPath: gearConstant.Guid.Data2
+      value: 1175872306
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+      propertyPath: gearConstant.Guid.Data3
+      value: -80374392
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
+      propertyPath: gearConstant.Guid.Data4
+      value: 173165043
       objectReference: {fileID: 0}
     - target: {fileID: 3916945088199687080, guid: 5d545629eb2b96e4885327e3566c5dcf, type: 3}
       propertyPath: 'Collection.Array.data[0]'
@@ -35063,7 +35120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4993080872618617122, guid: 780f8b5bbeb9b484d83adcc44d717adb, type: 3}
       propertyPath: m_Intensity
-      value: 795.4938
+      value: 0.4651178
       objectReference: {fileID: 0}
     - target: {fileID: 4993080872618617122, guid: 780f8b5bbeb9b484d83adcc44d717adb, type: 3}
       propertyPath: m_Lightmapping
