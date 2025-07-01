@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[1-3]'
+  m_text: '[Scroll]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cf7df448b77138a43b4215d344d93730, type: 2}
   m_sharedMaterial: {fileID: -5873611593503283770, guid: cf7df448b77138a43b4215d344d93730, type: 2}
@@ -2369,7 +2369,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Time: 2
+  RunOnEnable: 1
   Mode: 0
+  OnCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2310426411848132520
 GameObject:
   m_ObjectHideFlags: 0
@@ -6819,7 +6823,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Time: 3
+  RunOnEnable: 1
   Mode: 1
+  OnCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!225 &7573122504290766021
 CanvasGroup:
   m_ObjectHideFlags: 0
