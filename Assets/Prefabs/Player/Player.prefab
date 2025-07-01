@@ -5350,6 +5350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd7217fb9dda8f64684ec4fe1e99469e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SeeTheItem: 0
   OnSelect:
     m_PersistentCalls:
       m_Calls: []
@@ -6658,6 +6659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e854a8faaf0c04da12c28b9f0b7854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SeeTheItem: 0
   OnSelect:
     m_PersistentCalls:
       m_Calls: []
@@ -6689,6 +6691,7 @@ GameObject:
   - component: {fileID: 5908510189692319674}
   - component: {fileID: 4804203528875700632}
   - component: {fileID: 8607203841067845689}
+  - component: {fileID: 6077501776103343700}
   m_Layer: 0
   m_Name: Player physics controller
   m_TagString: Untagged
@@ -6784,7 +6787,26 @@ MonoBehaviour:
   inputDevice: 0
   cameraTransform: {fileID: 3234403363261146957}
   _debug: 0
-  _roofDetectionRange: 1.36
+  _roofDetectionRange: 1.24
+--- !u!114 &6077501776103343700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6177681187084765463}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3619a258a49f0749b6f5604344537e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _walk: {fileID: 11400000, guid: a9a6a4c89fa6ba641b2068b6c8d8bd68, type: 2}
+  _crouch: {fileID: 11400000, guid: 357a24211389dd84e91f2d6fde61ccaa, type: 2}
+  _sprint: {fileID: 11400000, guid: ac92304cc177f804fa5cbc3afe23053f, type: 2}
+  _shakeController: {fileID: 5794955200590595110}
+  _walkShake: {fileID: 11400000, guid: fc3b65b9545518d48a91132a547abd44, type: 2}
+  _crouchShake: {fileID: 11400000, guid: 71291053485afd842aac112da2878d5e, type: 2}
+  _sprintShake: {fileID: 11400000, guid: e73843bde89aea94d8ed8899a22841f8, type: 2}
 --- !u!1 &7919318065524113538
 GameObject:
   m_ObjectHideFlags: 0

@@ -81,6 +81,13 @@ public class CameraWalkingShake : MonoBehaviour
         transform.localPosition = offset + oneShotOffsets;
     }
 
+    public void ChangeShakeStates(CameraShakeState walk, CameraShakeState crouch, CameraShakeState sprint)
+    {
+        states[0] = walk;
+        states[1] = crouch;
+        states[2] = sprint;
+    }
+
     public void Shake(float time, float scale, float frequency)
     {
         if(gameObject.activeInHierarchy)
