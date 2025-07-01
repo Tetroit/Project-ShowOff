@@ -62,7 +62,7 @@ public class GameStateManager : MonoBehaviour
     }
 #endif
 
-    private void OnEnable()
+    void Start()
     {
         _currentStateKey = typeof(S_Play);
         _previousStates.Push(_currentStateKey);

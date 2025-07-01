@@ -48,6 +48,7 @@ public class PositionRandomizer : MonoBehaviour
         {
             Animator animator = arm.GetComponent<Animator>();
             animator.speed = Random.Range(0.5f, 1.5f); // Different speeds
+            //animator.Play();
         }
     }
 }
