@@ -12,21 +12,26 @@ public class OutlineComponent : MonoBehaviour
     Camera cam;
     public void Update()
     {
-        if ((cam.transform.position - transform.position).magnitude < radius && !inArea)
-        {
-            inArea = true;
-            OutlinePass.OutlineRenderers.Add(GetComponent<Renderer>());
-        }
+        if ((cam.transform.position - transform.position).magnitude < radius && !inArea) Show();
 
-        if ((cam.transform.position - transform.position).magnitude > radius && inArea)
-        {
-            inArea = false;
-            OutlinePass.OutlineRenderers.Remove(GetComponent<Renderer>());
-        }
+        if ((cam.transform.position - transform.position).magnitude > radius && inArea) Hide();
+    }
+    void Show()
+    {
+        inArea = true;
+        OutlinePass.OutlineRenderers.Add(GetComponent<Renderer>());
+    }
+    void Hide()
+    {
+        OutlinePass.OutlineRenderers.Remove(GetComponent<Renderer>());
+        inArea = false;
     }
     private void OnEnable()
     {
         cam = Camera.main;
+
+        if ((cam.transform.position - transform.position).magnitude < radius) Show();
+        if ((cam.transform.position - transform.position).magnitude > radius) Hide();
     }
 
     private void OnDisable()
