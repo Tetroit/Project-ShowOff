@@ -20,6 +20,7 @@ public class MainQuest : MonoBehaviour
 
     [SerializeField] bool playAllStepsTillCurrentStepOnAwake = true;
     [SerializeField] TimelinePlayerTrigger _floorFallTrigger;
+    [SerializeField] TimelinePlayerTrigger _pushOffBridgeScene;
     [SerializeField] DoorCutsceneTrigger LoreRoomDoor;
     [SerializeField] DoorCutsceneTrigger HallwayDoor;
     [SerializeField] DoorCutsceneTrigger OfficeDoor;
@@ -29,13 +30,15 @@ public class MainQuest : MonoBehaviour
     [SerializeField] QuickTimeEvent doorCloseQTE;
     [SerializeField] FearValue fearValue;
 
-    private void Awake()
+
+    void Start()
     {
         if (playAllStepsTillCurrentStepOnAwake)
         {
             FastForward((int)_currentStep);
         }
     }
+
     public QuestStep currentStep => _currentStep;
     public void Advance()
     {
@@ -162,7 +165,7 @@ public class MainQuest : MonoBehaviour
                     LoreRoomDoor.OpenInstant();
                 else
                     LoreRoomDoor.SetExternally(true);
-
+                _pushOffBridgeScene.gameObject.SetActive(true);
                 break;
         }
     }

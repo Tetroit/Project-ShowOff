@@ -10,7 +10,6 @@ public class FadeIn : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Log("aaa");
 
         if (_fadeBG == null)
             _fadeBG = GetComponent<Image>();
