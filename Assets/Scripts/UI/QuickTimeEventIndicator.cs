@@ -24,6 +24,7 @@ public class QuickTimeEventIndicator : MonoBehaviour
         coroutine = StartCoroutine(Pulse());
         _fac = 0;
         _pressFac = 0;
+        SetNormal();
 
         var group = GetComponentInChildren<CanvasGroup>();
         group.alpha = 1;
@@ -62,6 +63,18 @@ public class QuickTimeEventIndicator : MonoBehaviour
                 _fac = 0;
             yield return null;
         }
+    }
+    public void SetNormal()
+    {
+        image.color = Color.white;
+    }
+    public void SetSuccess()
+    {
+        image.color = Color.green;
+    }
+    public void SetFail()
+    {
+        image.color = Color.red;
     }
 
     public void SmoothDisable()
