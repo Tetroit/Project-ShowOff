@@ -2060,6 +2060,40 @@ PrefabInstance:
       propertyPath: _gameStateManager
       value: 
       objectReference: {fileID: 1376461560}
+    - target: {fileID: 3951385411063433362, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: _text
+      value: "Let it be proclaimed:\n\nThe cursed Miller, haunted by the weight of
+        his misdeeds, hath cast himself into the turning wheel of the water mill.\n\nLet
+        the lord Himself weigh his soul and mete out a punishment.\n\nAnd may the
+        restless spirits of those who perished in hunger by reason of his greed find
+        solace in his fall.\n\nFor their suffering crieth out still. \n\nAnd justice,
+        though late, is never stilled."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174406636000315381, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ff4bea5035ce98749bf79c4d453a5f6d, type: 2}
+    - target: {fileID: 4177858625982395918, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b6ef8869ef2d24640bbf4d5842397d2e, type: 2}
+    - target: {fileID: 4227390531159142416, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: _text
+      value: 'If he locks you in, DON''T PANIC.
+
+
+        I''ve hidden a spare key
+        in the shack,
+
+        you will find it atop a bookshelf.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447700430037625351, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: _text
+      value: "To whoever finds this, \r\n\r\nTURN BACK NOW \r\n\r\n\r\nWeird things
+        happen down here... This is your WARNING. There is something buried beneath
+        this ground, something inhuman.\r\n\r\nPlease... leave, while you still can.
+        \r\n\r\n\u2014J. de Mule"
+      objectReference: {fileID: 0}
     - target: {fileID: 4771918491848217281, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: fearValue
       value: 
@@ -2300,10 +2334,33 @@ PrefabInstance:
       propertyPath: OnAnimationEnd.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 7156343950821057272, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bfaff5f60140aa14d94bf95d82ebfeaf, type: 2}
     - target: {fileID: 7358895630239462130, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: OnTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1376461560}
+    - target: {fileID: 7511778818123759725, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b80edb04aab7f0e4991c3c256ed35798, type: 2}
+    - target: {fileID: 7811542238151421343, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: _text
+      value: 'I figured it out...
+
+        It wants revenge.
+
+
+        It''s been
+        400 years... Killed by criminals.
+
+        Now it seeks to unleash death
+        on those
+
+        who enter it''s land.'
+      objectReference: {fileID: 0}
     - target: {fileID: 7814363332581609891, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: indicator
       value: 
@@ -2328,6 +2385,10 @@ PrefabInstance:
       propertyPath: totalTime
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8011026028492987002, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0f8544cce1aca8c4f84eadbd58f1bfef, type: 2}
     - target: {fileID: 8225453861007871839, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: director
       value: 
@@ -2336,6 +2397,10 @@ PrefabInstance:
       propertyPath: finished.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1376461560}
+    - target: {fileID: 8726037844271037906, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b6ef8869ef2d24640bbf4d5842397d2e, type: 2}
     - target: {fileID: 9137549435408852864, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: _cameraShake
       value: 
@@ -2780,6 +2845,7 @@ GameObject:
   - component: {fileID: 262900380}
   - component: {fileID: 262900379}
   - component: {fileID: 262900383}
+  - component: {fileID: 262900384}
   m_Layer: 5
   m_Name: EndFade
   m_TagString: Untagged
@@ -2888,6 +2954,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority: 10000
+--- !u!114 &262900384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262900377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04873592cb2ce274a9d463f7f061de43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    Guid:
+      Data1: 381682310
+      Data2: 1178044914
+      Data3: -2006335309
+      Data4: -1567150341
+    Path: event:/Music/MainMenu
 --- !u!43 &281763514
 Mesh:
   m_ObjectHideFlags: 0
@@ -5326,15 +5411,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3234403363261146957, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.5876527
+      value: 1.0912142
       objectReference: {fileID: 0}
     - target: {fileID: 3234403363261146957, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.8044994
+      value: -0.23745823
       objectReference: {fileID: 0}
     - target: {fileID: 3234403363261146957, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.095806
+      value: -12.272654
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234403363261146957, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9907701
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234403363261146957, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.045608323
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234403363261146957, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.1275156
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234403363261146957, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0058629266
       objectReference: {fileID: 0}
     - target: {fileID: 4052443538845376337, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_Events.m_Events.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
@@ -5383,10 +5484,10 @@ PrefabInstance:
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_PlayableAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 4af9a441b35b7df419268a8eadf57d49, type: 2}
+      objectReference: {fileID: 11400000, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 126
+      value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.data[108].key
@@ -5463,7 +5564,7 @@ PrefabInstance:
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.data[126].key
       value: 
-      objectReference: {fileID: 4237184410131034991, guid: 04660c67951b11548a5eb9a3c1fa856a, type: 2}
+      objectReference: {fileID: 7915921948972054871, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.data[14].value
       value: 
@@ -5635,7 +5736,7 @@ PrefabInstance:
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.data[126].value
       value: 
-      objectReference: {fileID: 495605663}
+      objectReference: {fileID: 816875512}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[0].second
       value: 
