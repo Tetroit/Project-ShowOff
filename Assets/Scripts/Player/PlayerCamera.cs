@@ -6,8 +6,12 @@ namespace amogus
     public class PlayerCamera : MonoBehaviour
     {
         [SerializeField] Vector3 offset;
-        [SerializeField] float minAngle = -20f;
-        [SerializeField] float maxAngle = 35f;
+        public float minAngle = -20f;
+        public float maxAngle = 35f;
+
+        public bool constraintX = false;
+        public float xAngleRange = 120f;
+        public float constraintMiddle = 0f;
 
         public bool isCinematic;
         Quaternion targetRotation;
@@ -75,6 +79,14 @@ namespace amogus
             {
                 turn += PlayerInputHandler.Instance.View * 0.2f; //sensitivity here, 0.2 meanwhile
                 turn.y = Mathf.Clamp(turn.y, minAngle, maxAngle);
+                if (constraintX)
+                {
+                    var dev = Mathf.Clamp(turn.x - constraintMiddle, -180, 180);
+                    if (dev < -xAngleRange)
+                        turn.x = constraintMiddle - xAngleRange;
+                    if (dev > xAngleRange)
+                        turn.x = constraintMiddle + xAngleRange;
+                }
                 if (xRotator == yRotator)
                 {
                     Quaternion targetRotation = Quaternion.Euler(-turn.y, turn.x, 0);
