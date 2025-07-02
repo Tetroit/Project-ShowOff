@@ -2780,6 +2780,7 @@ GameObject:
   - component: {fileID: 262900380}
   - component: {fileID: 262900379}
   - component: {fileID: 262900383}
+  - component: {fileID: 262900384}
   m_Layer: 5
   m_Name: EndFade
   m_TagString: Untagged
@@ -2888,6 +2889,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority: 10000
+--- !u!114 &262900384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262900377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04873592cb2ce274a9d463f7f061de43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+    Guid:
+      Data1: 381682310
+      Data2: 1178044914
+      Data3: -2006335309
+      Data4: -1567150341
+    Path: event:/Music/MainMenu
 --- !u!43 &281763514
 Mesh:
   m_ObjectHideFlags: 0
