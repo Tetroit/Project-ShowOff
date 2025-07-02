@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{caef29ac-1925-4fd9-9f3e-89d0c81a6f74}">
+		<property name="name">
+			<value>GearIntensity</value>
+		</property>
+		<relationship name="folder">
+			<destination>{2cd14a21-265f-42e5-9908-69b8b251f2c7}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{83bc144b-40bf-4bc5-971d-9869657dcb3d}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{83bc144b-40bf-4bc5-971d-9869657dcb3d}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{c07fb8f1-2700-4afd-8450-e0e4754761d9}</destination>
+		</relationship>
+	</object>
+	<object class="SeekModulator" id="{c07fb8f1-2700-4afd-8450-e0e4754761d9}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>cursorPosition</value>
+		</property>
+		<property name="speedAscending">
+			<value>0.28999999165534973</value>
+		</property>
+	</object>
+</objects>
