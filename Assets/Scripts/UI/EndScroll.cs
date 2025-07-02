@@ -2,21 +2,24 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EndScroll : MonoBehaviour
 {
     [SerializeField] List<ScrollRect> _scrolls;
     [SerializeField] float _pause;
+    [SerializeField] float _endPause;
     [SerializeField] float _scrollTimeMultimplier;
 
     void OnEnable()
     {
-        StartCoroutine(Scroll(_pause, _scrollTimeMultimplier));    
+        StartCoroutine(Scroll(_pause, _endPause, _scrollTimeMultimplier));    
     }
-    IEnumerator Scroll(float pause, float time)
+
+    IEnumerator Scroll(float startPause, float endPause,float time)
     {
-        yield return new WaitForSeconds(pause);
+        yield return new WaitForSeconds(startPause);
         float startTime = 0;
 
         while(startTime < _scrollTimeMultimplier)
@@ -31,6 +34,8 @@ public class EndScroll : MonoBehaviour
             }
             startTime += Time.deltaTime;
         }
-        
+
+        yield return new WaitForSeconds(endPause);
+        SceneManager.LoadScene(0);
     }
 }

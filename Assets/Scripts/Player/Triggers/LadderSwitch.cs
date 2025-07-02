@@ -19,6 +19,7 @@ namespace amogus
 
         [field: SerializeField] public Ladder ladder { get; private set; }
         [SerializeField] Ladder.EndType whichEnd;
+
         public override void TransferData(PlayerController controller)
         {
             if (controller is LadderController)
