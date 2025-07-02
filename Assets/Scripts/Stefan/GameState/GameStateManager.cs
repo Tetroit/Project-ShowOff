@@ -142,7 +142,11 @@ public class GameStateManager : MonoBehaviour
 
     private void OnDisable()
     {
-        _currentState.Exit();
-        _previousStates.Clear();
+        try
+        {
+            _currentState.Exit();
+            _previousStates.Clear();
+        }
+        catch{ }
     }
 }

@@ -37,6 +37,7 @@ public class S_Cutscene : State
 
     public override void Exit()
     {
+
         SetStates(
             cursoreVisibility: _visibility,
             lockMode: _lockMode,

@@ -333,7 +333,7 @@ namespace amogus
             rb.isKinematic = false;
             rb.WakeUp();
 
-            if(_debug)
+            if (_debug)
             Debug.Log("enabled free move controls");
         }
 
