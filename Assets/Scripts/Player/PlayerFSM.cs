@@ -217,5 +217,18 @@ namespace amogus
             if (shake != null)
                 shake.ChangeState(shakeID);
         }
+        public void EnableCameraXConstraint(float facing)
+        {
+            if (cameraScript == null) return;
+            cameraScript.constraintX = true;
+            cameraScript.constraintMiddle = facing;
+
+        }
+        public void DisableCameraXConstraint()
+        {
+            if (cameraScript == null) return;
+            cameraScript.constraintX = false;
+
+        }
     }
 }

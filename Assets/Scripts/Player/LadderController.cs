@@ -16,6 +16,7 @@ namespace amogus
         {
             enabled = false;
             Debug.Log("ladder controls disabled");
+            playerFSM.DisableCameraXConstraint();
         }
 
         public override void EnableControl()
@@ -23,6 +24,7 @@ namespace amogus
             OnCameraShakeChange?.Invoke(CameraWalkingShake.State.LADDER);
             enabled = true;
             Debug.Log("ladder controls enabled");
+            playerFSM.EnableCameraXConstraint(ladderContext.facing.eulerAngles.y);
         }
 
         public override bool isMoving
@@ -38,13 +40,13 @@ namespace amogus
             bool flipCamera = Vector3.Dot(facing, ladderContext.facing * Vector3.forward) < 0;
             
             playerAction = PlayerInputHandler.Instance.Move.y;
-            target.transform.position += Time.deltaTime * speed * playerAction * (flipCamera? -1 : 1) * ladderContext.GetDir();
+            target.transform.position += Time.deltaTime * speed * playerAction * ladderContext.GetDir();
             //target.transform.position += Time.deltaTime * speed * playerAction * Vector3.up;
 
-            if (playerAction * (flipCamera ? -1 : 1) < 0 && ladderContext.GetHeight(target.position) <= 0)
+            if (playerAction < 0 && ladderContext.GetHeight(target.position) <= 0)
                 playerFSM.ActivateSwitch(ladderContext.startLadderSwitch);
 
-            if (playerAction * (flipCamera ? -1 : 1) > 0 && ladderContext.GetHeight(target.position) >= 1)
+            if (playerAction > 0 && ladderContext.GetHeight(target.position) >= 1)
                 playerFSM.ActivateSwitch(ladderContext.endLadderSwitch);
         }
 
