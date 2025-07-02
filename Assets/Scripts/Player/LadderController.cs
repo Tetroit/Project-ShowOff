@@ -12,11 +12,17 @@ namespace amogus
 
         Ladder ladderContext;
         Vector3 facing => cameraTransform.rotation * Vector3.forward;
+
+        [SerializeField] float xRange;
+        [SerializeField] float yMin;
+        [SerializeField] float yMax;
         public override void DisableControl()
         {
             enabled = false;
             Debug.Log("ladder controls disabled");
             playerFSM.DisableCameraXConstraint();
+
+            playerFSM.SetYCamConstraint(-70, 70);
         }
 
         public override void EnableControl()
@@ -25,6 +31,9 @@ namespace amogus
             enabled = true;
             Debug.Log("ladder controls enabled");
             playerFSM.EnableCameraXConstraint(ladderContext.facing.eulerAngles.y);
+
+            playerFSM.SetYCamConstraint(yMin, yMax);
+            playerFSM.SetXCamConstraint(xRange);
         }
 
         public override bool isMoving

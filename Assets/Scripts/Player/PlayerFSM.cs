@@ -230,5 +230,16 @@ namespace amogus
             cameraScript.constraintX = false;
 
         }
+
+        public void SetYCamConstraint(float bottom, float top)
+        {
+            cameraScript.minAngle = bottom;
+            cameraScript.maxAngle = top;
+        }
+
+        internal void SetXCamConstraint(float angle)
+        {
+            cameraScript.xAngleRange = angle;
+        }
     }
 }

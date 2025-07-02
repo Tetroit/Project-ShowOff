@@ -6,8 +6,8 @@ namespace amogus
     public class PlayerCamera : MonoBehaviour
     {
         [SerializeField] Vector3 offset;
-        [SerializeField] float minAngle = -20f;
-        [SerializeField] float maxAngle = 35f;
+        public float minAngle = -20f;
+        public float maxAngle = 35f;
 
         public bool constraintX = false;
         public float xAngleRange = 120f;

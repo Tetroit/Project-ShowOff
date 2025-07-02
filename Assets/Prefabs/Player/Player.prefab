@@ -6666,6 +6666,9 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   minAngle: -70
   maxAngle: 70
+  constraintX: 0
+  xAngleRange: 120
+  constraintMiddle: 0
   isCinematic: 0
   targetFOV: 60
   xRotator: {fileID: 3234403363261146957}
@@ -6712,6 +6715,9 @@ MonoBehaviour:
   target: {fileID: 3234403363261146957}
   cameraTransform: {fileID: 241725800075610130}
   speed: 3
+  xRange: 30
+  yMin: 15
+  yMax: 45
 --- !u!54 &6736891569577627229
 Rigidbody:
   m_ObjectHideFlags: 0
