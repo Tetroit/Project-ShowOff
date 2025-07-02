@@ -1201,6 +1201,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3059637311340720132, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
   m_PrefabInstance: {fileID: 200459046}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &106615780 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1749075087517490400, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+  m_PrefabInstance: {fileID: 200459046}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &165253687
 GameObject:
   m_ObjectHideFlags: 0
@@ -2149,6 +2154,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '#cGameplay'
       objectReference: {fileID: 0}
+    - target: {fileID: 1749075087517490400, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: m_Name
+      value: BreakingPlanks
+      objectReference: {fileID: 0}
     - target: {fileID: 1784729406635005655, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: LineView
       value: 
@@ -2277,7 +2286,7 @@ PrefabInstance:
       objectReference: {fileID: 737061646}
     - target: {fileID: 4777074779590807745, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: m_Name
-      value: '#rCutscenes'
+      value: '#pCutscenes'
       objectReference: {fileID: 0}
     - target: {fileID: 5126087750260048218, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: OnTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -2515,6 +2524,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: bfaff5f60140aa14d94bf95d82ebfeaf, type: 2}
+    - target: {fileID: 7218856875018959897, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7358895630239462130, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       propertyPath: OnTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -2589,7 +2602,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3605706337999235313, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
     - {fileID: 228889172885990639, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 956883052792467335, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+    - {fileID: 3186612230643004487, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+    - {fileID: 8736710705544638029, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
+    - {fileID: 165817983813454344, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5544830204454460790, guid: 1349eebcf63e3654284279625279d0ef, type: 3}
       insertIndex: -1
@@ -5855,10 +5872,10 @@ PrefabInstance:
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_PlayableAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 4af9a441b35b7df419268a8eadf57d49, type: 2}
+      objectReference: {fileID: 11400000, guid: aca1da869e0f430428708b27ee959e3a, type: 2}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 127
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.data[108].key
@@ -5936,6 +5953,10 @@ PrefabInstance:
       propertyPath: m_SceneBindings.Array.data[126].key
       value: 
       objectReference: {fileID: 7915921948972054871, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
+    - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_SceneBindings.Array.data[127].key
+      value: 
+      objectReference: {fileID: -7328763107904051309, guid: aca1da869e0f430428708b27ee959e3a, type: 2}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_SceneBindings.Array.data[14].value
       value: 
@@ -6108,6 +6129,10 @@ PrefabInstance:
       propertyPath: m_SceneBindings.Array.data[126].value
       value: 
       objectReference: {fileID: 816875512}
+    - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_SceneBindings.Array.data[127].value
+      value: 
+      objectReference: {fileID: 106615780}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[0].second
       value: 
