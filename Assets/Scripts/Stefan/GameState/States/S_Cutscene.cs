@@ -16,9 +16,9 @@ public class S_Cutscene : State
         _visibility = Cursor.visible;
         _lockMode = Cursor.lockState;
         _movement = fsm.PlayerController.inAnimation;
-        _inventoryControl = fsm.InventoryController.gameObject.activeSelf;
-        _interactionsEnabled = fsm.InteractionManager.enabled;
-        _selectedInventory = fsm.InventoryController.CurrentInventoryIndex;
+        _inventoryControl = fsm.InventoryController != null ? fsm.InventoryController.gameObject.activeSelf : false;
+        _interactionsEnabled = fsm.InventoryController != null ? fsm.InteractionManager.enabled : false;
+        _selectedInventory = fsm.InventoryController != null ? fsm.InventoryController.CurrentInventoryIndex : 0;
         _selectedItem = fsm.InventoryController.GetCurrentInventory().CurentItemIndex;
         _hudActive = fsm.HUD.activeSelf;
 
@@ -70,12 +70,18 @@ public class S_Cutscene : State
             fsm.PlayerController.EnableControls();
         else
             fsm.PlayerController.DisableControls();
-        fsm.InventoryController.gameObject.SetActive(inventoryControl);
-        fsm.InteractionManager.enabled = interactionsEnabled;
+        if(fsm.InventoryController != null)
+            fsm.InventoryController.gameObject.SetActive(inventoryControl);
 
-        fsm.InventoryController.SetInventory(inventorySelectIndex);
-        fsm.InventoryController.GetCurrentInventory().ChangeItemPosition(itemSelectIndex);
-        fsm.HUD.SetActive(hudActive);
+        if(fsm.InteractionManager != null)
+            fsm.InteractionManager.enabled = interactionsEnabled;
+
+        if(fsm.InventoryController != null)
+            fsm.InventoryController.SetInventory(inventorySelectIndex);
+        if(fsm.InventoryController != null)
+            fsm.InventoryController.GetCurrentInventory().ChangeItemPosition(itemSelectIndex);
+        if(fsm.HUD != null)
+            fsm.HUD.SetActive(hudActive);
 
     }
 }

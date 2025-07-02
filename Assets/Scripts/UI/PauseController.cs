@@ -41,4 +41,10 @@ public class PauseController : MonoBehaviour
         _isPaused = false;
 
     }
+
+    private void OnDisable()
+    {
+        _pauseAction.action.started -= TogglePause;
+
+    }
 }

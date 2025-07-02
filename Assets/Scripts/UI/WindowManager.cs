@@ -61,6 +61,27 @@ public class WindowManager : MonoBehaviour
         return false;
     }
 
+    public void SwitchWindow(Window w)
+    {
+        if (_currentActiveWindow == null)
+        {
+            _currentActiveWindow = w;
+            _currentActiveWindow.gameObject.SetActive(true);
+            _history.Add(_currentActiveWindow);
+            return;
+        }
+
+        if (_currentActiveWindow.Priority < w.Priority)
+        {
+            _currentActiveWindow.gameObject.SetActive(false);
+            _currentActiveWindow = w;
+            _currentActiveWindow.gameObject.SetActive(true);
+
+            _history.Add(_currentActiveWindow);
+            if (_historyCapacity < _history.Count) _history.RemoveAt(0);
+        }
+    }
+
     public void CloseCurrentWindow()
     {
         if(_currentActiveWindow != null)

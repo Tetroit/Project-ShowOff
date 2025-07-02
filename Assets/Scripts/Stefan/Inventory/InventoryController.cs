@@ -8,11 +8,15 @@ public class InventoryController : MonoBehaviour
 {
     [SerializeField] List<InventoryView> _inventories;
     [SerializeField] float _itemChangeCooldown = .2f;
+    [SerializeField] List<GameObject> _relatedUI;
+    List<bool> _relatedUIStates = new();
+    
     float _lastScrollTime;
     [field: SerializeField] public UnityEvent<InventoryView> OnInventoryChanged { get; private set; }
 
     int _currentInventoryIndex;
     InputSystem_Actions _input;
+
 
     public int CurrentInventoryIndex => _currentInventoryIndex;
 
@@ -38,10 +42,20 @@ public class InventoryController : MonoBehaviour
     void Awake()
     {
         _input = new();
+
+        for (int i = 0; i < _relatedUI.Count; i++)
+        {
+            _relatedUIStates.Add(_relatedUI[i].activeSelf);
+        }
     }
 
     void OnEnable()
     {
+        for (int i = 0; i < _relatedUI.Count; i++)
+        {
+            _relatedUI[i].SetActive( _relatedUIStates[i]);
+        }
+
         _input.Enable();
         _input.UI.ScrollWheel.performed += OnScroll;
         _input.Player.Interact.started += OnInteract;
@@ -50,11 +64,16 @@ public class InventoryController : MonoBehaviour
 
     void OnDisable()
     {
+        for (int i = 0; i < _relatedUI.Count; i++)
+        {
+            _relatedUIStates[i] = _relatedUI[i].activeSelf;
+            _relatedUI[i].SetActive(false);
+        }
+
         _input.Disable();
         _input.UI.ScrollWheel.performed -= OnScroll;
         _input.Player.Interact.started -= OnInteract;
         _input.UI.InventoryModes.started -= OnInventoryChange;
-
     }
 
     void Start()
