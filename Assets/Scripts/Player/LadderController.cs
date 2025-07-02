@@ -32,6 +32,7 @@ namespace amogus
             if (_previousItemName != null)
                 _inventory.SelectItem(_previousItemName);
             _previousItemName = null;
+            playerFSM.DisableCameraXConstraint();
         }
 
         public override void EnableControl()
@@ -45,6 +46,7 @@ namespace amogus
             _previousItemName = _inventory.GetCurrentItem().name;
             _inventory.SelectItem("NoArm");
             _inventoryController.enabled = false;
+            playerFSM.EnableCameraXConstraint(ladderContext.facing.eulerAngles.y);
         }
 
         public override bool isMoving
@@ -60,15 +62,13 @@ namespace amogus
             bool flipCamera = Vector3.Dot(facing, ladderContext.facing * Vector3.forward) < 0;
             
             playerAction = PlayerInputHandler.Instance.Move.y;
-            target.transform.position += Time.deltaTime * speed * playerAction * (flipCamera? -1 : 1) * ladderContext.GetDir();
+            target.transform.position += Time.deltaTime * speed * playerAction * ladderContext.GetDir();
             //target.transform.position += Time.deltaTime * speed * playerAction * Vector3.up;
 
-            float currentHeight = ladderContext.GetHeight(target.position);
-
-            if (playerAction * (flipCamera ? -1 : 1) < 0 && currentHeight <= 0)
+            if (playerAction < 0 && ladderContext.GetHeight(target.position) <= 0)
                 playerFSM.ActivateSwitch(ladderContext.startLadderSwitch);
 
-            if (playerAction * (flipCamera ? -1 : 1) > 0 && currentHeight >= 1)
+            if (playerAction > 0 && ladderContext.GetHeight(target.position) >= 1)
                 playerFSM.ActivateSwitch(ladderContext.endLadderSwitch);
 
             _director.transform.localPosition = target.localPosition + _armOffset;
