@@ -79,7 +79,7 @@ namespace amogus
                 timeCopy += Time.deltaTime * _animSpeed * playerAction;
                 if(timeCopy <= 0 )
                 {
-                    timeCopy += 1.5;    
+                    timeCopy += 1.766666;    
                 }
                 _director.time = timeCopy;
                 _director.Evaluate();
