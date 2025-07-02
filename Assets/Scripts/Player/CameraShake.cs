@@ -33,7 +33,6 @@ public class CameraWalkingShake : MonoBehaviour
     float rotationOffset;
     float _cooldown;
 
-
     Stack<Vector3> _oneShotOffsets = new();
 
     void Update()
