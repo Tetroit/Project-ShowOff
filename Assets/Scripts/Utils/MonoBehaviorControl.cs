@@ -35,7 +35,7 @@ public class MonoBehaviorControl : MonoBehaviour
         if(targetGear != null)
         {
             //AudioManager.instance.PlayOneShot(gearAmbience, transform.position);
-            AudioManager.instance.SetAmbienceArea(AmbienceArea.GEAR_AREA);
+            //AudioManager.instance.SetAmbienceArea(AmbienceArea.GEAR_AREA);
             AudioManager.instance.PlayOneShot(gearConstant, targetGear.transform.position);
         }
         else
