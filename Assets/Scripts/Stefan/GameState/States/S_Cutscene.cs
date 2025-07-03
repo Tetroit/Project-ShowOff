@@ -37,6 +37,7 @@ public class S_Cutscene : State
 
     public override void Exit()
     {
+
         SetStates(
             cursoreVisibility: _visibility,
             lockMode: _lockMode,
@@ -44,7 +45,7 @@ public class S_Cutscene : State
             inventoryControl: _inventoryControl,
             interactionsEnabled: _interactionsEnabled,
             inventorySelectIndex: _selectedInventory,
-            itemSelectIndex: _selectedItem,
+            itemSelectIndex: fsm.InventoryController.GetCurrentInventory().GetItemIndex("NoArm"),
             hudActive: _hudActive
             );
         //WindowManager.Instance.SwitchToPrevious();

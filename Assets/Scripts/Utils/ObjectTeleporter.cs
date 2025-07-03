@@ -10,7 +10,7 @@ public class ObjectTeleporter : MonoBehaviour
     {
         Target.transform.SetPositionAndRotation(point.position, point.rotation);
 #if UNITY_EDITOR
-        UnityEditor.EditorUtility.SetDirty(Target.transform);
+        UnityEditor.EditorUtility.SetDirty(Target);
 #endif
     }
 }

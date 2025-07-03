@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace amogus
@@ -216,6 +213,30 @@ namespace amogus
         {
             if (shake != null)
                 shake.ChangeState(shakeID);
+        }
+        public void EnableCameraXConstraint(float facing)
+        {
+            if (cameraScript == null) return;
+            cameraScript.constraintX = true;
+            cameraScript.constraintMiddle = facing;
+
+        }
+        public void DisableCameraXConstraint()
+        {
+            if (cameraScript == null) return;
+            cameraScript.constraintX = false;
+
+        }
+
+        public void SetYCamConstraint(float bottom, float top)
+        {
+            cameraScript.minAngle = bottom;
+            cameraScript.maxAngle = top;
+        }
+
+        internal void SetXCamConstraint(float angle)
+        {
+            cameraScript.xAngleRange = angle;
         }
     }
 }
