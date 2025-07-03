@@ -73,6 +73,7 @@ MonoBehaviour:
   <ItemDeselected>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
+  _startingItemIndex: 0
 --- !u!114 &2975920424228495262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,6 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad6005922f8bac4b83964957cb78719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SeeTheItem: 1
   OnSelect:
     m_PersistentCalls:
       m_Calls: []
@@ -102,6 +104,9 @@ MonoBehaviour:
   _pagesContainer: {fileID: 958364001023554275}
   _rightAngle: {x: 0, y: 0, z: 0, w: 0}
   _leftAngle: {x: 0, y: 0, z: 0, w: 0}
+  <OnNoteAdded>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6416427458611323187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +130,7 @@ MonoBehaviour:
   <ItemDeselected>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
+  _startingItemIndex: 0
 --- !u!1 &7729928046624653635
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +292,7 @@ PrefabInstance:
     - target: {fileID: -4795165560744122111, guid: 10ee8b4700df2064b90cef2a35b617c8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 8b08ae0e30b333140b07a25319edae9e, type: 2}
+      objectReference: {fileID: 2100000, guid: ff1a3e64e6e1b224abc70e3f0df000e2, type: 2}
     - target: {fileID: 919132149155446097, guid: 10ee8b4700df2064b90cef2a35b617c8, type: 3}
       propertyPath: m_Name
       value: BookTestV
