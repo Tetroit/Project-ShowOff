@@ -7,4 +7,9 @@ public class SceneHandler : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
