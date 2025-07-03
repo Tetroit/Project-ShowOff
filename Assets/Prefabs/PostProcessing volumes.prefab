@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 619300533653632793}
   - component: {fileID: 4659567304855751718}
+  - component: {fileID: 7650078614070734843}
   m_Layer: 0
   m_Name: Blink
   m_TagString: Untagged
@@ -49,6 +50,22 @@ MonoBehaviour:
   blendDistance: 0
   weight: 0
   sharedProfile: {fileID: 11400000, guid: 7700f30f645524e4a920c1eb94a25bc3, type: 2}
+--- !u!114 &7650078614070734843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3766462884842263135}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b23755f25606f64da43f6ed33dc624f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minWeight: 0.018
+  _maxWeight: 0.225
+  _minStateDuration: {x: 1, y: 1.5}
+  _maxStateDuration: {x: 1, y: 1.5}
 --- !u!1 &6257128363433942553
 GameObject:
   m_ObjectHideFlags: 0

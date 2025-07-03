@@ -1,5 +1,7 @@
 using DG.Tweening;
+using FMOD.Studio;
 using FMODUnity;
+using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +9,8 @@ public class VoiceMailController : MonoBehaviour
 {
     [SerializeField] InputActionReference _playVoiceMail;
     [SerializeField] TextRunner _voiceMailRunner;
-    [SerializeField] EventReference _ringtone;
+    [SerializeField] FMODUnity.EventReference _ringtone;
+    private EventInstance _eventInstance;
     [SerializeField] CanvasGroup _ui;
     [SerializeField] float _fadeSpeed = .8f;
     [SerializeField] float _hangUpTimeAfter = 5f;
@@ -16,7 +19,9 @@ public class VoiceMailController : MonoBehaviour
     {
         if (AudioManager.instance != null && !_ringtone.IsNull)
         {
-            AudioManager.instance.PlayOneShot(_ringtone, Vector3.zero);
+            _eventInstance = RuntimeManager.CreateInstance(_ringtone);
+            _eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+            _eventInstance.start();
         }
 
         _playVoiceMail.action.started += AnswerPhone;
@@ -34,8 +39,10 @@ public class VoiceMailController : MonoBehaviour
 
     void AnswerPhone(InputAction.CallbackContext context)
     {
+        _eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        _eventInstance.release();
         _voiceMailRunner.DisplayText();
-
+        _eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         _ui.DOFade(0,_fadeSpeed);
         _playVoiceMail.action.started -= AnswerPhone;
         //_playVoiceMail.action.Disable();

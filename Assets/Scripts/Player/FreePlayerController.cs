@@ -140,6 +140,13 @@ namespace amogus
 
         }
 
+        public void SetNewStates( PhysicsControllerState walk, PhysicsControllerState crouch, PhysicsControllerState sprint)
+        {
+            states[0] = walk;
+            states[1] = crouch;
+            states[2] = sprint;
+        }
+
         public Quaternion GetCameraRotation()
         {
             return cameraTransform.rotation;
@@ -326,7 +333,7 @@ namespace amogus
             rb.isKinematic = false;
             rb.WakeUp();
 
-            if(_debug)
+            if (_debug)
             Debug.Log("enabled free move controls");
         }
 

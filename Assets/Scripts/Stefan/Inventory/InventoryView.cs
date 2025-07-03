@@ -23,6 +23,7 @@ public class InventoryView : MonoBehaviour
     public ReadOnlyCollection<InventoryView> Items => new ((IList<InventoryView>)items);
     [field: SerializeField] public UnityEvent<InventoryItemView> ItemSelected { get; private set; }
     [field: SerializeField] public UnityEvent<InventoryItemView> ItemDeselected { get; private set; }
+    [SerializeField] int _startingItemIndex;
     int _curentItemIndex;
     
     public int ItemCount => items.Count;
@@ -39,12 +40,15 @@ public class InventoryView : MonoBehaviour
 
     void Awake()
     {
+        _curentItemIndex = _startingItemIndex;
         OnAwake();
     }
 
     void Start()
     {
+        
         OnStart(); 
+
     }
     protected virtual void OnAwake() { }
 

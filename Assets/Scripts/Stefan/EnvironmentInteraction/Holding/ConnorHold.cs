@@ -89,6 +89,7 @@ public class ConnorHold : HoldManager
         CurrentInteractable = interactable;
         Interacted?.Invoke(interactable.Self.gameObject ,interactable);
         baseRotation = _holdSpot.rotation;
+        ToggleOutline(interactable.Self.gameObject, false);
 
         StartCoroutine(interactable.Interact());
         yield return StartCoroutine(GrabAnimation(interactable, _grabTimeSeconds));
@@ -99,6 +100,7 @@ public class ConnorHold : HoldManager
     public override IEnumerator OnDismiss()
     {
         CurrentInteractable.Self.DORotateQuaternion(CurrentInteractable.GetInitialRotation(), _grabTimeSeconds);
+        ToggleOutline(CurrentInteractable.Self.gameObject, true);
         StopCoroutine(_itemHoldBehavior);
         StartCoroutine(CurrentInteractable.Deselect());
         yield return CurrentInteractable.Self.DOMove(CurrentInteractable.GetInitialPosition(), _grabTimeSeconds).WaitForCompletion();
@@ -107,6 +109,14 @@ public class ConnorHold : HoldManager
         CurrentInteractable = null;
     }
 
+    void ToggleOutline(GameObject go, bool enable)
+    {
+        var outline = go.GetComponentInChildren<OutlineComponent>();
+        if (outline != null)
+        {
+            outline.enabled = enable;
+        }
+    }
     IEnumerator OnItemHold(IHoldable interactable)
     {
         while(interactable != null )

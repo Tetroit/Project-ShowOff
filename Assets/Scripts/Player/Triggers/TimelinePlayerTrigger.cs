@@ -8,6 +8,7 @@ namespace amogus
         [SerializeField] protected GameStateManager _gameStateManager;
 
         [SerializeField] protected bool noGamemodeSwitch = false;
+
         public override Predicate<PlayerFSM> Predicate => (PlayerFSM player) => {
             if (director.state == UnityEngine.Playables.PlayState.Playing)
             {

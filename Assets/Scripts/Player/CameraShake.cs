@@ -33,7 +33,6 @@ public class CameraWalkingShake : MonoBehaviour
     float rotationOffset;
     float _cooldown;
 
-
     Stack<Vector3> _oneShotOffsets = new();
 
     void Update()
@@ -79,6 +78,13 @@ public class CameraWalkingShake : MonoBehaviour
 
 
         transform.localPosition = offset + oneShotOffsets;
+    }
+
+    public void ChangeShakeStates(CameraShakeState walk, CameraShakeState crouch, CameraShakeState sprint)
+    {
+        states[0] = walk;
+        states[1] = crouch;
+        states[2] = sprint;
     }
 
     public void Shake(float time, float scale, float frequency)

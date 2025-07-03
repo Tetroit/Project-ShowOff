@@ -75,9 +75,15 @@ public class QuickTimeEvent : MonoBehaviour
         Check();
         OnStopReading?.Invoke();
         if (success)
+        {
+            indicator.SetSuccess();
             OnSuccess?.Invoke();
+        }
         else
+        {
+            indicator.SetFail();
             OnFail?.Invoke();
+        }
 
         if (indicator != null)
         {
