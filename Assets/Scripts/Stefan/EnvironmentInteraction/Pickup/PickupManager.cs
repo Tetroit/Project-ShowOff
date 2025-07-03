@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 //for now it only supports picking up keys, it should be extended to decide what pickup item goes into what inventory
 public class PickupManager : InteractionBehavior<IPickupable>
