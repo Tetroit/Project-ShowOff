@@ -13,11 +13,12 @@ namespace amogus
         [SerializeField] Animator _anim;
         [SerializeField] GameStateManager _gameStateManager;
         [SerializeField] float _followWait;
- 
+        [SerializeField] CameraRigController _cameraRigController;
         [Header("For testing")]
         [SerializeField] Transform _testTarget;
         [SerializeField] bool _test;
         [SerializeField] bool _stopTest;
+        [SerializeField] TimelinePlayerTrigger _trigger;
 
         EventInstance followMusicEvent;
 
@@ -85,8 +86,17 @@ namespace amogus
         void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
+            _cameraRigController.TurnCamera180();
+            _cameraRigController.OnTurnComlpete.AddListener(()=>OnTurn(other.GetComponentInChildren<PlayerFSM>()));
+            //_gameStateManager.SwitchToGameOver();
+        }
 
-            _gameStateManager.SwitchToGameOver();
+        void OnTurn(PlayerFSM p )
+        {
+            _cameraRigController.OnTurnComlpete.RemoveAllListeners();
+
+            _trigger.enabled = true;
+            _trigger.ExternalTryTrigger(p);
         }
     }
 }

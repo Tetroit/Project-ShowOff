@@ -111,5 +111,18 @@ public abstract class SimpleTrigger<TargetType> : MonoBehaviour
 
         }
     }
+
+    public void ExternalTryTrigger(TargetType other)
+    {
+        if ( enabled )
+        {
+            Debug.Log("Triggered", this);
+            triggerObject = other;
+            Trigger();
+            OnTrigger?.Invoke();
+
+        }
+    }
+
     public abstract void Trigger();
 }
