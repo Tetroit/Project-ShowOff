@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
+using FMODUnity;
 
 public class ConstantBlinker : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class ConstantBlinker : MonoBehaviour
 
     [SerializeField] Vector2 _minStateDuration = new(5f, 10f);
     [SerializeField] Vector2 _maxStateDuration = new(0.1f, .4f);
+
+    [SerializeField] EventReference Heartbeat;
+    [SerializeField] EventReference Inhale;
+    [SerializeField] EventReference Exhale;
+
     Volume _volume;
     Coroutine _coroutine;
 
@@ -29,17 +35,21 @@ public class ConstantBlinker : MonoBehaviour
 
     IEnumerator SetMin(float time)
     {
+        AudioManager.instance.PlayOneShot(Heartbeat, transform.position);
+        AudioManager.instance.PlayOneShot(Inhale, transform.position);
         DOTween.To(() => _volume.weight, (f) => _volume.weight = f, _minWeight, time);
         yield return new WaitForSeconds(time);
-        StartCoroutine(SetMax(Random.Range(_maxStateDuration.x, _maxStateDuration.y)));
+        _coroutine = StartCoroutine(SetMax(Random.Range(_maxStateDuration.x, _maxStateDuration.y)));
     }
 
     IEnumerator SetMax(float time)
     {
+        AudioManager.instance.PlayOneShot(Heartbeat, transform.position);
+        AudioManager.instance.PlayOneShot(Exhale, transform.position);
         DOTween.To(() => _volume.weight, (f) => _volume.weight = f, _maxWeight, time);
 
         yield return new WaitForSeconds(time);
-        StartCoroutine(SetMin(Random.Range(_minStateDuration.x, _minStateDuration.y)));
+        _coroutine = StartCoroutine(SetMin(Random.Range(_minStateDuration.x, _minStateDuration.y)));
 
     }
 }
