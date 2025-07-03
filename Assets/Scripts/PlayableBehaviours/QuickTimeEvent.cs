@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -90,6 +91,7 @@ public class QuickTimeEvent : MonoBehaviour
             indicator.SmoothDisable();
         }
     }
+
     public void OnPress(InputAction.CallbackContext callback)
     {
         OnActionPress?.Invoke();
