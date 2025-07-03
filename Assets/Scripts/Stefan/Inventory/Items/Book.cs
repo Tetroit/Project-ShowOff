@@ -47,11 +47,23 @@ public class Book : InventoryItemView
         //turning on the page 
         _turningTween?.Complete();
         _turningTween = TurnRight(selectedPage);
+
+        bool hasDisabledDeselectPage = false;
+
+        _turningTween.OnUpdate(() =>
+        {
+            if (!hasDisabledDeselectPage && _turningTween.fullPosition / _turningTween.Duration() >= 0.8f)
+            {
+                deselectedPage.gameObject.SetActive(false);
+                hasDisabledDeselectPage = true;
+            }
+        });
+
         _turningTween.onComplete = () =>
         {
-            deselectedPage.gameObject.SetActive(false);
             _turningTween = null;
         };
+
         if (selectedPageIndex - 1 >= 0)
             _notesContainer.GetItemAt(selectedPageIndex - 1).gameObject.SetActive(true);
     }
@@ -100,9 +112,9 @@ public class Book : InventoryItemView
 
     public void AddNote(GameObject noteObj, IHoldable component)
     {
-        if(_notesContainer == null) _notesContainer = GetComponent<InventoryView>();
+        if (_notesContainer == null) _notesContainer = GetComponent<InventoryView>();
         if (_notesContainer.Any(x => x.name == noteObj.name)) return;
-        Note note = component as Note; 
+        Note note = component as Note;
 
         _notesContainer.AddItem(note.PagePrefab);
         var page = _notesContainer.GetAddedItem() as BookPage;
@@ -117,7 +129,7 @@ public class Book : InventoryItemView
         page.transform.localScale = Vector3.one;
         page.Text = note.Text;
         page.Title = note.Title;
-        page.gameObject.SetActive(false);
+        page.gameObject.SetActive(_notesContainer == null || _notesContainer.ItemCount <= 1);
 
         OnNoteAdded?.Invoke();
     }
@@ -125,16 +137,24 @@ public class Book : InventoryItemView
     public override void Select()
     {
         base.Select();
-        if( _gameStateManager != null)
-        _gameStateManager.SwitchState<S_UI>();
+        if (_gameStateManager != null)
+            _gameStateManager.SwitchState<S_UI>();
 
         foreach (var icon in UI_Icons) icon.SetActive(true);
 
-        if( _interactionManager != null)
-        _interactionManager.enabled = false;
+        if (_interactionManager != null)
+            _interactionManager.enabled = false;
 
+        if (_notesContainer == null || _notesContainer.ItemCount <= 1)
+        {
+            _swipeLeft.gameObject.SetActive(false);
+            _swipeRight.gameObject.SetActive(false);
+            return;
+        }
         _swipeLeft.gameObject.SetActive(true);
         _swipeRight.gameObject.SetActive(true);
+        _notesContainer.GetCurrentItem().Select();
+        
     }
 
     public override void Deselect()
