@@ -22,6 +22,34 @@ MonoBehaviour:
   gain:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1, w: 0.26848036}
+--- !u!114 &-2449101779713007915
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f034cba68ab55e046ae1445a42f18c0e, type: 3}
+  m_Name: IndirectLightingController
+  m_EditorClassIdentifier: 
+  active: 1
+  indirectDiffuseLightingMultiplier:
+    m_OverrideState: 1
+    m_Value: 5
+  indirectDiffuseLightingLayers:
+    m_OverrideState: 0
+    m_Value: 65535
+  reflectionLightingMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  reflectionLightingLayers:
+    m_OverrideState: 0
+    m_Value: 65535
+  reflectionProbeIntensityMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
 --- !u!114 &-2216675656629070054
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -83,7 +111,7 @@ MonoBehaviour:
   active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   meteringMode:
     m_OverrideState: 1
     m_Value: 2
@@ -95,13 +123,13 @@ MonoBehaviour:
     m_Value: 5.513695
   compensation:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: -3
   limitMin:
     m_OverrideState: 1
-    m_Value: -1
+    m_Value: 1.4270272
   limitMax:
     m_OverrideState: 1
-    m_Value: 14
+    m_Value: 8.180181
   curveMap:
     m_OverrideState: 1
     m_Value:
@@ -238,6 +266,7 @@ MonoBehaviour:
   - {fileID: 1204366114336456945}
   - {fileID: 981843460172519274}
   - {fileID: 1982793068059002672}
+  - {fileID: -2449101779713007915}
 --- !u!114 &981843460172519274
 MonoBehaviour:
   m_ObjectHideFlags: 3
