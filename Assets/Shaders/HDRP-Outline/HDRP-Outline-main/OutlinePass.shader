@@ -89,6 +89,7 @@ Shader "Hidden/Shader/OutlinePass"
 
     SubShader
     {
+        Tags{ "RenderPipeline" = "HDRenderPipeline" }
         Pass
         {
             Name "Custom Pass 0"
