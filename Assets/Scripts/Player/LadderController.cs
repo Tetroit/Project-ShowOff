@@ -27,6 +27,9 @@ namespace amogus
         public override void DisableControl()
         {
             enabled = false;
+
+            isEnabled = false;
+
             Debug.Log("ladder controls disabled");
             if(_inventoryController != null) 
                 _inventoryController.enabled = true;
@@ -36,6 +39,7 @@ namespace amogus
             if (_previousItemName != null)
                 _inventory.SelectItem(_previousItemName);
             _previousItemName = null;
+
             playerFSM.DisableCameraXConstraint();
 
             playerFSM.SetYCamConstraint(-70, 70);
@@ -43,6 +47,9 @@ namespace amogus
 
         public override void EnableControl()
         {
+            isEnabled = true;
+
+
             OnCameraShakeChange?.Invoke(CameraWalkingShake.State.LADDER);
             enabled = true;
             Debug.Log("ladder controls enabled");
