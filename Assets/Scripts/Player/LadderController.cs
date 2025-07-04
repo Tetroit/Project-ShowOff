@@ -36,9 +36,9 @@ namespace amogus
             if(_director != null)
                 _director.gameObject.SetActive(false);
 
-            if (_previousItemName != null)
-                _inventory.SelectItem(_previousItemName);
-            _previousItemName = null;
+            //if (_previousItemName != null)
+            //    _inventory.SelectItem(_previousItemName);
+            //_previousItemName = null;
 
             playerFSM.DisableCameraXConstraint();
 

@@ -108,6 +108,9 @@ namespace amogus
             ExitAnimation();
         }
 
+        public bool IsWalkingControler() => currentControllerID == ControllerType.FREE_MOVE;
+
+
         public bool IsCurrentEnabled()
         {
             if (currentControllerID == ControllerType.NONE) return false;

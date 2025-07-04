@@ -26,9 +26,8 @@ public class S_UI : State
         Cursor.lockState = lockMode;
         if(fsm.PlayerController != null ) 
         if(movement)
-                /*if (!fsm.PlayerController.IsCurrentEnabled()) */fsm.PlayerController.EnableControls();
-
+             fsm.PlayerController.EnableControls();
         else
-             /*if (fsm.PlayerController.IsCurrentEnabled())*/ fsm.PlayerController.DisableControls();
+             fsm.PlayerController.DisableControls();
     }
 }
