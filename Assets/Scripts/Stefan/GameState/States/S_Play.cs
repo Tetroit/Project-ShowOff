@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class S_Play : State
 {
@@ -17,7 +18,14 @@ public class S_Play : State
 
     public override void Exit()
     {
-        SetStates(_visibility, _lockMode, _movement);
+        try
+        {
+            SetStates(_visibility, _lockMode, _movement);
+
+        }catch(Exception e)
+        {
+            Debug.LogWarning(e);
+        }
     }
 
     void SetStates(bool cursoreVisibility, CursorLockMode lockMode, bool movement)
@@ -26,8 +34,8 @@ public class S_Play : State
         Cursor.lockState = lockMode;
         if(fsm.PlayerController != null ) 
         if (movement)
-            fsm.PlayerController.EnableControls();
+             /*if (!fsm.PlayerController.IsCurrentEnabled())*/ fsm.PlayerController.EnableControls();
         else
-            fsm.PlayerController.DisableControls();
+             /*if (fsm.PlayerController.IsCurrentEnabled())*/ fsm.PlayerController.DisableControls();
     }
 }

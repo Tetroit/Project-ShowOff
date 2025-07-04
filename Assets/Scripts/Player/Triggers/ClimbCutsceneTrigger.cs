@@ -33,11 +33,11 @@ namespace amogus
         public override void Begin(PlayerFSM target)
         {
             startPos = target.transform.position;
-            target.DisableControls();
+            //target.DisableControls();
         }
         public override void End(PlayerFSM target)
         {
-            target.EnableControls();
+            //target.EnableControls();
         }
 
     }
