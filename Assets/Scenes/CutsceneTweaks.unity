@@ -3498,17 +3498,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &442247341 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 509143256402324231, guid: 2ebca0f6c939ecd4486c0a5934d99f7e, type: 3}
-  m_PrefabInstance: {fileID: 1033328284}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ee8765ec5738ba4ebccf8474788a160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!43 &444839208
 Mesh:
   m_ObjectHideFlags: 0
@@ -5461,6 +5450,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6334553104927372864, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6334553104927372864, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_SceneBindings.Array.data[7].key
+      value: 
+      objectReference: {fileID: -3445703133025320965, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
+    - target: {fileID: 6334553104927372864, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_SceneBindings.Array.data[8].key
+      value: 
+      objectReference: {fileID: 7915921948972054871, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
+    - target: {fileID: 6334553104927372864, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_SceneBindings.Array.data[9].key
+      value: 
+      objectReference: {fileID: -4215883734825171753, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
+    - target: {fileID: 6334553104927372864, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
+      propertyPath: m_SceneBindings.Array.data[10].key
+      value: 
+      objectReference: {fileID: -2881977827709744372, guid: 3de2324a1b10a494c9f07d03a2e7a091, type: 2}
     - target: {fileID: 7143161083505511038, guid: 10c90aeaee04ff64b97f59672f90b6f0, type: 3}
       propertyPath: m_PlayableAsset
       value: 
@@ -10634,36 +10643,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71aa63872eb4d3949a20a0f86bf3d54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LineView: {fileID: 442247341}
+  LineView: {fileID: 0}
   _lines:
   - characterName: Landlord
-    text: Hey uhhh, congrats on your purchace of the northern mill.
+    text: uhhh, hey, congrats on your purchace of the northern mill.
+    playTimeSeconds: 4
+  - characterName: Landlord
+    text: Thanks, I'm heading there right now. Where did you leave the keys?
     playTimeSeconds: 3
   - characterName: Landlord
-    text: Thanks, I'm heading there right now.
-    playTimeSeconds: 1.5
+    text: Oh, uhm, I forgot to leave you any.
+    playTimeSeconds: 1
   - characterName: Landlord
-    text: Oh great, not sure what you want to do with the place, always creeped me
-      out, but I wish you the best of luck with it.
-    playTimeSeconds: 4.2
-  - characterName: Landlord
-    text: 'I''m not sure either, might make it into a museum. '
-    playTimeSeconds: 1.9
-  - characterName: Landlord
-    text: Hey by the way, are the keys in the mailbox somewhere or...
-    playTimeSeconds: 3
-  - characterName: Landlord
-    text: Oh, uhm, I may have forgotten to leave the door unlocked for you.
-    playTimeSeconds: 3
+    text: But it's old and broken so I'm sure you can find your way in.
+    playTimeSeconds: 2.2
   - characterName: Landlord
     text: What?
     playTimeSeconds: 0
   - characterName: Landlord
-    text: It's an old mill, I'm sure you'll figure out your way in somehow.
+    text: Sorry, good luck.
     playTimeSeconds: 2.5
   - characterName: Landlord
-    text: 'What kind of a la- ugh, fine, I''ll figure it out. '
-    playTimeSeconds: 2.8
+    text: Guess I have to "Find my way in"...
+    playTimeSeconds: 2.5
   _overridePause: 0
   _holdBeforeEnd: 0
   _holdTime: 0
