@@ -95,15 +95,26 @@ namespace amogus
         }
         public void DisableControls()
         {
+            if (currentControllerID == ControllerType.NONE) return;
             EnterAnimation();
             controllerDict[currentControllerID].DisableControl();
 
         }
         public void EnableControls()
         {
+            if ( currentControllerID == ControllerType.NONE) return;
+
             controllerDict[currentControllerID].EnableControl();
             ExitAnimation();
         }
+
+        public bool IsCurrentEnabled()
+        {
+            if (currentControllerID == ControllerType.NONE) return false;
+
+            return controllerDict[currentControllerID].isEnabled;
+        }
+
         public void SwitchController(ControllerType id, ScriptedAnimation<PlayerFSM> animation, bool enableCamera = false)
         {
             if (!ValidateController(id)) return;
@@ -146,13 +157,6 @@ namespace amogus
             {
                 ActivateSwitch(sw);
             }
-            //CutsceneTrigger cutsceneTrigger = other.GetComponent<CutsceneTrigger>();
-            //if (cutsceneTrigger != null && cutsceneTrigger.enabled)
-            //{
-            //    DisableControls();
-            //    cutsceneTrigger.Cutscene.OnEnd += EnableControls;
-            //    cutsceneTrigger.StartCutscene(this);
-            //}
         }
 
 

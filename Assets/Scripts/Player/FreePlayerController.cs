@@ -333,6 +333,8 @@ namespace amogus
             rb.isKinematic = false;
             rb.WakeUp();
 
+            isEnabled = true;
+
             if (_debug)
             Debug.Log("enabled free move controls");
         }
@@ -343,6 +345,7 @@ namespace amogus
             rb.isKinematic = true;
             coll.enabled = false;
             lockControls = true;
+            isEnabled = false;
 
             _isMoving = false;
             if(_debug)
