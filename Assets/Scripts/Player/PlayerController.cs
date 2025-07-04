@@ -9,5 +9,7 @@ namespace amogus
         public abstract bool isMoving { get; }
         public Action<CameraWalkingShake.State> OnCameraShakeChange;
         public Action<float> OnFOVChange;
+
+        public bool isEnabled { get; protected set; }
     }
 }
