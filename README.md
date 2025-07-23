@@ -5,11 +5,14 @@ Made as a part of the university project
 **Pipeline:** HDRP  
   
 > [!IMPORTANT]
-> ### How to install
-> 1. Clone repository
-> 2. Add a new Unity project
-> 3. Choose version **6000.0.48f1 or later**, **HDRP** template
-> 4. Launch the project
+> **Release:** view in [releases](https://github.com/Tetroit/Project-ShowOff/releases) or on [itch.io](https://connorsmith.itch.io/the-miller)
 
 > [!NOTE]
-> Work in progress, so not all features might be functional
+> 
+> A horror game that takes place in the Northern-Mill of Twickel, Twente.\
+> Explore the old Northern-Mill, discover its secrets, and try to make it out alive...\
+> Duration: ~15 mins
+> 
+> *Game contains flashing lights*
+
+$${\color{gray}mill\ or\ be\ milled}$$
