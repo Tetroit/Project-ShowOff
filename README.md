@@ -1,5 +1,5 @@
 # Project-ShowOff
-Made as a part of the university project for Tweeduster collection.\
+Made as a part of the university project for Tweeduuster collection.\
 **Engine:** Unity  
 **Version:** 6000.0.48f1  
 **Pipeline:** HDRP  
